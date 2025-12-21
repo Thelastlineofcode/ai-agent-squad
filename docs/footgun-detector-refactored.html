@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Footgun Detector</title>
+    <style>
+        :root {
+            --color-white: rgba(255, 255, 255, 1);
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-orange-400: rgba(230, 129, 97, 1);
+            --color-orange-500: rgba(168, 75, 47, 1);
+            --color-green-500: rgba(34, 197, 94, 1);
+
+            --color-background: var(--color-cream-50);
+            --color-surface: var(--color-white);
+            --color-text: var(--color-slate-900);
+            --color-text-secondary: var(--color-slate-500);
+            --color-primary: var(--color-teal-500);
+            --color-primary-hover: var(--color-teal-600);
+            --color-error: var(--color-red-500);
+            --color-warning: var(--color-orange-500);
+            --color-success: var(--color-green-500);
+        }
+
+        * { box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            padding: 20px; 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--color-background);
+            color: var(--color-text);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { margin: 0 0 10px 0; font-size: 28px; }
+        .subtitle { color: var(--color-text-secondary); margin-bottom: 30px; }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--color-text-secondary);
+        }
+
+        select, input {
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        select:focus, input:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(33, 128, 141, 0.1);
+        }
+
+        .footguns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .footgun-card {
+            background: var(--color-surface);
+            border-radius: 8px;
+            padding: 20px;
+            border-left: 4px solid var(--color-warning);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+
+        .footgun-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .footgun-card.critical { border-left-color: var(--color-error); }
+        .footgun-card.high { border-left-color: var(--color-orange-400); }
+        .footgun-card.medium { border-left-color: var(--color-warning); }
+        .footgun-card.low { border-left-color: var(--color-success); }
+
+        .severity-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .severity-badge.critical { background: rgba(192, 21, 47, 0.15); color: var(--color-error); }
+        .severity-badge.high { background: rgba(230, 129, 97, 0.15); color: var(--color-orange-500); }
+        .severity-badge.medium { background: rgba(168, 75, 47, 0.15); color: var(--color-orange-500); }
+        .severity-badge.low { background: rgba(34, 197, 94, 0.15); color: var(--color-success); }
+
+        .footgun-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 12px 0;
+            color: var(--color-text);
+        }
+
+        .footgun-description {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .footgun-impact {
+            font-size: 12px;
+            background: var(--color-gray-200);
+            padding: 8px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+        }
+
+        .footgun-fix {
+            font-size: 13px;
+            background: rgba(34, 197, 94, 0.08);
+            padding: 10px;
+            border-radius: 4px;
+            border-left: 3px solid var(--color-success);
+            margin-bottom: 12px;
+        }
+
+        .fix-label {
+            font-weight: 600;
+            color: var(--color-success);
+            font-size: 11px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 12px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background: var(--color-gray-200);
+            border-radius: 3px;
+            font-size: 11px;
+            color: var(--color-text);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--color-surface);
+            border-radius: 8px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            margin-top: 6px;
+            text-transform: uppercase;
+        }
+
+        .error-message {
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: rgba(192, 21, 47, 0.1);
+            border-left: 4px solid var(--color-error);
+            border-radius: 6px;
+            color: var(--color-error);
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 10px 16px;
+            background: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn:hover {
+            background: var(--color-primary-hover);
+        }
+
+        .btn:focus {
+            outline: 2px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Developer Footgun Detector</h1>
+        <p class="subtitle">Identify and prevent common rookie & mid-level developer mistakes before they ship to production</p>
+
+        <div id="errorContainer"></div>
+
+        <div class="stats" id="stats">
+            <div class="stat">
+                <div class="stat-number" id="totalCount">0</div>
+                <div class="stat-label">Total Footguns</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="criticalCount">0</div>
+                <div class="stat-label">Critical Issues</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number" id="searchCount">0</div>
+                <div class="stat-label">Matching Results</div>
+            </div>
+        </div>
+
+        <div class="filters" id="filterForm">
+            <div class="filter-group">
+                <label for="severityFilter">Severity Level</label>
+                <select id="severityFilter" aria-label="Filter by severity level">
+                    <option value="">All Severities</option>
+                    <option value="critical">🔴 Critical</option>
+                    <option value="high">🟠 High Impact</option>
+                    <option value="medium">🟡 Medium Impact</option>
+                    <option value="low">🟢 Low Impact</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="categoryFilter">Category</label>
+                <select id="categoryFilter" aria-label="Filter by category">
+                    <option value="">All Categories</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="techFilter">Technology</label>
+                <select id="techFilter" aria-label="Filter by technology">
+                    <option value="">All Technologies</option>
+                    <option value="javascript">JavaScript/TypeScript</option>
+                    <option value="rust">Rust</option>
+                    <option value="go">Go</option>
+                    <option value="python">Python</option>
+                    <option value="all">Cross-Language</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="levelFilter">Developer Level</label>
+                <select id="levelFilter" aria-label="Filter by developer level">
+                    <option value="">All Levels</option>
+                    <option value="rookie">Rookie</option>
+                    <option value="junior">Junior</option>
+                    <option value="mid">Mid-Level</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <input type="text" id="searchInput" placeholder="Search footguns..." aria-label="Search footguns" style="flex: 1; padding: 10px 12px;">
+            <button class="btn" id="resetButton" aria-label="Reset all filters to default values">Reset Filters</button>
+        </div>
+
+        <div class="footguns-grid" id="footgunsGrid"></div>
+    </div>
+
+    <script>
+        // Configuration Constants - Single source of truth
+        const CONFIG = {
+            elements: {
+                grid: 'footgunsGrid',
+                errorContainer: 'errorContainer',
+                severityFilter: 'severityFilter',
+                categoryFilter: 'categoryFilter',
+                techFilter: 'techFilter',
+                levelFilter: 'levelFilter',
+                searchInput: 'searchInput',
+                resetButton: 'resetButton',
+                stats: {
+                    total: 'totalCount',
+                    critical: 'criticalCount',
+                    search: 'searchCount'
+                }
+            }
+        };
+
+        // Helper: Safe DOM element access with error handling
+        function getElement(elementId) {
+            const element = document.getElementById(elementId);
+            if (!element) {
+                console.error(`DOM element not found: ${elementId}`);
+                showError(`UI component missing: ${elementId}`);
+            }
+            return element;
+        }
+
+        // Helper: Get filter value safely
+        function getFilterValue(elementId) {
+            const element = getElement(elementId);
+            return element ? (element.value || '').trim() : '';
+        }
+
+        // Helper: Normalize category names (single function)
+        function normalizeCategoryValue(categoryName) {
+            return categoryName.toLowerCase().replace(/\\s+/g, '-');
+        }
+
+        // Helper: Sanitize search input
+        function sanitizeSearchInput(input) {
+            return (input || '')
+                .toLowerCase()
+                .trim()
+                .replace(/\\s+/g, ' ');
+        }
+
+        // Helper: Show error messages with auto-dismiss
+        function showError(message) {
+            const container = getElement(CONFIG.elements.errorContainer);
+            if (container) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-message';
+                errorDiv.setAttribute('role', 'alert');
+                errorDiv.textContent = `⚠️ ${message}`;
+                container.appendChild(errorDiv);
+                
+                setTimeout(() => errorDiv.remove(), 5000);
+            }
+        }
+
+        // Footgun data (all 40 items)
+        const footguns = [
+            {id: 1, title: "Copy-Paste Without Understanding", severity: "critical", category: "Code Quality", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Blindly copying code from StackOverflow without reading or comprehending every line", impact: "Ships untested code with hidden bugs, security vulnerabilities", fix: "Always read documentation, understand context, test copied code thoroughly", tags: ["dangerous", "bug-prone", "security-risk"]},
+            {id: 2, title: "Missing Error Handling", severity: "critical", category: "Code Quality", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior", "mid"], description: "Unhandled promises, missing try/catch blocks, silent failures", impact: "Production crashes, undefined behavior, impossible to debug", fix: "Use linters to enforce error handling, write tests for error paths, catch exceptions", tags: ["crashes", "production", "stability"]},
+            {id: 3, title: "Hardcoded Secrets", severity: "critical", category: "Security", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie"], description: "Committing API keys, database passwords, tokens in source code", impact: "Complete security breach, credential theft, unauthorized access", fix: "Use environment variables, .env files, secrets manager (AWS Secrets, Vault)", tags: ["security", "breach", "compliance"]},
+            {id: 4, title: "No Input Validation", severity: "critical", category: "Security", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Trusting user input, SQL injection, XSS vulnerabilities", impact: "SQL injection attacks, XSS vulnerabilities, data theft", fix: "Validate all inputs, use parameterized queries, escape output, use libraries", tags: ["security", "injection", "owasp"]},
+            {id: 5, title: "Off-By-One Errors", severity: "critical", category: "Logic Errors", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Array/loop boundary mistakes (<=N instead of <N)", impact: "IndexOutOfBounds, incorrect data processing, silent corruption", fix: "Test boundary conditions, use automated testing, use modern languages with bounds checking", tags: ["logic-error", "testing", "boundary-condition"]},
+            {id: 6, title: "Null/Undefined References", severity: "critical", category: "Code Quality", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Not checking if values exist before using them", impact: "NullPointerException, crashes, undefined behavior", fix: "Use optional types, null coalescing (?.), optional chaining, type systems", tags: ["null-safety", "type-system", "crashes"]},
+            {id: 7, title: "Type Confusion", severity: "critical", category: "Logic Errors", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie"], description: "Treating strings as numbers, loose equality (== vs ===)", impact: "Silent type coercion, incorrect comparisons, security bugs", fix: "Use strict equality (===), type hints, TypeScript, use language type system", tags: ["types", "comparison", "javascript-gotcha"]},
+            {id: 8, title: "Mutating Data Unexpectedly", severity: "critical", category: "State Management", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Modifying objects/arrays passed as parameters or shared state", impact: "Hidden state mutations, impossible to debug, race conditions", fix: "Use immutable patterns, functional approach, const, Object.freeze(), deep cloning", tags: ["state", "immutability", "pure-functions"]},
+            {id: 9, title: "No Automated Tests", severity: "high", category: "Testing", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Relying solely on manual testing, no unit/integration tests", impact: "Regressions go undetected, high maintenance cost, shipping bugs", fix: "Write tests before code (TDD), aim for >85% coverage, use testing frameworks", tags: ["testing", "quality", "regression"]},
+            {id: 10, title: "Only Testing Happy Path", severity: "high", category: "Testing", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Tests ignore error cases and edge cases", impact: "Edge cases crash in production, untested error paths fail silently", fix: "Test error cases, boundary conditions, unusual inputs, null values", tags: ["testing", "edge-cases", "error-handling"]},
+            {id: 11, title: "God Objects/Classes", severity: "high", category: "Architecture", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "One massive class handling UI, logic, and database", impact: "Unmaintainable code, impossible to test, tight coupling", fix: "Separate concerns (MVC, layered architecture), single responsibility principle", tags: ["architecture", "maintainability", "solid"]},
+            {id: 12, title: "Spaghetti Code", severity: "high", category: "Architecture", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "No modularity, functions calling functions everywhere", impact: "Unmaintainable, impossible to debug, high technical debt", fix: "Modularize, use design patterns, follow SOLID principles, extract functions", tags: ["architecture", "technical-debt", "maintainability"]},
+            {id: 13, title: "Tight Coupling", severity: "high", category: "Architecture", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Components dependent on implementation details instead of interfaces", impact: "Changes break everything, hard to test, rigid design", fix: "Use dependency injection, abstract interfaces, dependency inversion", tags: ["architecture", "testing", "flexibility"]},
+            {id: 14, title: "Circular Dependencies", severity: "high", category: "Architecture", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Module A imports B, B imports A (cyclic imports)", impact: "Breaks module loading, initialization order bugs, impossible to reason about", fix: "Reorganize modules, use dependency injection, create mediator pattern", tags: ["architecture", "imports", "module-design"]},
+            {id: 15, title: "N+1 Query Problem", severity: "high", category: "Performance", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Fetching user then doing one query per item (1000 items = 1001 queries)", impact: "Database locked up, timeouts, poor performance", fix: "Use JOIN queries, batch operations, eager loading, caching", tags: ["performance", "database", "scalability"]},
+            {id: 16, title: "Loading Entire Datasets to Memory", severity: "high", category: "Performance", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "No pagination, trying to load 1 million rows into memory", impact: "Out of memory errors, crashes, unusable app", fix: "Implement pagination, streaming, lazy loading, use database queries", tags: ["performance", "memory", "scalability"]},
+            {id: 17, title: "Memory Leaks", severity: "high", category: "Performance", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Event listeners, timers, subscriptions not cleaned up", impact: "App slows down over time, eventually crashes", fix: "Clean up in destructors/cleanup functions, unsubscribe, remove listeners", tags: ["performance", "memory", "leaks"]},
+            {id: 18, title: "Blocking Operations on UI Thread", severity: "high", category: "Performance", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Long-running tasks freezing the UI interface", impact: "Unresponsive UI, poor user experience, appears broken", fix: "Use async/await, web workers, background threads, or timeouts", tags: ["performance", "ui", "responsiveness"]},
+            {id: 19, title: "SQL Injection", severity: "high", category: "Security", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Concatenating user input into SQL queries", impact: "Database breach, data theft, deletion of all data", fix: "Use parameterized queries, prepared statements, ORM libraries", tags: ["security", "injection", "owasp"]},
+            {id: 20, title: "XSS Vulnerabilities", severity: "high", category: "Security", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Not escaping user input in templates or DOM", impact: "Script injection, session hijacking, credential theft", fix: "Escape all user input, use templating engines, use innerText not innerHTML", tags: ["security", "xss", "owasp"]},
+            {id: 21, title: "Secrets in Version Control", severity: "high", category: "Security", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Committing .env files, password files, API keys to Git", impact: "Credentials exposed in history forever, breach notification, legal liability", fix: "Add to .gitignore, use environment variables, rotate exposed secrets", tags: ["security", "secrets", "git"]},
+            {id: 22, title: "Poor Naming", severity: "medium", category: "Code Quality", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Variables called x, data, thing, temp, callback", impact: "Unmaintainable code, future dev can't understand intent", fix: "Use descriptive names that explain purpose, avoid abbreviations", tags: ["readability", "maintainability"]},
+            {id: 23, title: "Copy-Paste Code", severity: "medium", category: "Code Quality", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Same logic duplicated in 5 different places", impact: "Bug fixes need to happen in multiple places, inconsistencies", fix: "Extract into reusable function, use DRY principle, refactor", tags: ["duplication", "maintainability", "refactoring"]},
+            {id: 24, title: "Premature Optimization", severity: "medium", category: "Architecture", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Optimizing before identifying actual bottlenecks", impact: "Wasted time on irrelevant optimizations, unreadable code", fix: "Write clear code first, profile to find actual bottlenecks, then optimize", tags: ["performance", "optimization", "profiling"]},
+            {id: 25, title: "Over-Engineering", severity: "medium", category: "Architecture", tech: ["javascript", "rust", "go", "python", "all"], level: ["mid"], description: "Adding Docker, K8s, microservices to a simple CRUD app", impact: "Unnecessary complexity, hard to maintain, over-built", fix: "Start simple, add complexity only when needed, YAGNI principle", tags: ["architecture", "complexity", "yagni"]},
+            {id: 26, title: "Too Many Dependencies", severity: "medium", category: "Dependencies", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "500 npm packages for simple functionality", impact: "Bloated app, security vulnerabilities, maintenance burden", fix: "Evaluate each dependency, use minimal deps, prefer stdlib", tags: ["dependencies", "bloat", "security"]},
+            {id: 27, title: "Outdated Dependencies", severity: "medium", category: "Dependencies", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Known security vulnerabilities in packages", impact: "Security breaches, exploits, compliance violations", fix: "Regular audits (npm audit), automated dependency updates, security scanning", tags: ["dependencies", "security", "maintenance"]},
+            {id: 28, title: "No Code Review", severity: "medium", category: "Process", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Committing directly to main, no peer review", impact: "Bad code ships, bugs go undetected, no knowledge sharing", fix: "Require pull requests, code review, senior engineer approval", tags: ["process", "quality", "collaboration"]},
+            {id: 29, title: "Vague Commit Messages", severity: "medium", category: "Process", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior"], description: "Commits like 'fixed stuff', 'updates', 'changed things'", impact: "History unreadable, impossible to understand changes, breaks bisect", fix: "Descriptive messages, explain what and why, use conventional commits", tags: ["git", "documentation", "collaboration"]},
+            {id: 30, title: "Global Mutable State", severity: "medium", category: "State Management", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Shared state across entire app that gets mutated", impact: "Race conditions, side effects, impossible to debug", fix: "Use immutability, encapsulation, pure functions, state management", tags: ["state", "concurrency", "testability"]},
+            {id: 31, title: "Insufficient Test Coverage", severity: "medium", category: "Testing", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Code coverage below 80%, critical paths untested", impact: "Regressions undetected, refactoring breaks things", fix: "Aim for >85% coverage, test critical paths, use coverage tools", tags: ["testing", "quality"]},
+            {id: 32, title: "Tests That Don't Test", severity: "medium", category: "Testing", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Tests written that always pass, no real assertions", impact: "False sense of security, bugs ship undetected", fix: "Write meaningful tests with real assertions, test failure cases", tags: ["testing", "quality"]},
+            {id: 33, title: "Race Conditions", severity: "medium", category: "Concurrency", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "Multiple async operations updating same state", impact: "Intermittent bugs, data corruption, impossible to reproduce", fix: "Use locks, atomic operations, proper synchronization, actor model", tags: ["concurrency", "async", "threading"]},
+            {id: 34, title: "Not Reading Documentation", severity: "low", category: "Learning", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Googling StackOverflow before checking official docs", impact: "Misunderstanding APIs, using deprecated features, poor solutions", fix: "Read docs first, understand context, then search for specific problems", tags: ["learning", "knowledge"]},
+            {id: 35, title: "Not Asking for Help", severity: "low", category: "Learning", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie", "junior"], description: "Struggling for hours instead of asking senior developer", impact: "Wasted time, blocked on simple issues, frustration", fix: "Ask questions, pair program, code review, mentor relationships", tags: ["learning", "collaboration"]},
+            {id: 36, title: "Missing Error Messages", severity: "low", category: "Debugging", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior"], description: "Errors with no context (bare 'Error' or numeric codes)", impact: "Hard to debug, time wasted figuring out what happened", fix: "Provide descriptive error messages, include context, use error types", tags: ["debugging", "logging"]},
+            {id: 37, title: "Magic Numbers", severity: "low", category: "Code Quality", tech: ["javascript", "rust", "go", "python", "all"], level: ["rookie"], description: "Hard-coded values like 42, 1000, 3600 with no context", impact: "Unmaintainable, unknown purpose, hard to adjust", fix: "Use named constants, explain purpose, document intent", tags: ["readability", "maintainability"]},
+            {id: 38, title: "Huge Commits", severity: "low", category: "Process", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior"], description: "Mixing refactoring, features, and bug fixes in one commit", impact: "Unreadable history, hard to review, breaks bisect", fix: "Small focused commits, one concern per commit, atomic changes", tags: ["git", "process"]},
+            {id: 39, title: "No Logging/Monitoring", severity: "low", category: "Operations", tech: ["javascript", "rust", "go", "python", "all"], level: ["junior", "mid"], description: "No idea what's happening in production", impact: "Can't debug production issues, blind to problems", fix: "Add structured logging, APM, metrics, alerts, dashboards", tags: ["operations", "observability"]},
+            {id: 40, title: "Ignoring Technical Debt", severity: "low", category: "Architecture", tech: ["javascript", "rust", "go", "python", "all"], level: ["mid"], description: "Piling features on unstable foundation, never refactoring", impact: "Velocity slows down, hard to add features, code becomes brittle", fix: "Schedule refactoring, pay down debt incrementally, track tech debt", tags: ["architecture", "maintainability"]}
+        ];
+
+        // Render footguns to DOM
+        function renderFootguns(filtered = footguns) {
+            const containerGrid = getElement(CONFIG.elements.grid);
+            if (!containerGrid) return;
+
+            containerGrid.innerHTML = '';
+
+            filtered.forEach(footgun => {
+                const cardElement = document.createElement('div');
+                cardElement.className = `footgun-card ${footgun.severity}`;
+                cardElement.innerHTML = `
+                    <span class="severity-badge ${footgun.severity}">${footgun.severity.toUpperCase()}</span>
+                    <div class="footgun-title">❌ ${footgun.title}</div>
+                    <div class="footgun-description">${footgun.description}</div>
+                    <div class="footgun-impact"><strong>Impact:</strong> ${footgun.impact}</div>
+                    <div class="footgun-fix">
+                        <div class="fix-label">✅ Fix:</div>
+                        ${footgun.fix}
+                    </div>
+                    <div class="tags">
+                        ${footgun.tags.map(tag => `<span class="tag">#${tag}</span>`).join('')}
+                    </div>
+                `;
+                containerGrid.appendChild(cardElement);
+            });
+
+            updateStats(filtered);
+        }
+
+        // Populate category filter once
+        function populateCategoryFilter() {
+            try {
+                const categories = [...new Set(footguns.map(f => f.category))].sort();
+                const selectElement = getElement(CONFIG.elements.categoryFilter);
+                if (!selectElement) return;
+
+                categories.forEach(category => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = normalizeCategoryValue(category);
+                    optionElement.textContent = category;
+                    selectElement.appendChild(optionElement);
+                });
+            } catch (error) {
+                console.error('Error populating category filter:', error);
+                showError('Failed to load categories');
+            }
+        }
+
+        // Apply all filters
+        function applyFilters() {
+            try {
+                let filtered = footguns;
+                
+                const severity = getFilterValue(CONFIG.elements.severityFilter);
+                const category = getFilterValue(CONFIG.elements.categoryFilter);
+                const tech = getFilterValue(CONFIG.elements.techFilter);
+                const level = getFilterValue(CONFIG.elements.levelFilter);
+                const search = sanitizeSearchInput(getFilterValue(CONFIG.elements.searchInput));
+
+                if (severity) {
+                    filtered = filtered.filter(f => f.severity === severity);
+                }
+                if (category) {
+                    filtered = filtered.filter(f => normalizeCategoryValue(f.category) === category);
+                }
+                if (tech) {
+                    filtered = filtered.filter(f => f.tech.includes(tech));
+                }
+                if (level) {
+                    filtered = filtered.filter(f => f.level.includes(level));
+                }
+                if (search) {
+                    filtered = filtered.filter(f => 
+                        f.title.toLowerCase().includes(search) || 
+                        f.description.toLowerCase().includes(search) ||
+                        f.fix.toLowerCase().includes(search)
+                    );
+                }
+
+                renderFootguns(filtered);
+            } catch (error) {
+                console.error('Error applying filters:', error);
+                showError('Failed to apply filters');
+            }
+        }
+
+        // Update all stats at once
+        function updateStats(filtered = footguns) {
+            try {
+                const totalElement = getElement(CONFIG.elements.stats.total);
+                const criticalElement = getElement(CONFIG.elements.stats.critical);
+                const searchElement = getElement(CONFIG.elements.stats.search);
+
+                if (totalElement) totalElement.textContent = footguns.length;
+                if (criticalElement) criticalElement.textContent = footguns.filter(f => f.severity === 'critical').length;
+                if (searchElement) searchElement.textContent = filtered.length;
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        // Reset all filters
+        function resetFilters() {
+            try {
+                const filterElements = [
+                    CONFIG.elements.severityFilter,
+                    CONFIG.elements.categoryFilter,
+                    CONFIG.elements.techFilter,
+                    CONFIG.elements.levelFilter,
+                    CONFIG.elements.searchInput
+                ];
+
+                filterElements.forEach(elementId => {
+                    const element = getElement(elementId);
+                    if (element) element.value = '';
+                });
+
+                applyFilters();
+            } catch (error) {
+                console.error('Error resetting filters:', error);
+                showError('Failed to reset filters');
+            }
+        }
+
+        // Initialize app with error handling
+        function initialize() {
+            try {
+                populateCategoryFilter();
+                
+                // Attach event listeners
+                const filterElements = [
+                    CONFIG.elements.severityFilter,
+                    CONFIG.elements.categoryFilter,
+                    CONFIG.elements.techFilter,
+                    CONFIG.elements.levelFilter,
+                    CONFIG.elements.searchInput
+                ];
+
+                filterElements.forEach(elementId => {
+                    const element = getElement(elementId);
+                    if (element) {
+                        const eventType = elementId === CONFIG.elements.searchInput ? 'input' : 'change';
+                        element.addEventListener(eventType, applyFilters);
+                    }
+                });
+
+                const resetButton = getElement(CONFIG.elements.resetButton);
+                if (resetButton) {
+                    resetButton.addEventListener('click', resetFilters);
+                }
+
+                updateStats();
+                renderFootguns();
+            } catch (error) {
+                console.error('Initialization error:', error);
+                showError('Failed to initialize application');
+            }
+        }
+
+        // Start when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initialize);
+        } else {
+            initialize();
+        }
+    </script>
+</body>
+</html>
