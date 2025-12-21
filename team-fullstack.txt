@@ -97,7 +97,7 @@
 - Dependency audit (monthly)
 
 ### Tech Debt Protocol
-1. Log all tech debt in `docs/agent-learnings.md`
+1. Log all tech debt in `.agent-ops/AGENT_LEARNINGS.md`
 2. Tag severity: 🔴 CRITICAL | 🟡 HIGH | 🟢 LOW
 3. Attach ROI estimate for fix
 4. Schedule in sprints (don't let it accumulate)
@@ -119,7 +119,7 @@
 ### Ox (Build & Implementation)
 - `serena` - cross-module dependency & contract verification
 - `rustc` / `cargo` - Rust compilation
-- `trunk` - Leptos WASM build & serve
+- `trunk` - Frontend WASM build & serve
 - `cargo-watch` - hot reloading
 - `rustfmt` - Rust formatting
 
@@ -280,13 +280,13 @@ All agents enforce:
 
 **ALL AGENTS MUST UPDATE THESE FILES:**
 
-1. **`docs/agent-ops-board.md`** - Update at:
+1. **`.agent-ops/AGENT_OPS_BOARD.md`** - Update at:
    - Start of task: Update "Current Task" and status to 🔨 Working
    - Handoff: Add to "Pending Handoffs"
    - Completion: Move to "Completed This Sprint", set status to ✅ Done
    - Blocked: Update "Blocked On" column
 
-2. **`docs/agent-learnings.md`** - Update when:
+2. **`.agent-ops/AGENT_LEARNINGS.md`** - Update when:
    - Architecture decisions are made
    - Patterns that worked are discovered
    - Anti-patterns are identified
