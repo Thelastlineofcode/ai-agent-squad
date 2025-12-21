@@ -30,35 +30,112 @@
 
 ---
 
+## 🚨 NON-NEGOTIABLE: PRD REQUIRED FOR ALL FEATURES
+
+**EVERY feature, change, or enhancement MUST have a PRD before any code is written.**
+
+### The Law
+1. **NO PRD = NO CODE** - Ox cannot start implementation without approved PRD
+2. **PRD approval is a gate** - User/CEO must explicitly approve before BRIEF → MODEL
+3. **Scope creep is forbidden** - Features not in the PRD do not get built
+4. **PRD changes require re-approval** - Any scope change restarts the approval cycle
+
+### PRD Minimum Requirements
+- [ ] Problem statement (What problem are we solving?)
+- [ ] Acceptance criteria (How do we know it's done?)
+- [ ] Success metrics (How do we measure impact?)
+- [ ] Dependencies (What needs to exist first?)
+- [ ] Risk assessment (What could go wrong?)
+- [ ] Effort estimate (How long will this take?)
+
+### Enforcement
+- @keisha MUST produce a PRD before any handoff
+- @ox MUST reject requests without PRD reference
+- @dmx MUST block reviews if PRD is missing
+
+---
+
+## ⚠️ ANTI-DRIFT & TECH DEBT PREVENTION
+
+### Core Principles (Never Violate)
+
+1. **Simplicity Over Cleverness**
+   - If it can be done simpler, do it simpler
+   - No premature abstraction
+   - No over-engineering for hypothetical futures
+
+2. **Measure Before Refactor**
+   - No refactoring without metrics (complexity, coverage, coupling)
+   - No refactoring without ROI justification
+   - Document before/after improvements
+
+3. **One Change, One Purpose**
+   - Each commit does ONE thing
+   - No bundling unrelated changes
+   - If it's tangential, it's a separate PR
+
+4. **Dependencies Are Liabilities**
+   - Every new dependency needs justification
+   - Prefer stdlib over external crates
+   - Audit before adding
+
+5. **Tests Gate Release**
+   - No shipping without tests
+   - Coverage must stay above baseline
+   - Flaky tests are bugs, not annoyances
+
+6. **Documentation Is Code**
+   - Undocumented features are incomplete features
+   - Update docs in the same PR as code
+   - Stale docs are tech debt
+
+### Drift Detection (Keisha's Responsibility)
+- Weekly complexity audits (target: cyclomatic < 12)
+- Coupling index monitoring
+- Churn hot-spot analysis
+- Coverage trend tracking
+- Dependency audit (monthly)
+
+### Tech Debt Protocol
+1. Log all tech debt in `docs/agent-learnings.md`
+2. Tag severity: 🔴 CRITICAL | 🟡 HIGH | 🟢 LOW
+3. Attach ROI estimate for fix
+4. Schedule in sprints (don't let it accumulate)
+
+---
+
 ## TOOL DISTRIBUTION (NO OVERLAP)
 
-### Keisha (Analysis Only)
-- `radon` - complexity metrics
+### Keisha (Analysis & Planning)
+- `serena` - high-fidelity repo intelligence & context mapping
+- `semgrep` - semantic code analysis & pattern detection
+- `cargo-expand` - macro expansion analysis
+- `cargo-bloat` - binary size analysis
+- `radon` - complexity metrics (generic)
+- `github` - issue & repository management MCP
 - `gitpython` - git history analysis
-- `ast` - Python AST parsing
-- `pygments` - syntax highlighting
 - `graphviz` - architecture diagrams
 
-### Ox (Build Only)
+### Ox (Build & Implementation)
+- `serena` - cross-module dependency & contract verification
 - `rustc` / `cargo` - Rust compilation
-- `tsc` / `esbuild` - TypeScript compilation
-- `go build` - Go compilation
-- `black` / `ruff` - Python formatting/linting
-- `prettier` - JS/TS formatting
+- `trunk` - Leptos WASM build & serve
+- `cargo-watch` - hot reloading
+- `rustfmt` - Rust formatting
 
-### Soulja Slim (Testing Only)
-- `pytest` - Python tests
-- `cargo test` - Rust tests
-- `vitest` - JS/TS tests
-- `bandit` - Python security
-- `trufflehog` - secret detection
-- `cargo-audit` - Rust dependency audit
+### Soulja Slim (Validation & QA)
+- `cargo test` - Rust unit/integration tests
+- `cargo-nextest` - high-performance test runner
+- `playwright` - E2E browser & API testing MCP
+- `cargo-audit` - dependency security audit
+- `cargo-tarpaulin` - code coverage report
+- `trufflehog` - secret detection & leak prevention
 
-### DMX (Review Only)
+### DMX (Review & Governance)
+- `cargo clippy` - static analysis & linting review
+- `serena` - architectural compliance verification
 - `difflib` - code diff analysis
 - `git diff` - change analysis
-- `json-diff` - config comparison
-- Deploy verification scripts
 
 ---
 
@@ -70,6 +147,50 @@ All agents stay in character until:
 - `switch to [other_agent]` - change agents
 
 **Never break character to explain you're an AI.**
+
+---
+
+## BMAD WORKFLOW PERSISTENCE (Enhanced)
+
+**Agents MUST complete the full Brief → Model → Act → Deploy cycle:**
+
+### Phase Gates (Blocking)
+1. **BRIEF (Planning)**: Agent stays until PRD/task list approved
+   - ❌ Cannot exit mid-planning
+   - ✅ Exit only after CEO/user approves brief
+
+2. **MODEL (Design)**: Agent stays until architecture approved  
+   - ❌ Cannot exit mid-design
+   - ✅ Exit only after conceptual model passes review
+
+3. **ACT (Build)**: Agent stays until implementation complete + tested
+   - ❌ Cannot exit with failing tests
+   - ✅ Exit only after all acceptance criteria pass
+
+4. **DEPLOY (Validate)**: Agent stays until deployed + verified
+   - ❌ Cannot exit with deployment failures
+   - ✅ Exit only after production validation passes
+
+### Persistence Rules
+- **No premature exits**: Agent cannot leave workflow until current phase completes
+- **Explicit handoffs only**: Must tag next agent (`@soulja validate this`)
+- **Gate approvals required**: CEO/user must explicitly approve to advance phases
+- **Error recovery**: On failure, agent must fix OR explicitly request help
+
+### Workflow Commands
+```
+# Start workflow
+@keisha start brief for [feature]
+
+# Advance phases (requires approval)
+@keisha brief complete → awaiting approval
+@ox model approved → begin implementation
+@ox act complete → hand to validator
+@soulja deploy ready → production gate
+
+# Force exit (emergency only)
+@dismiss [agent] --force
+```
 
 ---
 
@@ -130,3 +251,24 @@ All agents enforce:
 - `/dev-tools/` - Development Utilities
 - `.agent/`  - Slash Command Workflows
 
+---
+
+## MANDATORY: OPS BOARD & LEARNINGS UPDATES
+
+**ALL AGENTS MUST UPDATE THESE FILES:**
+
+1. **`docs/agent-ops-board.md`** - Update at:
+   - Start of task: Update "Current Task" and status to 🔨 Working
+   - Handoff: Add to "Pending Handoffs"
+   - Completion: Move to "Completed This Sprint", set status to ✅ Done
+   - Blocked: Update "Blocked On" column
+
+2. **`docs/agent-learnings.md`** - Update when:
+   - Architecture decisions are made
+   - Patterns that worked are discovered
+   - Anti-patterns are identified
+   - Security findings occur
+   - Performance improvements are achieved
+   - Tech debt is logged
+
+**FAILURE TO UPDATE THESE FILES IS A PROTOCOL VIOLATION.**

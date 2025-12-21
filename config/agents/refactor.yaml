@@ -1,0 +1,136 @@
+# Refactor Workflow
+# Julep Workflow Definition
+
+name: refactor
+description: |
+  Refactor code for improved quality with ROI justification.
+  Ensures no behavior regressions.
+
+version: "1.0"
+triggers:
+  - "/refactor"
+  - "@ox refactor"
+
+state:
+  target_code: ""
+  refactor_type: ""  # complexity | coupling | testability | readability
+  metrics_before: {}
+  metrics_after: {}
+  behavior_unchanged: false
+
+steps:
+  - id: analyze_target
+    agent: keisha
+    action: |
+      Analyze refactoring target: {{ target_code }}
+      
+      Capture BEFORE metrics:
+      - Cyclomatic complexity
+      - Lines of code
+      - Coupling index
+      - Test coverage
+      - Nesting depth
+      
+      Identify refactoring opportunities:
+      - Extract functions
+      - Reduce nesting
+      - Improve naming
+      - Add abstractions
+      - Remove duplication
+    update_state:
+      metrics_before: "{{ captured_metrics }}"
+    on_complete: propose_refactor
+    
+  - id: propose_refactor
+    agent: keisha
+    action: |
+      Propose refactoring plan.
+      
+      Current metrics: {{ state.metrics_before }}
+      
+      Proposed changes:
+      1. [Change] - [Expected improvement]
+      2. ...
+      
+      ROI Justification:
+      - Effort: [estimate]
+      - Payoff: [benefit]
+      - Risk: [LOW/MEDIUM/HIGH]
+      
+      Success criteria:
+      - Complexity reduced from X to Y
+      - No behavior changes
+    on_complete: await_approval
+    
+  - id: await_approval
+    type: human_input
+    prompt: |
+      Refactoring plan ready for {{ state.target_code }}.
+      
+      Reply:
+      - "approved" to proceed
+      - "changes: [feedback]" for modifications
+    on_approved:
+      next: execute_refactor
+    on_changes:
+      next: propose_refactor
+      
+  - id: execute_refactor
+    agent: ox
+    action: |
+      Execute refactoring:
+      
+      1. Apply changes incrementally
+      2. Run tests after each change
+      3. Capture AFTER metrics
+      4. Verify behavior unchanged
+      
+      Keep changes reversible.
+    update_state:
+      metrics_after: "{{ captured_metrics }}"
+    on_complete: validate_refactor
+    
+  - id: validate_refactor
+    agent: soulja
+    action: |
+      Validate refactoring:
+      
+      1. All tests pass
+      2. No behavior regressions
+      3. Metrics improved:
+         - Before: {{ state.metrics_before }}
+         - After: {{ state.metrics_after }}
+      4. No new complexity introduced
+    on_pass:
+      update_state:
+        behavior_unchanged: true
+      next: review_refactor
+    on_fail:
+      next: execute_refactor
+      
+  - id: review_refactor
+    agent: dmx
+    condition: "state.behavior_unchanged == true"
+    action: |
+      Review refactoring:
+      
+      Before: {{ state.metrics_before }}
+      After: {{ state.metrics_after }}
+      
+      Verify:
+      - Improvement achieved
+      - No new issues
+      - Consistent with patterns
+    on_approved:
+      next: complete_refactor
+    on_changes:
+      next: execute_refactor
+      
+  - id: complete_refactor
+    type: notification
+    message: |
+      ✅ Refactor Complete: {{ state.target_code }}
+      
+      Before: {{ state.metrics_before }}
+      After: {{ state.metrics_after }}
+      Behavior Unchanged: {{ state.behavior_unchanged }}

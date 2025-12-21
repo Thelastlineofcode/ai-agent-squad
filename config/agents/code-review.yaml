@@ -1,0 +1,131 @@
+# Code Review Workflow
+# Julep Workflow Definition
+
+name: code-review
+description: |
+  Comprehensive code review with quality checks using DMX.
+  Presents issues as diffs with severity ratings.
+
+version: "1.0"
+triggers:
+  - "@dmx review"
+  - "/code-review"
+
+state:
+  code_target: ""
+  issues_found: []
+  verdict: ""  # APPROVED | BLOCKED | APPROVED_WITH_WARNINGS
+  human_decisions_needed: []
+
+# Review categories
+categories:
+  - duplicate
+  - dead_code
+  - type_safety
+  - footgun
+  - bloat
+  - complexity
+  - consistency
+  - security
+
+steps:
+  - id: start_review
+    agent: dmx
+    action: |
+      Review code: {{ code_target }}
+      
+      ## Architecture & Design
+      - Architecture is sound and scalable
+      - Patterns consistent with team standards
+      - Dependencies are appropriate
+      - Will handle 10x load without rewrite
+      
+      ## Code Quality
+      - Duplicate code: No unnecessary repetition
+      - Dead code: No unreachable or unused code
+      - Type safety: Properly typed, no implicit `any`
+      - Gotchas/Footguns: No rookie mistakes or traps
+      - Bloat: No unnecessary comments or code
+      - Complexity: Logic as simple as possible
+      - Consistency: Patterns uniform
+      
+      ## Security
+      - No hardcoded secrets
+      - Input validation present
+      - No SQL injection risks
+      - No XSS vulnerabilities
+      
+      ## Maintainability
+      - Junior engineer can understand in 6 months
+      - Functions < 30 lines
+      - Complexity < 12
+      - Documentation complete
+      
+      Present issues as diffs with severity.
+    update_state:
+      issues_found: "{{ captured_issues }}"
+    on_complete: present_issues
+    
+  - id: present_issues
+    type: output
+    format: |
+      ## Code Review Results
+      
+      {% for issue in state.issues_found %}
+      ### Issue {{ loop.index }}: {{ issue.description }}
+      - **Severity**: {{ issue.severity }}
+      - **Category**: {{ issue.category }}
+      - **Decision**: {{ issue.decision_type }}
+      
+      ```diff
+      - {{ issue.current_code }}
+      + {{ issue.suggested_fix }}
+      ```
+      {% endfor %}
+    next: await_decisions
+    
+  - id: await_decisions
+    type: human_input
+    condition: "state.human_decisions_needed | length > 0"
+    prompt: |
+      Difficult decisions requiring your input:
+      
+      {% for decision in state.human_decisions_needed %}
+      {{ loop.index }}. {{ decision.description }}
+         Options: {{ decision.options }}
+      {% endfor %}
+      
+      Reply with decisions for each numbered item.
+    on_response:
+      next: apply_decisions
+      
+  - id: apply_decisions
+    agent: dmx
+    action: |
+      Apply human decisions: {{ decisions }}
+      
+      Update review based on input.
+    next: final_verdict
+    
+  - id: final_verdict
+    agent: dmx
+    action: |
+      Final verdict for {{ code_target }}:
+      
+      Issues: {{ state.issues_found | length }}
+      - MUST FIX: {{ state.issues_found | selectattr('severity', 'eq', 'HIGH') | list | length }}
+      - SHOULD FIX: {{ state.issues_found | selectattr('severity', 'eq', 'MEDIUM') | list | length }}
+      - CONSIDER: {{ state.issues_found | selectattr('severity', 'eq', 'LOW') | list | length }}
+      
+      Verdict: ✅ APPROVED | ❌ BLOCKED | ⚠️ APPROVED WITH WARNINGS
+    update_state:
+      verdict: "{{ determined_verdict }}"
+    on_complete: complete_review
+    
+  - id: complete_review
+    type: notification
+    message: |
+      Code Review Complete: {{ state.code_target }}
+      
+      Verdict: {{ state.verdict }}
+      Issues Found: {{ state.issues_found | length }}

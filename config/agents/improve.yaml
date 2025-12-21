@@ -1,0 +1,152 @@
+# Improve Workflow
+# Julep Workflow Definition
+# Refine, harden, and optimize without adding features
+
+name: improve
+description: |
+  Improve the product and codebase without adding new features.
+  Focus on quality, DX, performance, and stability.
+
+version: "1.0"
+triggers:
+  - "/improve"
+  - "@keisha improve"
+
+state:
+  target_area: ""
+  improvement_type: ""  # dx | stability | performance | security
+  metrics_before: {}
+  metrics_after: {}
+  refinement_plan_approved: false
+  validation_passed: false
+
+# Improvement principles embedded
+principles:
+  simplify: "If it can be done with less code/text, do it"
+  harden: "Make it harder to break or misuse"
+  clarify: "Make it easier for others (and AI) to understand"
+  trim: "Remove what doesn't add value"
+
+steps:
+  - id: audit_for_refinement
+    agent: keisha
+    action: |
+      Audit the codebase specifically for refinement targets:
+      
+      1. Dead code / bloat
+      2. Overly complex logic (complexity > 8)
+      3. Inconsistent patterns
+      4. Document/prompt quality gaps
+      
+      Categorize by improvement type:
+      - DX: paths, error messages
+      - Stability: guardrails, hardening
+      - Performance: optimization opportunities
+      - Security: vulnerability patterns
+      
+      Capture BEFORE metrics.
+    update_state:
+      metrics_before: "{{ captured_metrics }}"
+    on_complete: brainstorm_improvements
+    
+  - id: brainstorm_improvements
+    agent: keisha
+    action: |
+      Brainstorm non-feature improvements for {{ target_area }}.
+      
+      Focus areas:
+      - DX: Standardizing paths, better error messages
+      - Stability: Hardening prompts, guardrails
+      - Performance: Optimizing tool snippets, reducing tokens
+      - Security: Hardening definitions
+      
+      MUST NOT add new features.
+      MUST show measurable improvement potential.
+    on_complete: create_refinement_plan
+    
+  - id: create_refinement_plan
+    agent: keisha
+    action: |
+      Create refinement plan for {{ target_area }}.
+      
+      Requirements:
+      - NO new features
+      - Measurable improvement (e.g., complexity X → Y)
+      - Clear impact on DX or Stability
+      - Before/after metrics defined
+    on_complete: await_plan_approval
+    
+  - id: await_plan_approval
+    type: human_input
+    prompt: |
+      Refinement plan ready.
+      
+      Review and reply:
+      - "approved" to proceed
+      - "changes: [feedback]" for revisions
+    on_approved:
+      update_state:
+        refinement_plan_approved: true
+      next: execute_refinement
+    on_changes:
+      next: create_refinement_plan
+      
+  - id: execute_refinement
+    agent: ox
+    condition: "state.refinement_plan_approved == true"
+    action: |
+      Execute the refinement plan.
+      
+      1. Refactor the code/docs
+      2. Capture AFTER metrics
+      3. Ensure no behavior regressions
+      4. Provide before/after evidence
+    update_state:
+      metrics_after: "{{ captured_metrics }}"
+    on_complete: validate_refinement
+    
+  - id: validate_refinement
+    agent: soulja
+    action: |
+      Validate refinement:
+      
+      1. No regression in existing functionality
+      2. Improvement in security/performance/stability
+      3. All validation layers pass
+      
+      Compare:
+      - Before: {{ state.metrics_before }}
+      - After: {{ state.metrics_after }}
+    on_pass:
+      update_state:
+        validation_passed: true
+      next: review_refinement
+    on_fail:
+      next: execute_refinement
+      
+  - id: review_refinement
+    agent: dmx
+    condition: "state.validation_passed == true"
+    action: |
+      Final review of refinement.
+      
+      Verify:
+      1. Changes didn't introduce complexity
+      2. Consistency maintained
+      3. Measurable improvement achieved
+      
+      Metrics delta:
+      {{ state.metrics_after - state.metrics_before }}
+    on_approved:
+      next: complete_improvement
+    on_changes:
+      next: execute_refinement
+      
+  - id: complete_improvement
+    type: notification
+    message: |
+      ✅ Improvement complete for {{ target_area }}!
+      
+      Type: {{ state.improvement_type }}
+      Metrics Before: {{ state.metrics_before }}
+      Metrics After: {{ state.metrics_after }}

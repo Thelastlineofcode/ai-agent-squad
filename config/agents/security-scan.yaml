@@ -1,0 +1,141 @@
+# Security Scan Workflow
+# Julep Workflow Definition
+
+name: security-scan
+description: |
+  Comprehensive security scan using Soulja's security tools.
+  7-layer validation with focus on security aspects.
+
+version: "1.0"
+triggers:
+  - "@soulja security scan"
+  - "@tester run security scan"
+  - "/security-scan"
+
+state:
+  target_path: ""
+  vulnerabilities: []
+  secrets_found: []
+  dependency_issues: []
+  scan_complete: false
+  severity_counts:
+    critical: 0
+    high: 0
+    medium: 0
+    low: 0
+
+# Security standards (December 2025)
+standards:
+  - no_dangerous_set_inner_html: true
+  - csp_headers_required: true
+  - parameterized_queries_only: true
+  - input_validation_everywhere: true
+  - output_encoding_for_xss: true
+  - no_hardcoded_secrets: true
+  - dependency_scanning: true
+  - no_deprecated_crypto: true  # MD5, SHA1
+  - rate_limiting_on_apis: true
+  - proper_error_handling: true
+
+steps:
+  - id: secret_detection
+    agent: soulja
+    action: |
+      Run secret detection on {{ target_path }} using trufflehog.
+      
+      Look for:
+      - API keys
+      - Credentials
+      - Private keys
+      - Tokens
+      - Connection strings
+      
+      Report with file:line locations.
+    update_state:
+      secrets_found: "{{ detected_secrets }}"
+    on_complete: dependency_audit
+    
+  - id: dependency_audit
+    agent: soulja
+    action: |
+      Run dependency audit on {{ target_path }}.
+      
+      Tools:
+      - cargo-audit for Rust
+      - npm audit for JS/TS
+      - pip-audit for Python
+      
+      Report vulnerable dependencies with CVE IDs.
+    update_state:
+      dependency_issues: "{{ audit_results }}"
+    on_complete: static_analysis
+    
+  - id: static_analysis
+    agent: soulja
+    action: |
+      Run static security analysis on {{ target_path }}.
+      
+      Check for:
+      - SQL injection patterns
+      - XSS vulnerabilities
+      - Command injection
+      - Path traversal
+      - Insecure deserialization
+      - IDOR (Insecure Direct Object References)
+      
+      Use semgrep/bandit as applicable.
+    update_state:
+      vulnerabilities: "{{ static_findings }}"
+    on_complete: input_validation_check
+    
+  - id: input_validation_check
+    agent: soulja
+    action: |
+      Check input validation patterns.
+      
+      Verify:
+      - All API endpoints validate input
+      - No raw user input in SQL/commands
+      - Output encoding for HTML contexts
+      - Rate limiting in place
+      
+      Flag missing validation.
+    on_complete: generate_report
+    
+  - id: generate_report
+    agent: soulja
+    action: |
+      Generate security scan report.
+      
+      ## Security Scan Report: {{ target_path }}
+      
+      ### Summary
+      - Critical: {{ state.severity_counts.critical }}
+      - High: {{ state.severity_counts.high }}
+      - Medium: {{ state.severity_counts.medium }}
+      - Low: {{ state.severity_counts.low }}
+      
+      ### Secrets Detected
+      {{ state.secrets_found }}
+      
+      ### Dependency Vulnerabilities
+      {{ state.dependency_issues }}
+      
+      ### Static Analysis Findings
+      {{ state.vulnerabilities }}
+      
+      ### Verdict
+      {{ "🔴 BLOCKED" if state.severity_counts.critical > 0 else "🟡 WARNINGS" if state.severity_counts.high > 0 else "🟢 PASS" }}
+    update_state:
+      scan_complete: true
+    on_complete: complete_scan
+    
+  - id: complete_scan
+    type: notification
+    message: |
+      Security Scan Complete: {{ state.target_path }}
+      
+      Critical: {{ state.severity_counts.critical }}
+      High: {{ state.severity_counts.high }}
+      Medium: {{ state.severity_counts.medium }}
+      Low: {{ state.severity_counts.low }}

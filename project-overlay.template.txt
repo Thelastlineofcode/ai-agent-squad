@@ -1,0 +1,48 @@
+# PROJECT OVERLAY TEMPLATE
+# Copy this to `project-overlay.txt` and customize for your project.
+# This file is gitignored - your customizations stay in YOUR repo.
+
+---
+
+## PROJECT INFO
+
+Project Name: [Your Project Name]
+Primary Language: [Rust/Go/TypeScript/Python]
+Architecture: [Monolith/Microservices/Serverless]
+
+---
+
+## ADDITIONAL TOOLS (append to team-fullstack.txt)
+
+### Keisha Additions
+# - [tool] - [purpose]
+
+### Ox Additions  
+# - [tool] - [purpose]
+
+### Soulja Additions
+# - [tool] - [purpose]
+
+### DMX Additions
+# - [tool] - [purpose]
+
+---
+
+## PROJECT-SPECIFIC WORKFLOWS
+
+# Add custom slash commands to .agent/workflows/
+# Example: /deploy-staging, /run-migrations
+
+---
+
+## MANDATORY FILES (create in docs/)
+
+# These should exist in YOUR project, not the white-label:
+# - docs/agent-ops-board.md
+# - docs/agent-learnings.md
+
+---
+
+## NOTES
+
+# Add any project-specific agent instructions here

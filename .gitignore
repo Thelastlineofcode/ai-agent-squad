@@ -24,3 +24,14 @@ __pycache__/
 # Logs
 *.log
 logs/
+
+# Project-specific (keep in target project, not white-label)
+docs/agent-ops-board.md
+docs/agent-learnings.md
+project-overlay.txt
+.gemini/
+
+# Never commit API keys or secrets
+*.pem
+*.key
+secrets/

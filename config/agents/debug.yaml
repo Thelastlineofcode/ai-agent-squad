@@ -1,0 +1,135 @@
+# Debug Workflow
+# Julep Workflow Definition
+
+name: debug
+description: |
+  Debug an issue with root cause analysis.
+  Systematic approach to finding and fixing bugs.
+
+version: "1.0"
+triggers:
+  - "/debug"
+  - "@keisha debug"
+
+state:
+  issue_description: ""
+  symptoms: []
+  hypotheses: []
+  root_cause: ""
+  fix_applied: false
+  regression_test_added: false
+
+steps:
+  - id: gather_symptoms
+    agent: keisha
+    action: |
+      Debug issue: {{ issue_description }}
+      
+      Gather symptoms:
+      1. What is the expected behavior?
+      2. What is the actual behavior?
+      3. When did it start?
+      4. What changed recently?
+      5. Can it be reproduced?
+      6. Error messages/stack traces?
+    update_state:
+      symptoms: "{{ gathered_symptoms }}"
+    on_complete: form_hypotheses
+    
+  - id: form_hypotheses
+    agent: keisha
+    action: |
+      Based on symptoms, form hypotheses:
+      
+      Symptoms: {{ state.symptoms }}
+      
+      Rank hypotheses by probability:
+      1. [Hypothesis] - [Probability] - [Test to verify]
+      2. ...
+      
+      Identify files/modules likely involved.
+    update_state:
+      hypotheses: "{{ formed_hypotheses }}"
+    on_complete: investigate
+    
+  - id: investigate
+    agent: ox
+    action: |
+      Investigate hypotheses in order:
+      
+      {{ state.hypotheses }}
+      
+      For each:
+      1. Add logging/debugging
+      2. Run test case
+      3. Confirm or eliminate hypothesis
+      
+      Report findings.
+    on_found:
+      update_state:
+        root_cause: "{{ confirmed_cause }}"
+      next: propose_fix
+    on_not_found:
+      next: form_hypotheses
+      
+  - id: propose_fix
+    agent: ox
+    condition: "state.root_cause != ''"
+    action: |
+      Root cause identified: {{ state.root_cause }}
+      
+      Propose fix:
+      1. Show the fix as a diff
+      2. Explain why it works
+      3. Identify potential side effects
+      4. Suggest regression test
+    on_complete: await_fix_approval
+    
+  - id: await_fix_approval
+    type: human_input
+    prompt: |
+      Fix proposed for: {{ state.issue_description }}
+      Root cause: {{ state.root_cause }}
+      
+      Reply:
+      - "apply" to apply the fix
+      - "changes: [feedback]" for modifications
+    on_approved:
+      next: apply_fix
+    on_changes:
+      next: propose_fix
+      
+  - id: apply_fix
+    agent: ox
+    action: |
+      Apply the approved fix.
+      Add regression test to prevent recurrence.
+    update_state:
+      fix_applied: true
+    on_complete: validate_fix
+    
+  - id: validate_fix
+    agent: soulja
+    condition: "state.fix_applied == true"
+    action: |
+      Validate the fix:
+      
+      1. Original issue no longer reproduces
+      2. Regression test passes
+      3. No new issues introduced
+      4. All existing tests pass
+    on_pass:
+      update_state:
+        regression_test_added: true
+      next: complete_debug
+    on_fail:
+      next: investigate
+      
+  - id: complete_debug
+    type: notification
+    message: |
+      ✅ Debug Complete: {{ state.issue_description }}
+      
+      Root Cause: {{ state.root_cause }}
+      Fix Applied: {{ state.fix_applied }}
+      Regression Test: {{ state.regression_test_added }}

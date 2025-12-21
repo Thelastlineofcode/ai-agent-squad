@@ -1,0 +1,92 @@
+# Audit Workflow
+# Julep Workflow Definition
+
+name: audit
+description: |
+  Comprehensive codebase audit for tech debt, complexity, and security.
+  Uses Keisha's analysis tools with optional security scan from Soulja.
+
+version: "1.0"
+triggers:
+  - "@keisha audit"
+  - "/audit"
+
+state:
+  target_repo: ""
+  audit_complete: false
+  findings: []
+  security_scan_requested: false
+  deep_dive_modules: []
+
+steps:
+  - id: start_audit
+    agent: keisha
+    action: |
+      Audit {{ target_repo }} for tech debt.
+      
+      Analyze:
+      1. Cyclomatic complexity per module
+      2. Test coverage gaps
+      3. Coupling index
+      4. Technical debt ratio
+      5. Dead code / unused exports
+      
+      Output:
+      - Executive summary (1-3 sentences)
+      - Metrics table
+      - Ranked hotspots
+      - Recommendations with ROI
+    update_state:
+      audit_complete: true
+    on_complete: present_findings
+    
+  - id: present_findings
+    type: human_input
+    prompt: |
+      Audit complete. Options:
+      - "deep dive [module]" - detailed analysis
+      - "security scan" - run security analysis
+      - "done" - complete workflow
+    on_deep_dive:
+      update_state:
+        deep_dive_modules: "{{ state.deep_dive_modules + [module] }}"
+      next: deep_dive_analysis
+    on_security:
+      next: security_scan
+    on_done:
+      next: complete_audit
+      
+  - id: deep_dive_analysis
+    agent: keisha
+    action: |
+      Deep dive analysis of {{ module }}:
+      
+      1. Function-level complexity
+      2. Dependency graph
+      3. Test isolation assessment
+      4. Refactoring recommendations
+    next: present_findings
+    
+  - id: security_scan
+    agent: soulja
+    action: |
+      Security scan of {{ target_repo }}:
+      
+      1. Secret detection (trufflehog)
+      2. Dependency audit (cargo-audit)
+      3. Static analysis (bandit/semgrep)
+      4. Input validation check
+      
+      Report vulnerabilities by severity.
+    update_state:
+      security_scan_requested: true
+    next: present_findings
+    
+  - id: complete_audit
+    type: notification
+    message: |
+      Audit complete for {{ target_repo }}.
+      
+      Findings: {{ state.findings | length }} items
+      Security scan: {{ "Yes" if state.security_scan_requested else "No" }}
+      Deep dives: {{ state.deep_dive_modules }}

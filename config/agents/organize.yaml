@@ -1,0 +1,111 @@
+# Organize Workflow
+# Julep Workflow Definition
+
+name: organize
+description: |
+  Refactor and organize codebase structure.
+  Clean up file organization, folder structure, and imports.
+
+version: "1.0"
+triggers:
+  - "/organize"
+  - "@keisha organize"
+
+state:
+  target_area: ""
+  structure_before: {}
+  structure_after: {}
+  files_moved: []
+  imports_updated: []
+
+steps:
+  - id: analyze_structure
+    agent: keisha
+    action: |
+      Analyze current structure of {{ target_area }}.
+      
+      Map:
+      1. Folder hierarchy
+      2. File locations
+      3. Import patterns
+      4. Module boundaries
+      
+      Identify issues:
+      - Misplaced files
+      - Inconsistent naming
+      - Circular dependencies
+      - Deep nesting
+    update_state:
+      structure_before: "{{ captured_structure }}"
+    on_complete: propose_organization
+    
+  - id: propose_organization
+    agent: keisha
+    action: |
+      Propose new organization:
+      
+      Current: {{ state.structure_before }}
+      
+      Proposed changes:
+      1. [Move/Rename]: [from] → [to]
+      2. ...
+      
+      Principles:
+      - Group by feature, not type
+      - Max 2 levels deep in most cases
+      - Clear module boundaries
+      - Consistent naming conventions
+    on_complete: await_approval
+    
+  - id: await_approval
+    type: human_input
+    prompt: |
+      Organization plan ready for {{ state.target_area }}.
+      
+      {{ proposed_changes | length }} changes proposed.
+      
+      Reply:
+      - "approved" to proceed
+      - "changes: [feedback]" for modifications
+    on_approved:
+      next: execute_organization
+    on_changes:
+      next: propose_organization
+      
+  - id: execute_organization
+    agent: ox
+    action: |
+      Execute organization changes:
+      
+      1. Move/rename files
+      2. Update all imports
+      3. Update all references
+      4. Run tests to verify
+      
+      Track all changes for rollback.
+    update_state:
+      files_moved: "{{ moved_files }}"
+      imports_updated: "{{ updated_imports }}"
+    on_complete: validate_organization
+    
+  - id: validate_organization
+    agent: soulja
+    action: |
+      Validate organization:
+      
+      1. All tests pass
+      2. No broken imports
+      3. No broken references
+      4. Build succeeds
+    on_pass:
+      next: complete_organization
+    on_fail:
+      next: execute_organization
+      
+  - id: complete_organization
+    type: notification
+    message: |
+      ✅ Organization Complete: {{ state.target_area }}
+      
+      Files Moved: {{ state.files_moved | length }}
+      Imports Updated: {{ state.imports_updated | length }}
