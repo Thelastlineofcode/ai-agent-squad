@@ -1,44 +1,57 @@
 # Agent Learnings
 
-**Purpose:** Durable insights for agents working on this framework.
+**Purpose:** Durable insights for agents working on this codebase.
 
 ---
 
-## Framework Context
+## Project Context
 
-- **Product:** AI Agent Squad (White-Label)
-- **Agents:** Keisha (Planner), Ox (Coder), Soulja (Tester), DMX (Reviewer)
-- **Config:** YAML-based agent definitions
+- **Product:** Levité — Synastry + Timing astrology app
+- **Stack:** Leptos (Rust/WASM) frontend, Rust/Axum backend, PostgreSQL + Neo4j
+- **Pricing:** 4-tier subscription (Starter/Core/Pro/Cosmic)
 
 ---
 
 ## Critical Rules
 
-### 1. Persona Persistence
-- When activated, STAY in character until dismissed
-- Sign off with agent identifier (*@keisha standing by*)
-- Never say "I'm an AI" while in persona
+### 1. Sidereal System Standard
+- **Zodiac:** Sidereal (Krishnamurti 23.8° ayanamsa)
+- **Houses:** Koch (KP System)
+- **Never use Tropical for calculations** — only as reference layer
 
-### 2. PRD Required
-- No code without approved PRD
-- Keisha produces PRD → User approves → Ox implements
+### 2. Timing vs Synastry Scope
+- **Timing (5-posture):** GO/GROW/GLOW/GROUND/RESET — for calendar only
+- **Synastry:** Full compatibility analysis — unchanged
 
-### 3. Anti-Drift Principles
-- Simplicity over cleverness
-- Measure before refactor
-- One change, one purpose
-- Tests gate release
+### 3. Stripe SKU Format
+- Format: `levite_[tier]_[billing]`
+- Example: `levite_core_monthly`, `levite_pro_annual`
+
+### 4. No Hardcoded Secrets
+- All API keys in `.env`
+- Never commit `.env` files
 
 ---
 
-## File Locations
+## Architectural Decisions
 
-| What | Where |
-|------|-------|
-| Team reference | `team-fullstack.txt` |
-| Agent configs | `config/agents/` |
-| Workflows | `config/workflows/` |
-| System prompts | `agents/` |
+| Decision | Rationale |
+|----------|-----------|
+| Leptos over React | Rust end-to-end, WASM performance |
+| Hybrid backend | Node gateway + Rust engine sidecar |
+| Redis caching | 6-hour TTL for timing signals |
+| Swiss Ephemeris | Required for KP accuracy |
+
+---
+
+## Common Pitfalls
+
+| Pitfall | Solution |
+|---------|----------|
+| Moon sign drift | Always use sidereal, not tropical |
+| Timezone errors | Store all times as UTC, convert on display |
+| Stripe webhook missing | Check `STRIPE_WEBHOOK_SECRET` in .env |
+| Leptos hydration errors | Ensure SSR and CSR match |
 
 ---
 
@@ -46,6 +59,19 @@
 
 | Date | Learning |
 |------|----------|
-| 2025-12-21 | Added strict persona persistence enforcement |
-| 2025-12-21 | Julep API deprecated, using YAML config |
-| 2025-12-21 | MCP tools distributed per agent role |
+| 2025-12-21 | 5-posture system is timing-only, doesn't replace synastry |
+| 2025-12-21 | White-label B2B is $99-299/mo per seat |
+| 2025-12-21 | Translation Engine uses weighted threshold resolution |
+
+---
+
+## File Locations
+
+| What | Where |
+|------|-------|
+| Product brief | `docs/levite-product-brief.md` |
+| Feature matrix | `docs/prd/FEATURE_MATRIX.md` |
+| User stories | `docs/prd/USER_STORIES.md` |
+| API backend | `api/src/` |
+| Frontend | `levite-web/src/` |
+| Shared types | `shared/src/` |

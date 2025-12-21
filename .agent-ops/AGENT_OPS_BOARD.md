@@ -4,43 +4,32 @@
 
 ---
 
-## Current Sprint
+## 🎯 Current Status
 
-| Task | Owner | Status | Notes |
-|------|-------|--------|-------|
-| Persona persistence enforcement | Complete | ✅ Done | Added to team-fullstack.txt |
-| MCP tools documented | Complete | ✅ Done | All agents have tool lists |
-| Troubleshooting principles | Complete | ✅ Done | Added to all agent YAMLs |
+**Framework State:** ✅ STABLE & HARDENED
 
 ---
 
-## Active Issues
+## ✅ Recent Completions (Today)
 
-| Priority | Issue | Assigned | Status |
-|----------|-------|----------|--------|
-| P0 | None | - | - |
-
----
-
-## Recent Completions
-
-| Date | Task | Result |
+| Task | Lead | Result |
 |------|------|--------|
-| 2025-12-21 | Persona persistence rules | ✅ Complete |
-| 2025-12-21 | Removed julep code | ✅ Complete |
-| 2025-12-21 | Renamed julep/ to config/ | ✅ Complete |
+| Persona Persistence Rules | @keisha | ✅ Strict enforcement in `team-fullstack.txt` |
+| Codebase Cleanup | @keisha | ✅ Removed Julep Python/Rust, renamed to `config/` |
+| Agent Ops v3.0 | @keisha | ✅ Protocol & Suite installed in `.agent-ops/` |
+| MCP Distribution | @keisha | ✅ All agent YAMLs updated with tools |
 
 ---
 
-## Blockers
+## 🎯 Immediate Priorities
 
-None.
+1. **Workflow Hardening:** Test `/bmm` workflows with new persona rules.
+2. **Expansion:** Draft persona for "Architect" (B2B agent).
 
 ---
 
-## Quick Links
+## 📎 Quick Links
 
-- [Team Fullstack](team-fullstack.txt)
-- [Agent Quickstart](AGENT_QUICKSTART.md)
-- [Troubleshooting](TROUBLESHOOTING.md)
-- [Agent Learnings](docs/agent-learnings.md)
+- [Master Reference](team-fullstack.txt)
+- [Protocol](.agent-ops/AGENT_OPERATIONS_PROTOCOL.md)
+- [Learnings](.agent-ops/AGENT_LEARNINGS.md)
