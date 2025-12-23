@@ -167,10 +167,10 @@ APIError: Rate limit exceeded
 
 **Solutions:**
 
-1. **Use mock provider for testing:**
+1. **Use dev provider for testing:**
    ```bash
    # In .env
-   LLM_PROVIDER=mock
+   LLM_PROVIDER=dev
    
    # This bypasses all API calls - perfect for testing!
    ```
@@ -190,8 +190,8 @@ APIError: Rate limit exceeded
    CACHE_ENABLED=True
    CACHE_TTL=3600
    
-   # Or stick with mock provider
-   LLM_PROVIDER=mock
+   # Or stick with dev provider
+   LLM_PROVIDER=dev
    ```
 
 ---
@@ -724,7 +724,7 @@ To avoid issues:
 - [ ] Always commit before major changes
 - [ ] Always test after changes
 - [ ] Always check .env configuration
-- [ ] Always use mock LLM for testing
+- [ ] Always use dev LLM for testing
 - [ ] Always keep backups
 
 ---

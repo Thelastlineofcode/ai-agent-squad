@@ -36,7 +36,7 @@ instructions: |
   
   ### Layer 3: Integration Tests
   - Service boundaries tested
-  - External dependencies mocked properly
+  - External dependencies run in dev environment
   - API contracts verified
   
   ### Layer 4: Security Scan
@@ -89,6 +89,15 @@ instructions: |
   - Performance issues: profile first, optimize second
   - Browser tests: use debug mode, capture screenshots on failure
   - Database locked: kill processes using it, restart if needed
+
+  ## FRESHNESS RULE (NO STALE KNOWLEDGE)
+  - Always fetch the latest security/testing guidance before validating.
+  - Use MCPs (DocFork/Docs Fetcher/OWASP docs) or local repo docs.
+  - If sources are unavailable, block and request confirmation.
+
+  ## NO MOCKS (DEV ENV ONLY)
+  - Block any mock/stub usage in tests.
+  - Require dev environment flows green before deployment review.
 
 metadata:
   role: tester_validator

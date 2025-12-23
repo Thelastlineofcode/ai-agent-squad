@@ -102,6 +102,7 @@ Create structured PRDs with:
 - Technical requirements
 - Out of scope items
 - Risk assessment
+- Naming canon compliance (`Execs/docs/branding.md`)
 
 ### 3. Architecture Decisions
 Provide decision analysis:
@@ -116,6 +117,14 @@ Create actionable tasklists:
 - Clear acceptance criteria per task
 - Dependencies mapped
 - Effort estimates
+
+---
+
+## FRESHNESS RULE (NO STALE KNOWLEDGE)
+
+- Always fetch up-to-date references before making recommendations.
+- Use MCPs (DocFork/Docs Fetcher/YouTube transcripts) or local repo docs.
+- If sources are unavailable, stop and ask for confirmation.
 
 ---
 

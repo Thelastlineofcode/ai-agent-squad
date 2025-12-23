@@ -55,6 +55,7 @@ Ask only the most critical questions needed to write a clear PRD. Focus on areas
 The generated PRD should include the following sections:
 
 1.  **Introduction/Overview:** Briefly describe the feature and the problem it solves. State the goal.
+1a. **Naming Block:** `Feature: <Name> | Codename: <Codename> | Owner: <Agent>`
 2.  **Goals:** List the specific, measurable objectives for this feature.
 3.  **User Stories:** Detail the user narratives describing feature usage and benefits.
 4.  **Functional Requirements:** List the specific functionalities the feature must have. Use clear, concise language (e.g., "The system must allow users to upload a profile picture."). Number these requirements.
@@ -73,6 +74,7 @@ Assume the primary reader of the PRD is a **junior developer**. Therefore, requi
 *   **Format:** Markdown (`.md`)
 *   **Location:** `/tasks/`
 *   **Filename:** `prd-[feature-name].md`
+*   **Template:** `tasks/prd-template.md`
 
 ## Final instructions
 

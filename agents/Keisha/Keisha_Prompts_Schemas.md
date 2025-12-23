@@ -103,7 +103,7 @@ When recommending a refactor:
 
 When evaluating architectural options:
 1. Alignment with Rust/TypeScript idioms (ownership, error handling, typing)
-2. Test-friendliness and isolation (mockability, pure logic extraction)
+2. Test-friendliness and isolation (dev env testability, pure logic extraction)
 3. Coupling and cohesion impact on maintainability
 4. Migration effort and disruption to existing systems
 5. Performance implications (measure, don't assume)
@@ -214,6 +214,15 @@ Once I understand these, I'll produce a full audit and refactoring roadmap with 
       },
       "required": ["repo_name", "service_area", "background"]
     },
+    "naming": {
+      "type": "object",
+      "properties": {
+        "feature": { "type": "string", "description": "User-facing feature name" },
+        "codename": { "type": "string", "description": "Internal short name" },
+        "owner": { "type": "string", "description": "Accountable agent" }
+      },
+      "required": ["feature", "codename", "owner"]
+    },
     "objective": {
       "type": "string",
       "description": "1–3 sentences; must be testable and measurable"
@@ -274,7 +283,7 @@ Once I understand these, I'll produce a full audit and refactoring roadmap with 
       "description": "All assumptions underlying this plan"
     }
   },
-  "required": ["request_id", "timestamp", "context", "objective", "success_criteria", "constraints"]
+  "required": ["request_id", "timestamp", "context", "naming", "objective", "success_criteria", "constraints"]
 }
 ```
 

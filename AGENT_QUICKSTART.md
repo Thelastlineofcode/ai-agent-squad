@@ -5,22 +5,25 @@
 
 ## What Is This?
 
-This repository contains a **multi-agent AI system** for software development. Four specialized agents work together in a sequential pipeline:
+This repository contains a **multi-agent AI system** for software development. Specialized agents work together in a sequential pipeline:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │                    DEVELOPMENT PIPELINE                         │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  @keisha (Planner)  →  @ox (Coder)  →  @soulja (Tester)  →  @dmx (Reviewer)  │
-│       │                    │                │                  │ │
-│       ▼                    ▼                ▼                  ▼ │
-│   PRD + Tasks         Code + Tests     Validation         Approval │
+│  @keisha (Planner)  →  @soulja (Preflight) → @ox (Executor) → @soulja (Validate) → @dmx (Reviewer) │
+│       │                    │                     │                  │                  │ │
+│       ▼                    ▼                     ▼                  ▼                  ▼ │
+│   PRD + Tasks         TDD Gate              Tests + Code        Validation         Approval │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 Each agent is an **LLM system prompt** designed to specialize in one phase of the development lifecycle. Agents are stateless and can run on any LLM platform (Claude, GPT-4, Gemini, Perplexity).
+
+Auto workflow: `Execs/docs/auto-workflow.md`  
+Branding canon: `Execs/docs/branding.md`
 
 ---
 
@@ -31,8 +34,8 @@ Each agent is an **LLM system prompt** designed to specialize in one phase of th
 | Agent | Domain | Input | Output |
 |-------|--------|-------|--------|
 | **Keisha** | Planning | Feature request | PRD + TASKLIST |
-| **Ox** | Implementation | PRD/TASKLIST | Code + Tests |
-| **Soulja** | Validation | Code | Pass/Fail Report |
+| **Ox (Executor)** | Implementation | PRD/TASKLIST | Code + Tests |
+| **Soulja** | Preflight + Validation | PRD/Tasks + Code | Pass/Fail Report |
 | **DMX** | Governance | Validation Report | Approval/Rejection |
 
 ### Design Principles
@@ -42,6 +45,7 @@ Each agent is an **LLM system prompt** designed to specialize in one phase of th
 3. **Tool Isolation**: No shared tools between agents (prevents blast radius)
 4. **Sequential Handoffs**: Clear input/output contracts between stages
 5. **Quality Gates**: Non-negotiable thresholds enforced at each stage
+6. **Freshness Rule**: Always fetch current docs before decisions
 
 ### Tool Distribution (No Overlap)
 
@@ -50,7 +54,7 @@ Each agent is an **LLM system prompt** designed to specialize in one phase of th
 │ Agent        │ Exclusive Tools                                │
 ├──────────────┼────────────────────────────────────────────────┤
 │ Keisha       │ radon, gitpython, ast, graphviz, pygments      │
-│ Ox           │ rustc, cargo, tsc, esbuild, go, black, ruff    │
+│ Ox (Executor)│ rustc, cargo, tsc, esbuild, go, black, ruff    │
 │ Soulja       │ pytest, vitest, bandit, trufflehog, cargo-audit│
 │ DMX          │ difflib, git-diff, json-diff, deploy scripts   │
 └──────────────┴────────────────────────────────────────────────┘
@@ -73,7 +77,7 @@ Each agent is an **LLM system prompt** designed to specialize in one phase of th
 
 | Command | Description |
 |---------|-------------|
-| `@ox build [feature]` | Implement with TDD (tests first) |
+| `@ox build [feature]` | TDD in dev env, no mocks, failure + edge cases required |
 | `@ox refactor [code]` | Improve code quality (complexity, clarity) |
 | `@ox optimize [code]` | Performance optimization with benchmarks |
 | `@ox fix [issue]` | Debug and fix with regression test |
@@ -83,6 +87,7 @@ Each agent is an **LLM system prompt** designed to specialize in one phase of th
 | Command | Description |
 |---------|-------------|
 | `@tester validate [feature]` | Run full 5-layer validation |
+| `@soulja preflight [feature]` | Stack/test command + guardrails gate |
 | `@soulja run security scan` | Dependency + secret + code security scan |
 | `@tester debug [error]` | Root cause analysis |
 | `@soulja check coverage` | Coverage analysis and gaps |
@@ -131,6 +136,15 @@ All agents enforce:
 - ✅ Resilience testing (circuit breakers, graceful degradation)
 - ✅ Penetration testing (fuzzing, auth bypass, IDOR)
 
+### TDD Enforcement (No Mocks)
+- Tests run in the dev environment (no mocks/stubs/fakes)
+- Failure and edge cases are mandatory (happy-path-only is blocked)
+- Dev environment must be green before any deployment validation
+
+### Freshness Rule
+- Agents must fetch current docs (MCPs or repo docs) before decisions
+- If sources are unavailable, block and request confirmation
+
 ---
 
 ## Directory Structure
@@ -143,7 +157,7 @@ Execs/
 │
 ├── agents/                          # THE SQUAD
 │   ├── Keisha/                      # Planner
-│   ├── Ox/                          # Coder
+│   ├── Ox/                          # Executor
 │   ├── Soulja-Slim/                 # Validator
 │   └── DMX/                         # Reviewer
 │
@@ -222,16 +236,20 @@ Execs/
    → Keisha asks clarifying questions
    → Keisha produces PRD + TASKLIST
 
-2. @ox build authentication following this PRD
-   → Ox writes tests first
+2. @soulja preflight authentication
+   → Soulja verifies stack/test command + guardrails
+   → Blocks if TDD artifacts or dev env are missing
+
+3. @ox build authentication following this PRD
+   → Ox writes tests first (dev env, no mocks)
    → Ox implements feature
    → Ox provides evidence (coverage, complexity)
 
-3. @soulja validate authentication implementation
+4. @soulja validate authentication implementation
    → Soulja runs 5-layer validation
    → Soulja produces Pass/Fail report
 
-4. @dmx review for production
+5. @dmx review for production
    → DMX reviews architecture, security, quality
    → DMX approves or blocks with specific feedback
 ```

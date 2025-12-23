@@ -720,6 +720,6 @@ All 3 MCPs are:
 
 ---
 
-**Keisha plans. Ox builds (with instant doc access). Soulja validates. DMX enforces.**
+**Keisha plans. Soulja preflights. Ox builds (with instant doc access). Soulja validates. DMX enforces.**
 
 **Together with free MCPs: Unstoppable productivity + knowledge. 🎤**

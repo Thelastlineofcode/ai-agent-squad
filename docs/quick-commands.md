@@ -17,10 +17,11 @@ Output: Metrics + hot-spots + risks (10-15 min)
 Output: Progress report + blockers + next steps (2 min)
 ```
 
-### BUILDING (Ox)
+### BUILDING (Ox / Executor)
 ```
 @ox build [feature] with tests first
 Output: Code + tests + docs (> 85% coverage) (30-45 min)
+Constraint: Dev env only, no mocks, include failure + edge cases.
 
 @ox optimize [code/module] for performance
 Output: Optimized code + benchmark report (20-30 min)
@@ -29,8 +30,23 @@ Output: Optimized code + benchmark report (20-30 min)
 Output: Refactored code meeting target (20-40 min)
 ```
 
+### GUARDRAILS (Scripts)
+```
+python Execs/dev-tools/guardrails/guardrails.py --voice ox --feature [slug]
+Output: PASS or BLOCKED with next steps
+
+# No default tech stack: override when needed
+python Execs/dev-tools/guardrails/guardrails.py --voice ox --feature [slug] --stack [stack] --test-cmd "[cmd]"
+
+# Preflight gate
+python Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature [slug] --stage preflight
+```
+
 ### VALIDATING (Soulja/Tester)
 ```
+@soulja preflight [feature]
+Output: Stack/test command verification + guardrails PASS/BLOCKED (5-10 min)
+
 @tester full validation of [feature]
 Output: Test report + approval/rejection (15-30 min)
 Includes: Unit + integration + E2E + security + performance
@@ -65,6 +81,15 @@ Output: Architecture feedback + recommendations (10-15 min)
 @keisha create prd and I'll build it
 Output: Complete workflow walkthrough (30 min training)
 ```
+
+### AUTO MODE
+```
+See: Execs/docs/auto-workflow.md
+Requirement: PRD + TASKLIST + TDD evidence in tasks/
+```
+
+Brand canon: `Execs/docs/branding.md`
+PRD template: `tasks/prd-template.md`
 
 ---
 
@@ -102,6 +127,7 @@ Output: Complete workflow walkthrough (30 min training)
 
 ### Deployment Phase
 ```
+0. Verify dev environment flows are green (no mocks)
 1. Merge to main (if approved)
 2. Canary deployment (5% traffic)
 3. Monitor for 30 min
@@ -145,6 +171,8 @@ With @dmx review:
 └─ Security verifier: Vulnerability database
 ```
 
+**Freshness rule:** Agents must use MCPs or local repo docs for current guidance before making decisions.
+
 ---
 
 ## GUARDRAILS (Automatic Enforcement)
@@ -169,6 +197,15 @@ ACCEPTANCE CRITERIA: 100% must be met
 
 ARCHITECTURE: Must be sound + scalable
 └─ Poor design? @dmx require refactor
+
+TDD: No mocks, no happy-path-only tests
+└─ Violations? @soulja block and request fixes
+
+DEV ENV: All dev flows green before deployment
+└─ Not green? @dmx blocks release
+
+FRESHNESS: Must use up-to-date sources
+└─ No sources? Block and request confirmation
 ```
 
 ---
@@ -356,6 +393,7 @@ Output: Monthly roadmap
 ### Week 2-4: Execution
 ```
 Daily: Build features with @ox
+Daily: Preflight with @soulja
 Daily: Validate with @tester
 Daily: Review with @dmx
 Daily: Track metrics
@@ -477,6 +515,6 @@ Result: Complete PRD with acceptance criteria in 5 minutes
 
 **Your AI dev team is ready. Start using these commands today. 🚀**
 
-Keisha plans. Ox builds. Soulja validates. DMX enforces.
+Keisha plans. Soulja preflights. Ox builds. Soulja validates. DMX enforces.
 
 10x productivity. 100% quality. Zero tech debt.

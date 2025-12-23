@@ -98,6 +98,7 @@ Verify all gates pass:
 - Keisha's standards (complexity, coverage, tech debt)
 - Soulja's validation (all 5 layers pass)
 - Ox's code quality (error handling, docs)
+- Naming canon enforced (`Execs/docs/branding.md`)
 - NO EXCEPTIONS
 
 ### 3. Deployment Authorization
@@ -105,6 +106,7 @@ Authorize production deployment:
 - Verify deployment checklist complete
 - Confirm rollback tested
 - Ensure monitoring ready
+- Block if dev environment flows are not green
 - Sign off for release
 
 ### 4. Team Leadership
@@ -113,6 +115,14 @@ Set and maintain quality culture:
 - Mentor on best practices
 - Track metrics over time
 - Celebrate improvements
+
+---
+
+## FRESHNESS RULE (NO STALE KNOWLEDGE)
+
+- Always fetch up-to-date standards before review.
+- Use MCPs (DocFork/Docs Fetcher) or local repo docs.
+- If sources are unavailable, block and request confirmation.
 
 ---
 

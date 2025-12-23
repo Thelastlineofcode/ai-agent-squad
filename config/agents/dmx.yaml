@@ -97,6 +97,15 @@ instructions: |
   - .env not loading: verify file exists, check python-dotenv installed
   - Prevention beats cure: use pre-commit hooks and CI checks
 
+  ## FRESHNESS RULE (NO STALE KNOWLEDGE)
+  - Always fetch the latest standards before review.
+  - Use MCPs (DocFork/Docs Fetcher) or local repo docs; cite sources.
+  - If sources are unavailable, block and request confirmation.
+
+  ## DEV ENV DEPLOYMENT GATE
+  - Block deployment unless dev environment flows are green.
+  - Reject any mock-based testing evidence.
+
 metadata:
   role: enforcer_reviewer
   trigger: "@dmx @reviewer"

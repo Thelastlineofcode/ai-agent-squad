@@ -7,6 +7,7 @@
 
 | Category | Command | Invocation | Input | Output | Best For |
 |----------|---------|-----------|-------|--------|----------|
+| **WORKFLOW** | `/auto` | `/auto [slug]` | Feature slug | Auto pipeline execution | PRD-in → shipped-out |
 | **PLANNING** | `/plan` | `/plan "implement OAuth2"` | Requirements string | Task JSON + markdown | Breaking down features |
 | | `/architect` | `/architect $ARGUMENTS` | Feature description | Architecture diagram + decisions | System design |
 | | `/analyze` | `/analyze` | Codebase context | Complexity report + patterns | Understanding existing code |
@@ -25,12 +26,44 @@
 | **QUALITY** | `/improve` | `/improve` | Codebase/Product | Refinement plan + evidence | Improving without new features |
 | | `/lint-fix` | `/lint-fix` | Code section | Formatted code | Style/formatting |
 | | `/dependency-audit` | `/dependency-audit` | package.json/Cargo.toml | Vulnerability report | Dependency security |
+| | `/guardrails` | `/guardrails [slug]` | Feature slug | PASS/BLOCKED report | TDD + artifact enforcement |
 | **DOCS** | `/document` | `/document $ARGUMENTS` | Code section | API docs + comments | Documentation |
 | | `/migrate` | `/migrate "jest→vitest"` | Module/config | Migration script + changes | Version/framework updates |
 
 ---
 
+## Freshness Rule (No Stale Knowledge)
+
+- Always fetch current docs before implementing or reviewing.
+- Prefer MCPs (DocFork/Docs Fetcher/YouTube transcripts) or local repo docs.
+- If sources are unavailable, block and ask for confirmation.
+
 ## Detailed Command Specifications
+
+### WORKFLOW COMMANDS
+
+#### `/auto`
+**Purpose**: Run the full pipeline automatically (PRD → preflight → build → validate → review)
+```
+Usage: /auto [feature-slug]
+
+Requires:
+- tasks/prd-[feature].md
+- tasks/tasks-[feature].md
+- tasks/tdd-[feature].md
+
+Executes:
+- @keisha confirm PRD + acceptance criteria
+- @soulja preflight (guardrails --stage preflight)
+- @ox build (tests first, dev env only)
+- @soulja validate (guardrails --stage post)
+- @dmx review + approve/block
+
+Notes:
+- Naming must match `Execs/docs/branding.md`
+- Auto runner: `python Execs/dev-tools/auto-runner.py --feature [slug] --phase preflight`
+- PRD template: `tasks/prd-template.md`
+```
 
 ### PLANNING COMMANDS
 
@@ -185,9 +218,12 @@ Usage: /test-gen  # Generate tests for modified files
 Returns:
 - Unit test cases (normal flow, edge cases, errors)
 - Integration test scenarios
-- Mock setup code
+- Dev environment setup code
 - Expected assertions
 - Coverage analysis
+
+Notes:
+- No mocks or stubs; tests should target the dev environment.
 
 Example:
 ```rust
@@ -325,6 +361,20 @@ Returns:
 
 ### QUALITY & MAINTENANCE
 
+#### `/guardrails`
+**Purpose**: Enforce PRD/TDD artifacts with stack-aware checks (no default stack)
+```
+Usage: /guardrails [slug]
+
+Executes:
+python Execs/dev-tools/guardrails/guardrails.py --voice dmx --feature [slug]
+
+Options:
+--stack [stack]
+--test-cmd "[cmd]"
+--stage preflight|post
+```
+
 #### `/lint-fix`
 **Purpose**: Auto-fix code style and formatting
 ```
@@ -447,7 +497,7 @@ Inputs: Feature requirements, stakeholder needs
 Outputs: Task breakdown, acceptance criteria, architecture docs
 ```
 
-**Agent: Ox (Coder)**
+**Agent: Ox (Executor)**
 ```
 Primary commands: /implement, /scaffold, /refactor
 Inputs: Task breakdown from Keisha
@@ -457,8 +507,8 @@ Outputs: Code diff, test files, implementation details
 **Agent: Soulja (Tester)**
 ```
 Primary commands: /test-gen, /debug, /trace, /coverage, /perf
-Inputs: Code from Ox
-Outputs: Test results, performance profiles, identified issues
+Inputs: PRD/TASKLIST + Code from Ox
+Outputs: Preflight guardrails, test results, performance profiles, identified issues
 ```
 
 **Agent: DMX (Reviewer)**
@@ -495,7 +545,7 @@ Outputs: Review decision, feedback, approval/rejection
 
 ### Python
 - `/lint-fix` - Black + isort + flake8
-- `/test-gen` - pytest fixtures, mocks
+- `/test-gen` - pytest fixtures, dev env data
 - `/perf` - cProfile, memory profiling
 - `/migrate` - Python 2→3, framework updates
 - Relevant tools: `bandit`, `safety`, `mypy`

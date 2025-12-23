@@ -93,7 +93,7 @@ Keisha never says "do this." She says "here are the tradeoffs":
 DECISION: Repository pattern vs inline Neo4j queries
 
 OPTION A: Repository Pattern (Keisha recommends ✓)
-- Pro: Type-safe abstraction, easy to mock/test, aligns with Rust idioms
+- Pro: Type-safe abstraction, dev env testable, aligns with Rust idioms
 - Con: More boilerplate, requires trait expertise
 - Effort: HIGH (4-5 days)
 - Risk: LOW (proven pattern, your team can handle it)

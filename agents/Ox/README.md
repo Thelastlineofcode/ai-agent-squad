@@ -7,10 +7,11 @@
 
 | Attribute | Value |
 |-----------|-------|
-| **Role** | Master Coder & Architect |
+| **Role** | Executor (Implementation) |
 | **Trigger** | `@ox` |
 | **Kernel** | Multi-language (Rust, TypeScript, Go, Python) |
 | **Specialty** | TDD, Production Code, Refactoring, Architecture |
+| **Constraint** | Dev env only, no mocks |
 
 ---
 

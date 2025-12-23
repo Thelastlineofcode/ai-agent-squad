@@ -1,5 +1,5 @@
 # AGENT TEAM ORCHESTRATION & @ACTIVATION SYSTEM
-## How Keisha + Ox Work Together (With Examples)
+## How Keisha + Soulja + Ox Work Together (With Examples)
 
 ---
 
@@ -13,7 +13,12 @@
 │  │ (Produces PRD + TASKLIST with acceptance criteria)      │
 │  │                                                          │
 │  ↓                                                          │
-│  @ox [tasklist]     →  Code | Test | Build                 │
+│  @soulja [preflight] →  TDD Gate | Stack | Guardrails       │
+│  │                                                          │
+│  │ (Blocks if dev env/TDD artifacts are missing)            │
+│  │                                                          │
+│  ↓                                                          │
+│  @ox [tasklist]     →  Tests First | Build (dev env)        │
 │  │                                                          │
 │  │ (Produces production-ready code with evidence)          │
 │  │                                                          │
@@ -41,10 +46,18 @@ Each agent has a unique @mention trigger:
 
 ```
 @keisha [request]       → Keisha (Planner & Analyst)
-@ox [request]           → Ox (Coder & Architect)
+@soulja preflight [prd] → Soulja (TDD Gate)
+@ox [request]           → Ox (Executor)
 @tester [code]          → Tester (Validation)
 @reviewer [pr]          → Reviewer (Quality Gates)
 ```
+
+---
+
+## AUTO MODE
+
+Auto pipeline is defined in `Execs/docs/auto-workflow.md`.  
+Branding canon is enforced via `Execs/docs/branding.md`.
 
 ---
 
@@ -129,6 +142,21 @@ PRD attached: [JSON with success criteria, dependencies, risks]
 Ready for Ox to execute?
 ```
 
+### Preflight Gate (New)
+
+```
+User: @soulja preflight KP transits engine
+
+Soulja checks:
+- Runs guardrails: `python Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature kp-transits --stage preflight`
+- Stack + test command confirmed
+- PRD + TASKLIST present
+- TDD evidence template created
+- Dev environment ready (no mocks)
+
+Soulja output: PASS or BLOCKED
+```
+
 ### Step 4: User Activates Ox
 
 ```
@@ -145,7 +173,7 @@ Keisha's PRD + TASKLIST attached (2 sprints, clear success criteria)
 I understand the plan. Before I start, confirming:
 
 1. Rust stack, Neo4j backend, async/await throughout?
-2. Should I use mockall for mocking Neo4j in tests?
+2. Should I run tests against local dev Neo4j?
 3. Any existing patterns in Levite for error types + repository?
 4. Timeline: Start immediately? (I'll time-box each task)
 
@@ -164,7 +192,7 @@ Ready for answers.
 User: @ox confirmed:
 
 1. Yes, Rust + Neo4j + tokio
-2. Use mockall for mocks
+2. Use local dev Neo4j for tests
 3. See LeviteError enum in src/errors.rs (follow that pattern)
 4. Start immediately; we're on tight timeline
 ```
@@ -178,7 +206,7 @@ T1: Repository trait definition
 ├─ Defining GraphRepository trait (async)
 ├─ Neo4j implementation (src/repository/neo4j.rs)
 ├─ Custom error types (RepositoryError)
-├─ Unit tests with mockall (tests/repository_tests.rs)
+├─ Unit tests with dev env Neo4j (tests/repository_tests.rs)
 └─ Target: 8 hours, > 85% coverage
 
 Current progress:
@@ -250,12 +278,12 @@ T2: Refactor AspectCalculator
 ├─ Accept repository trait as param
 ├─ Extract pure logic from graph queries
 ├─ Implement with error handling
-└─ Unit tests + mocks
+└─ Unit tests + dev environment services
 
 Progress:
 - Trait parameter acceptance: DONE (2 hours)
 - Pure logic extraction: DONE (4 hours)
-- Tests with mocks: DONE (6 hours)
+- Tests with dev environment services: DONE (6 hours)
 
 Hit a complexity issue:
 - compute_aspects function: complexity 15 (exceeds 12 target)
@@ -448,7 +476,7 @@ Deploy checklist:
 ### 2. Sequential Handoffs (Not Parallel)
 
 ```
-Keisha finishes plan → Ox starts coding → Tester validates → Reviewer merges
+Keisha finishes plan → Soulja preflights → Ox starts coding → Tester validates → Reviewer merges
 
 NOT: Everyone working at once (chaos, conflicts, rework)
 ```
@@ -459,11 +487,21 @@ NOT: Everyone working at once (chaos, conflicts, rework)
 
 ```
 Keisha defines success criteria in PRD.
-Ox builds to meet those criteria exactly.
+Soulja preflights stack/test command + guardrails.
+Ox builds to meet those criteria exactly (dev env, no mocks).
 Tester validates 100% criteria met.
 Reviewer enforces standards.
 
 Result: No surprises, no rework, no drift.
+```
+
+---
+
+### 4. Freshness Over Memory
+
+```
+Agents must fetch current docs/sources before decisions.
+If sources are unavailable, block and ask for confirmation.
 ```
 
 ---
@@ -520,6 +558,7 @@ Risks: Context switching (mitigated by clear @activation + context)
 | Phase | Time | Critical Path |
 |-------|------|---------------|
 | **@keisha audits & plans** | 2 hours | Clarify requirements |
+| **@soulja preflights** | 30 min | Stack/test cmd confirmed |
 | **@ox codes (T1)** | 1 day | Good spec from Keisha |
 | **@tester validates (T1)** | 2 hours | Ox's quality standards |
 | **@ox codes (T2)** | 2 days | No blocking issues |
@@ -539,6 +578,7 @@ Compare: Traditional dev (without agent coordination): 2-4 weeks
 | "Code is messy; what should we fix?" | @keisha | audit Levite |
 | "I want to add feature X" | @keisha | plan feature X |
 | "Choose between architecture A/B" | @keisha | decide A vs B |
+| "Run TDD preflight gate" | @soulja | preflight [feature] |
 | "Build feature from Keisha's plan" | @ox | execute plan |
 | "Fix bugs in my code" | @ox | refactor [code] |
 | "Does this code meet criteria?" | @tester | validate [code] |
@@ -549,15 +589,15 @@ Compare: Traditional dev (without agent coordination): 2-4 weeks
 ## SETUP CHECKLIST FOR FULL TEAM
 
 - [ ] Deploy @keisha (Planner)
-- [ ] Deploy @ox (Coder) with @activation trigger
-- [ ] Deploy @tester (Validator)
+- [ ] Deploy @ox (Executor) with @activation trigger
+- [ ] Deploy @soulja preflight + validation
 - [ ] Deploy @reviewer (Quality Gates)
 - [ ] Setup communication protocol (JSON handoffs)
 - [ ] Create acceptance criteria templates
 - [ ] Setup CI/CD hooks for automated testing
 - [ ] Create metrics dashboard (coverage, complexity, velocity)
 - [ ] Train team on @activation syntax + expectations
-- [ ] Run first end-to-end workflow (plan → code → test → review)
+- [ ] Run first end-to-end workflow (plan → preflight → code → test → review)
 
 ---
 
@@ -574,6 +614,6 @@ Compare: Traditional dev (without agent coordination): 2-4 weeks
 
 **The @activation system is how you orchestrate your agent team.**
 
-**Keisha plans. Ox builds. Tester validates. Reviewer enforces.**
+**Keisha plans. Soulja preflights. Ox builds. Tester validates. Reviewer enforces.**
 
 **Together: production-ready code at scale.**

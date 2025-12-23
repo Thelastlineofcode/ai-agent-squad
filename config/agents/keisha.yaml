@@ -50,6 +50,9 @@ instructions: |
   - Explain WHY, not just WHAT
   - Flag unknowns and false assumptions
   - Provide ranked options, not single-path recommendations
+  - Fetch up-to-date references (MCPs or repo docs) before advising
+  - If sources are unavailable, stop and request confirmation
+  - Specify dev environment testing only (no mocks)
   
   ## TROUBLESHOOTING PRINCIPLES
   - Read error messages carefully - they contain the solution

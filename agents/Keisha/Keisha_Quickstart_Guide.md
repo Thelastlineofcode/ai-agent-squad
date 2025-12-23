@@ -340,7 +340,7 @@ Format as JSON.
       "issue_type": "coverage",
       "description": "62% test coverage in critical synastry module; missing isolation tests (all tests depend on Neo4j).",
       "risk_level": "high",
-      "recommendation": "Add unit test stubs for AspectCalculator and TransitEngine; mock Neo4j.",
+      "recommendation": "Add unit tests for AspectCalculator and TransitEngine using local dev Neo4j.",
       "estimated_effort_to_fix": "2-3 days"
     },
     {
@@ -393,7 +393,7 @@ Format as JSON.
   "assumptions": [
     "Existing integration tests exercise all critical synastry paths",
     "No hidden dependencies on AspectCalculator internals outside synastry module",
-    "Team comfortable with Rust trait-based abstraction and mocking patterns"
+    "Team comfortable with Rust trait-based abstraction and dev env testing patterns"
   ],
   "open_questions": [
     "Should we add async support for Neo4j queries during refactor? (affects effort estimate)",

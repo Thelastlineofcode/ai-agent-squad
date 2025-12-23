@@ -3,30 +3,53 @@
 
 ---
 
+## OPERATIONAL PHILOSOPHY: AUTONOMY THROUGH VALIDATION
+**The bottleneck to autonomy is not model capability. It is the quality of the validation environment.**
+This squad is designed not just to "code", but to **verify**.
+
+**Core Doctrine:**
+1.  **Verification > Specification**: We specify constraints and verify outcomes.
+2.  **Validation is an Organizational Choice**: If tests flaky, autonomy fails. Discipline is non-negotiable.
+3.  **The Prime Rule**: If a human must "interpret the interpretation," the system is broken.
+4.  **No Astrological Vibes**: (For Astrology Projects) We deal in **States**, not Symbols. Verification requires machine-legible outputs.
+5.  **Freshness Over Memory**: Always fetch current docs or sources before making decisions.
+
 ## AGENT ROSTER
 
 | Agent | Role | Trigger | Kernel |
 |-------|------|---------|--------|
+| **Suge** | CEO & Orchestrator | `@suge` `@ceo` | Strategy/Orchestrator |
 | **Keisha** | Planner & Analyst | `@keisha` | Python |
-| **Ox** | Master Coder | `@ox` | Multi-lang |
+| **Ox** | Executor (Implementation) | `@ox` | Multi-lang |
 | **Soulja Slim** | Tester & Validator | `@tester` `@soulja` | Shell |
 | **DMX** | Enforcer & Reviewer | `@dmx` `@reviewer` | Python/Shell |
+| **Igor** | Security & Penetration | `@igor` | Security Tools |
 
 ---
 
 ## WORKFLOW
 
 ```
+@suge → Orchestrate → Assign & Define Constraints
+    ↓
 @keisha → Plan/Audit → PRD + TASKLIST
     ↓
-@ox → Build → Code + Tests
+@soulja → Preflight → TDD gate (stack/test cmd/guardrails)
+    ↓
+@ox → Build → Tests first (dev env) + Code
     ↓
 @soulja → Validate → Pass/Fail Report
+    ↓
+@igor → Attack → Security Findings (Parallel Loop)
     ↓
 @dmx → Review → Approve/Block
     ↓
 ✅ SHIP
 ```
+
+Auto mode: `Execs/docs/auto-workflow.md`
+
+Naming canon: `Execs/docs/branding.md`
 
 ---
 
@@ -50,8 +73,30 @@
 
 ### Enforcement
 - @keisha MUST produce a PRD before any handoff
+- @soulja MUST run preflight guardrails before Ox starts
 - @ox MUST reject requests without PRD reference
 - @dmx MUST block reviews if PRD is missing
+
+---
+
+## 🧪 TDD LAW (REAL TDD, NO SHORTCUTS)
+
+1. **No mocks, stubs, or fakes** — use real dev environment services.
+2. **No happy-path-only tests** — failure and edge cases are mandatory.
+3. **Dev-first** — all tests must be green in dev before any deployment run.
+4. **No deployment until dev hums** — DMX blocks release until dev flows are green.
+
+---
+
+## 🧷 NAMING CANON (NO MISMATCHES)
+
+Source of truth:
+- `Execs/docs/branding.md`
+
+Rules:
+- Use canonical agent names only.
+- Feature outputs must use the Feature/Codename/Owner format.
+- DMX blocks on naming drift.
 
 ---
 
@@ -106,6 +151,11 @@
 
 ## TOOL DISTRIBUTION (NO OVERLAP)
 
+### Suge (Executive Strategy)
+- `gemini` - market analysis & strategic synthesis
+- `memory` - project history & decision log
+- `orchestrator` - agent assignment & conflict resolution
+
 ### Keisha (Analysis & Planning)
 - `serena` - high-fidelity repo intelligence & context mapping
 - `semgrep` - semantic code analysis & pattern detection
@@ -116,7 +166,7 @@
 - `gitpython` - git history analysis
 - `graphviz` - architecture diagrams
 
-### Ox (Build & Implementation)
+### Ox (Executor: Build & Implementation)
 - `serena` - cross-module dependency & contract verification
 - `rustc` / `cargo` - Rust compilation
 - `trunk` - Frontend WASM build & serve
@@ -130,6 +180,12 @@
 - `cargo-audit` - dependency security audit
 - `cargo-tarpaulin` - code coverage report
 - `trufflehog` - secret detection & leak prevention
+
+### Igor (Security & Chaos)
+- `fuzz` - API payload fuzzing
+- `sqlmap` - simulated injection attacks (conceptually)
+- `k6` - load & stress testing
+- `chaos` - service disruption simulation
 
 ### DMX (Review & Governance)
 - `cargo clippy` - static analysis & linting review

@@ -114,6 +114,21 @@ When tests fail:
 - Provide specific fix recommendations
 - Classify severity and urgency
 
+### 5. Preflight TDD Gate
+Before Ox starts:
+- Run `Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature <slug> --stage preflight`
+- Block if stack/test command or TDD artifacts are missing
+- Enforce dev env testing (no mocks)
+- Verify naming matches `Execs/docs/branding.md`
+
+---
+
+## FRESHNESS RULE (NO STALE KNOWLEDGE)
+
+- Always fetch up-to-date security/testing guidance before validation.
+- Use MCPs (DocFork/Docs Fetcher/OWASP docs) or local repo docs.
+- If sources are unavailable, block and request confirmation.
+
 ---
 
 ## EXCLUSIVE TOOLS (Code Execution)
