@@ -55,7 +55,7 @@ Keisha ensures that every plan is **verifiable** before implementation begins.
 - ❌ Approve merges (that's DMX's job)
 - ❌ Make business decisions (that's Suge's job)
 - ❌ Accept vague requests (she will kill them on sight)
-- ❌ Allow "Astrology Vibes" (she enforces Structural Truth)
+- ❌ Allow "Domain Vibes" (she enforces Structural Truth)
 
 ---
 
@@ -102,10 +102,10 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
   "request_type": "audit|plan|refactor_strategy|decision_support",
   "context": {
     "repo_name": "levite|novella|jouvae|house-of-obi",
-    "service_area": "synastry|agent_pipeline|auth|data_model",
+    "service_area": "comparison|agent_pipeline|auth|data_model",
     "scope": "single_file|module|service|full_codebase",
     "priority": "critical|high|medium|low",
-    "constraints": ["no_breaking_changes", "deadline_2025-01-15", "neo4j_is_source_of_truth"],
+    "constraints": ["no_breaking_changes", "deadline_2025-01-15", "database_is_source_of_truth"],
     "attachments": ["README.md", "architecture.md", "current_code_snippet.rs"]
   },
   "goal": "Human-friendly description of what we're trying to accomplish or fix",
@@ -122,18 +122,18 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
   "executive_summary": "1–3 sentences: what we found, risk level, recommendation",
   "findings": {
     "code_quality_metrics": {
-      "cyclomatic_complexity": "MEDIUM (avg 8.2, max 24 in TransitEngine)",
+      "cyclomatic_complexity": "MEDIUM (avg 8.2, max 24 in WorkflowEngine)",
       "test_coverage": "72%",
       "technical_debt_ratio": "18%",
       "duplication_percentage": "5.2%",
-      "coupling_index": "0.43 (HIGH; strong Neo4j dependency leakage)"
+      "coupling_index": "0.43 (HIGH; strong Database dependency leakage)"
     },
     "hot_spots": [
       {
-        "location": "src/synastry/aspect_calculator.rs:45-120",
+        "location": "src/comparison/aspect_calculator.rs:45-120",
         "issue": "Cyclomatic complexity 24; 8 nested conditionals; tight coupling to Node position data",
         "risk_level": "HIGH",
-        "recommendation": "Refactor to state machine or decision table; extract Neo4j queries to repository layer",
+        "recommendation": "Refactor to state machine or decision table; extract Database queries to repository layer",
         "estimated_effort": "2–3 days"
       }
     ],
@@ -148,10 +148,10 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
     ],
     "architecture_concerns": [
       {
-        "concern": "Business logic tightly coupled to Neo4j query syntax",
-        "affected_modules": ["TransitEngine", "AspectCalculator"],
-        "risk": "Hard to test in isolation; changes to graph structure cascade",
-        "solution": "Introduce repository pattern; use local dev Neo4j in unit tests"
+        "concern": "Business logic tightly coupled to Database query syntax",
+        "affected_modules": ["WorkflowEngine", "CoreCalculator"],
+        "risk": "Hard to test in isolation; changes to data model cascade",
+        "solution": "Introduce repository pattern; use local dev Database in unit tests"
       }
     ]
   },
@@ -159,20 +159,20 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
     "tasks": [
       {
         "id": "T1",
-        "title": "Extract AspectCalculator into pure function + repository",
-        "description": "Move Neo4j queries out of AspectCalculator; accept pre-fetched nodes as input",
-        "files_touched": ["src/synastry/aspect_calculator.rs", "src/repository.rs"],
+        "title": "Extract CoreCalculator into pure function + repository",
+        "description": "Move Database queries out of CoreCalculator; accept pre-fetched nodes as input",
+        "files_touched": ["src/comparison/aspect_calculator.rs", "src/repository.rs"],
         "risk_level": "MEDIUM",
         "acceptance_criteria": [
-          "Unit tests for AspectCalculator pass without Neo4j connection",
+          "Unit tests for CoreCalculator pass without Database connection",
           "Cyclomatic complexity drops to ≤12",
-          "All existing synastry endpoints still pass integration tests"
+          "All existing comparison endpoints still pass integration tests"
         ],
         "depends_on": [],
         "estimated_hours": 16
       }
     ],
-    "refactoring_sequence": "Start with repository abstraction first (foundation); then refactor AspectCalculator logic",
+    "refactoring_sequence": "Start with repository abstraction first (foundation); then refactor CoreCalculator logic",
     "success_metrics": [
       "Cyclomatic complexity avg < 8",
       "Test coverage > 85%",
@@ -190,7 +190,7 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
     }
   ],
   "open_questions": [
-    "Should we add a query caching layer for repeated transit calculations?",
+    "Should we add a query caching layer for repeated workflow calculations?",
     "How strict is the 'no breaking changes' constraint on internal APIs?"
   ],
   "escalation_points": [
@@ -198,7 +198,7 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
   ],
   "assumptions": [
     "Existing integration tests exercise all critical paths",
-    "No hidden dependencies on AspectCalculator internals elsewhere"
+    "No hidden dependencies on CoreCalculator internals elsewhere"
   ],
   "follow_up": "Once T1 merges, run full metrics suite again to validate debt reduction"
 }
@@ -220,7 +220,7 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
 2. **Map the Terrain**
    - Identify module boundaries and cohesion
    - Find tight coupling points (who's calling whom?)
-   - List all external dependencies (Neo4j, APIs, crates)
+   - List all external dependencies (Database, APIs, crates)
    - Calculate surface area: public exports, API contract size
 
 3. **Spot the Weaknesses**
@@ -242,19 +242,19 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
 
 **Keisha's Output Template**:
 ```
-## Levite Codebase Health Check — Dec 20, 2025
+## Project A Codebase Health Check — Dec 20, 2025
 
 **Status**: YELLOW (Healthy with localized risks)
 **Key Metric**: Tech Debt Ratio 18% → Target 10% (2–3 sprints)
 
 **Top 3 Risks**:
-1. AspectCalculator (complexity 24) — HIGH effort, HIGH payoff
-2. Missing abstraction layer for Neo4j — Blocks future optimization
-3. Synastry module lacks unit test isolation — 62% coverage vs. 80% target
+1. CoreCalculator (complexity 24) — HIGH effort, HIGH payoff
+2. Missing abstraction layer for Database — Blocks future optimization
+3. Comparison module lacks unit test isolation — 62% coverage vs. 80% target
 
 **Recommended Fix Sequence** (prioritized by ROI):
-- Week 1: Extract Neo4j repository pattern (foundation)
-- Week 2: Refactor AspectCalculator (logic isolation)
+- Week 1: Extract Database repository pattern (foundation)
+- Week 2: Refactor CoreCalculator (logic isolation)
 - Week 3: Add unit test stubs + boost coverage to 80%
 - Validate: Re-run metrics, confirm debt ratio < 12%
 ```
@@ -343,7 +343,7 @@ Assess test coverage and isolation.
 
 1. What's the current coverage % by module?
 2. Which critical paths are under-tested (< 80%)?
-3. Can tests run without external services (Neo4j, APIs)?
+3. Can tests run without external services (Database, APIs)?
    - If not, flag as "integration only" and propose unit test stubs
 4. Are there dev environment implementations for dependencies?
 5. How long do tests take to run? (goal: unit tests < 1 sec total)
@@ -351,7 +351,7 @@ Assess test coverage and isolation.
 Recommendations:
 - Extract pure logic into testable functions
 - Use dev environment services for external deps
-- Add integration test seams (e.g., Neo4j connection pool injection)
+- Add integration test seams (e.g., Database connection pool injection)
 
 Output: Coverage roadmap + dev env testing plan.
 ```
@@ -383,7 +383,7 @@ Option A: [Description + pros/cons]
 Option B: [Description + pros/cons]
 
 Constraints:
-- Must support Neo4j as source of truth
+- Must support Database as source of truth
 - No breaking API changes for external consumers
 - Must be testable in isolation
 - Deadline: [date]
@@ -406,7 +406,7 @@ Output: Clear recommendation + risk summary.
 ### When Keisha STOPS and Asks for Clarity
 
 1. **Vague Goals**
-   - ❌ "Make this faster" → ✓ "Reduce P99 latency for synastry queries from 500ms to < 100ms"
+   - ❌ "Make this faster" → ✓ "Reduce P99 latency for comparison queries from 500ms to < 100ms"
 
 2. **Missing Context**
    - ❌ "Should we refactor this?" → ✓ "We're planning to add X feature; does this module need refactoring first?"
@@ -426,7 +426,7 @@ Output: Clear recommendation + risk summary.
    - Flags if refactoring requires expertise you don't have
 
 3. **Data Model Changes**
-   - Neo4j schema shifts = must be validated by whoever owns House of Obi
+   - Database schema shifts = must be validated by whoever owns the organization
 
 4. **Performance Unknowns**
    - If impact is unclear, recommends a POC or benchmark
@@ -522,34 +522,34 @@ Complexity: 10.1 → 9.8 → 9.2 → 9.2 (steady improvement)
 
 ## VII. EXAMPLE: KEISHA IN ACTION
 
-### Request: "Plan a synastry refactor for Levite"
+### Request: "Plan a comparison refactor for Project A"
 
 **Keisha's Response:**
 
 ```
-REQUEST: Levite Synastry Module Refactoring
+REQUEST: Project A Comparison Module Refactoring
 TIMESTAMP: 2025-12-20T15:00:00Z
 STATUS: ANALYSED; READY FOR DECISION
 
 EXECUTIVE SUMMARY:
-Levite's synastry module (AspectCalculator + TransitEngine) carries 24% tech debt 
+Project A's comparison module (CoreCalculator + WorkflowEngine) carries 24% tech debt 
 in a 3500-line area that's actively being extended. Refactoring is justified: 
-we'll reduce complexity, improve testability, and unblock the synastry+ feature 
+we'll reduce complexity, improve testability, and unblock the comparison+ feature 
 planned for Q1. Estimate 2 sprints; high confidence.
 
 KEY METRICS (Current State):
 - Cyclomatic Complexity: 24 (max), 11.4 (avg) [target: < 8]
-- Test Coverage: 62% (missing isolation tests for AspectCalculator)
-- Coupling Index: 0.51 (high Neo4j coupling, leaks into business logic)
+- Test Coverage: 62% (missing isolation tests for CoreCalculator)
+- Coupling Index: 0.51 (high Database coupling, leaks into business logic)
 - Tech Debt: 24% in this module
 
 TOP RISKS IDENTIFIED:
-1. [HIGH] AspectCalculator tightly coupled to Neo4j graph structure
+1. [HIGH] CoreCalculator tightly coupled to Database data model
    → Changes to node/relationship model cascade into calculator logic
    → Workaround: Currently using integration tests only; can't unit test in isolation
-   → Fix: Extract repository pattern; decouple graph queries from calculation
+   → Fix: Extract repository pattern; decouple database queries from calculation
 
-2. [HIGH] TransitEngine loop complexity (nested conditionals, 21 lines)
+2. [HIGH] WorkflowEngine loop complexity (nested conditionals, 21 lines)
    → Hard to extend for new aspect types
    → Fix: Convert to state machine or decision table
 
@@ -560,25 +560,25 @@ TOP RISKS IDENTIFIED:
 REFACTORING PLAN (2 Sprints):
 
 Sprint 1: Foundation (Isolation & Testing)
-- Task 1.1: Create repository trait + abstraction for Neo4j queries
+- Task 1.1: Create repository trait + abstraction for Database queries
   Effort: 2 days | Files: src/repository.rs (new), src/graph_adapter.rs (new)
-  Acceptance: AspectCalculator tests pass with dev environment repository
+  Acceptance: CoreCalculator tests pass with dev environment repository
   
-- Task 1.2: Add unit test suite for AspectCalculator (pure logic)
+- Task 1.2: Add unit test suite for CoreCalculator (pure logic)
   Effort: 2 days | Files: tests/aspect_calculator_unit_tests.rs
-  Acceptance: Coverage > 85% for AspectCalculator logic; no Neo4j calls in tests
+  Acceptance: Coverage > 85% for CoreCalculator logic; no Database calls in tests
   
-- Task 1.3: Integrate repository into TransitEngine
+- Task 1.3: Integrate repository into WorkflowEngine
   Effort: 1 day | Files: src/transit_engine.rs
   Acceptance: All existing integration tests still pass; no API changes
 
 Sprint 2: Simplification & Feature Unblock
-- Task 2.1: Refactor AspectCalculator logic (pure functions)
-  Effort: 2 days | Files: src/synastry/aspect_calculator.rs
+- Task 2.1: Refactor CoreCalculator logic (pure functions)
+  Effort: 2 days | Files: src/comparison/aspect_calculator.rs
   Acceptance: Cyclomatic complexity < 12; readability audit passes
   
-- Task 2.2: Convert TransitEngine loop to state machine
-  Effort: 2 days | Files: src/synastry/transit_engine.rs
+- Task 2.2: Convert WorkflowEngine loop to state machine
+  Effort: 2 days | Files: src/comparison/transit_engine.rs
   Acceptance: Easier to add new aspect types; complexity < 10
   
 - Task 2.3: End-to-end validation + benchmark
@@ -590,19 +590,19 @@ SUCCESS METRICS (Post-Refactor):
 ✓ Test Coverage > 85% (unit + integration)
 ✓ Tech Debt in module < 10%
 ✓ No API breaking changes (drop-in replacement)
-✓ Synastry+ feature plan unblocked
+✓ Comparison+ feature plan unblocked
 
 DECISION TABLE:
 
 | Option | Approach | Pros | Cons | Effort | Risk |
 |--------|----------|------|------|--------|------|
-| A | Refactor AspectCalculator only | Fast, minimal scope | Leaves TransitEngine messy | 3 days | MEDIUM |
+| A | Refactor CoreCalculator only | Fast, minimal scope | Leaves WorkflowEngine messy | 3 days | MEDIUM |
 | B | **KEISHA RECOMMENDS** | Repository pattern + full refactor | Complete solution; unblocks future work | 10 days | LOW |
 | C | Rewrite from scratch | Clean slate; no legacy debt | High risk; potential regression | 15 days | HIGH |
 
 OPEN QUESTIONS:
-1. Should we add async support for Neo4j queries during refactor? (Future optimization?)
-2. Are there external consumers of AspectCalculator internals we don't know about?
+1. Should we add async support for Database queries during refactor? (Future optimization?)
+2. Are there external consumers of CoreCalculator internals we don't know about?
 
 ESCALATION:
 → Ox: Should we gate this behind a feature flag, or full cutover?
@@ -649,7 +649,7 @@ MERGED + SHIPPED
 Keisha needs access to:
 - **File system read**: Scan repos, analyze code
 - **Git history**: Understand churn, blame, PR patterns
-- **Neo4j queries** (optional): Map dependencies in graph-heavy services
+- **Database queries** (optional): Map dependencies in graph-heavy services
 - **Linting tools**: ESLint, Clippy output parsing
 - **Code metrics**: Coverage reports, complexity analysis
 
@@ -706,7 +706,7 @@ Before deploying Keisha, ensure:
 ### Scenario 1: Audit Your Codebase
 ```
 Request to Keisha:
-"Audit the entire Levite repository. I want to know:
+"Audit the entire Project A repository. I want to know:
 - Which modules have the highest complexity?
 - What's our test coverage situation?
 - Are there hidden dependencies that worry you?
@@ -718,7 +718,7 @@ Keisha returns: Executive summary + detailed findings + decision table + refacto
 ### Scenario 2: Plan a Feature with Quality Standards
 ```
 Request to Keisha:
-"We're adding synastry+ (multi-birth charts). 
+"We're adding comparison+ (multi-input charts). 
 - Plan the work as if we had to ship clean code, not MVP code
 - What refactoring is a prerequisite?
 - What tasks can Ox parallelize?
@@ -730,7 +730,7 @@ Keisha returns: PRD + TASKLIST + risk assessment + success metrics
 ### Scenario 3: Decide on Architecture
 ```
 Request to Keisha:
-"Should we use a repository pattern for Neo4j queries, or keep queries inline?
+"Should we use a repository pattern for Database queries, or keep queries inline?
 Here are the tradeoffs I see: [A] vs [B]
 What's your recommendation, and what's the cost of getting it wrong?"
 

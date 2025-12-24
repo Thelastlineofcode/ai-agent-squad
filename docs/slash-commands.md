@@ -23,6 +23,7 @@
 | **REVIEW** | `/review` | `/review` | Code diff | Feedback + decision | Code quality review |
 | | `/security-scan` | `/security-scan` | Code/dependencies | Vulnerabilities + fixes | Security assessment |
 | | `/coverage` | `/coverage` | Test results | Coverage gaps + recommendations | Test completeness |
+| **AUDITS** | `/audit` | `/audit [type] [slug]` | Audit type + feature slug | Audit report in `Execs/docs/audits/reports/` | Formal release gates |
 | **QUALITY** | `/improve` | `/improve` | Codebase/Product | Refinement plan + evidence | Improving without new features |
 | | `/lint-fix` | `/lint-fix` | Code section | Formatted code | Style/formatting |
 | | `/dependency-audit` | `/dependency-audit` | package.json/Cargo.toml | Vulnerability report | Dependency security |
@@ -375,6 +376,24 @@ Options:
 --stage preflight|post
 ```
 
+#### `/audit`
+**Purpose**: Produce a formal audit report using canonical templates
+```
+Usage: /audit [type] [feature-slug]
+
+Types:
+- requirements | architecture | tech-debt
+- validation | flow-coverage
+- implementation | security | ux | release | ops
+
+Outputs:
+- `Execs/docs/audits/reports/<agent>/audit-<feature>-<type>-<date>.md`
+- Uses templates in `Execs/docs/audits/templates/`
+
+Scaffold:
+`python Execs/dev-tools/audits/scaffold_audits.py --feature [slug]`
+```
+
 #### `/lint-fix`
 **Purpose**: Auto-fix code style and formatting
 ```
@@ -504,17 +523,17 @@ Inputs: Task breakdown from Keisha
 Outputs: Code diff, test files, implementation details
 ```
 
-**Agent: Soulja (Tester)**
+**Agent: Soulja Slim (Validation)**
 ```
 Primary commands: /test-gen, /debug, /trace, /coverage, /perf
 Inputs: PRD/TASKLIST + Code from Ox
 Outputs: Preflight guardrails, test results, performance profiles, identified issues
 ```
 
-**Agent: DMX (Reviewer)**
+**Agent: DMX (Enforcer)**
 ```
 Primary commands: /review, /security-scan, /coverage-analysis
-Inputs: Code from Ox, tests from Soulja
+Inputs: Code from Ox, tests from Soulja Slim
 Outputs: Review decision, feedback, approval/rejection
 ```
 

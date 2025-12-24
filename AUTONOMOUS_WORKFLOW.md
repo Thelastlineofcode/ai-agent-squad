@@ -38,10 +38,10 @@
     *   *Check*: Is it verified?
     *   *Output*: `docs/prd/[feature].md`
 3.  **Keisha** tags -> **Soulja Slim (Preflight)**.
-    *   "Soulja, preflight this PRD for TDD + dev env readiness."
-4.  **Soulja** runs preflight guardrails.
+    *   "Soulja Slim, preflight this PRD for TDD + dev env readiness."
+4.  **Soulja Slim** runs preflight guardrails.
     *   *Check*: Stack/test command confirmed, dev env ready, no mocks allowed.
-5.  **Soulja** tags -> **Ox**.
+5.  **Soulja Slim** tags -> **Ox**.
     *   "Ox, build this. Preflight PASSED."
 
 ### B. The TDD & Build Loop (Tests -> Code -> Verify)
@@ -53,17 +53,17 @@
     *   *Goal*: Make the tests pass (Green state).
     *   *Check*: Coverage > 85%?
 4.  **Ox** tags -> **Soulja Slim**.
-    *   "Soulja, validate this implementation. Tests are green."
+    *   "Soulja Slim, validate this implementation. Tests are green."
 
 ### C. The Security Loop (Parallel Attack)
-1.  **Soulja** is verifying.
+1.  **Soulja Slim** is verifying.
 2.  **Igor** wakes up.
     *   "I'm attacking the new endpoint."
 3.  **Igor** reports findings to **DMX**.
 4.  **Suge** monitors: "Did Ox write tests first in dev env, no mocks? If not, REJECT."
 
 ### D. The Enforcement Loop (Verify -> Ship)
-1.  **DMX** receives "PASS" from Soulja + Report from Igor.
+1.  **DMX** receives "PASS" from Soulja Slim + Report from Igor.
 2.  **DMX** reviews code.
     *   *Approve*: Merge to main. Tag -> **Suge**.
     *   *Block*: Tag -> **Ox** (fix architecture).
@@ -74,7 +74,7 @@
 
 1.  **No Ambiguity**: If Keisha produces a vague plan, bounce it back immediately.
 2.  **Daily Summary is Law**: You must produce the summary. It is the only way the User knows what happened.
-3.  **Protect the Doctrine**: If Ox starts coding astrology vibes, stop him.
+3.  **Protect the Doctrine**: If Ox starts coding domain vibes, stop him.
 4.  **Silence is Compliance**: If agents are working, let them work. Intervene only on blockers.
 
 ---

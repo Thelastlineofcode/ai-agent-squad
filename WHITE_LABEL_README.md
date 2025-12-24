@@ -44,7 +44,7 @@ All agents include:
 | Core Analysis | semgrep, code-analysis, rust-analyzer, clippy, eslint |
 | Metrics | cargo-tarpaulin, c8, radon |
 | Git Intelligence | git-analysis, git-history |
-| Architecture | cargo-tree, depcruise, neo4j-query |
+| Architecture | cargo-tree, depcruise, database-query |
 | Security | owasp-check, cargo-audit, trufflehog |
 
 ### 📚 Documentation Fork & Learning
@@ -62,8 +62,8 @@ All agents include:
 |-------|------|---------|-----------|
 | **Keisha** | Planner & Analyst | `@keisha` | Audits, PRDs, architecture |
 | **Ox** | Master Coder | `@ox` | Implementation, TDD, Rust/TS |
-| **Soulja Slim** | Tester & Validator | `@soulja` | 7-layer validation |
-| **DMX** | Enforcer & Reviewer | `@dmx` | Code review, final approval |
+| **Soulja Slim** | Validator | `@soulja` | 7-layer validation |
+| **DMX** | Enforcer | `@dmx` | Code review, final approval |
 
 ---
 

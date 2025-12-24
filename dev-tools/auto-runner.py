@@ -51,6 +51,19 @@ def run_guardrails(root, feature, stage):
     return subprocess.call(cmd, cwd=str(root))
 
 
+def run_audit_scaffold(root, feature, tasks_dir):
+    scaffold = root / "Execs" / "dev-tools" / "audits" / "scaffold_audits.py"
+    cmd = [
+        sys.executable,
+        str(scaffold),
+        "--feature",
+        feature,
+        "--tasks-dir",
+        str(tasks_dir),
+    ]
+    return subprocess.call(cmd, cwd=str(root))
+
+
 def ensure_artifacts(tasks_dir, feature):
     prd = tasks_dir / f"prd-{feature}.md"
     tasklist = tasks_dir / f"tasks-{feature}.md"
@@ -117,6 +130,9 @@ def main(argv):
     print("AUTO RUNNER: feature {}".format(feature))
     if args.phase == "preflight":
         print("PHASE: preflight")
+        code = run_audit_scaffold(root, feature, tasks_dir)
+        if code != 0:
+            return code
         code = run_guardrails(root, feature, "preflight")
         if code != 0:
             return code
@@ -124,6 +140,9 @@ def main(argv):
         return 0
 
     print("PHASE: post")
+    code = run_audit_scaffold(root, feature, tasks_dir)
+    if code != 0:
+        return code
     code = run_guardrails(root, feature, "post")
     if code != 0:
         return code

@@ -1,7 +1,12 @@
 # AGENT TEAM ORCHESTRATION & @ACTIVATION SYSTEM
-## How Keisha + Soulja + Ox Work Together (With Examples)
+## How Keisha + Soulja Slim + Ox Work Together (With Examples)
 
 ---
+
+## Audit + Limiter Requirements
+
+- Required audits live in `Execs/docs/audits/` and must be PASS before release.
+- Tech debt/bloat gates are enforced in `Execs/docs/limiters.md`.
 
 ## THE AGENT TEAM
 
@@ -46,10 +51,10 @@ Each agent has a unique @mention trigger:
 
 ```
 @keisha [request]       → Keisha (Planner & Analyst)
-@soulja preflight [prd] → Soulja (TDD Gate)
+@soulja preflight [prd] → Soulja Slim (TDD Gate)
 @ox [request]           → Ox (Executor)
-@tester [code]          → Tester (Validation)
-@reviewer [pr]          → Reviewer (Quality Gates)
+@tester [code]          → Soulja Slim (Validation)
+@reviewer [pr]          → DMX (Quality Gates)
 ```
 
 ---
@@ -61,16 +66,16 @@ Branding canon is enforced via `Execs/docs/branding.md`.
 
 ---
 
-## FULL WORKFLOW EXAMPLE: Building the KP Transits Engine
+## FULL WORKFLOW EXAMPLE: Building the Core Workflow Engine
 
 ### Step 1: User Activates Keisha
 
 ```
-User: @keisha plan the KP transits engine for Levite
+User: @keisha plan the Core workflows engine for Project A
 
 Context:
-- Current state: Synastry module at 18% tech debt
-- Feature scope: Calculate Saturn/Jupiter transits (5-year span)
+- Current state: Comparison module at 18% tech debt
+- Feature scope: Calculate Entity A/Entity B workflows (5-year span)
 - Constraints: 2-sprint budget, real-time performance critical
 - Team capacity: 1-2 developers
 - Quality bar: > 90% coverage, complexity < 12
@@ -83,20 +88,20 @@ Context:
 
 Before I plan, I have clarifying questions:
 
-1. Have we fixed the AspectCalculator coupling issue?
+1. Have we fixed the CoreCalculator coupling issue?
    (If not, should we bundle refactoring + this feature?)
 
-2. Are Saturn/Jupiter the only transits, or do we need extensibility
-   for future transit types?
+2. Are Entity A/Entity B the only workflows, or do we need extensibility
+   for future workflow types?
 
 3. Can we break API, or must this be backward-compatible?
 
 4. Is "real-time" critical for the initial MVP, or acceptable for v2?
 
 Once I understand these, I'll:
-- Audit current Levite state
+- Audit current Project A state
 - Identify prerequisites (refactoring needed? yes/no)
-- Break transits engine into atomic tasks
+- Break workflows engine into atomic tasks
 - Estimate timeline + risk
 - Produce PRD + TASKLIST for Ox
 ```
@@ -106,8 +111,8 @@ Once I understand these, I'll:
 ```
 User: @keisha here are the answers:
 
-1. AspectCalculator is still at 18% debt (not yet refactored)
-2. Saturn + Jupiter only for MVP; extensible for future
+1. CoreCalculator is still at 18% debt (not yet refactored)
+2. Entity A + Entity B only for MVP; extensible for future
 3. Must maintain backward compatibility
 4. Real-time not critical for MVP; v1.1 can optimize
 ```
@@ -117,23 +122,23 @@ User: @keisha here are the answers:
 ```
 @keisha response:
 
-DECISION: Refactor AspectCalculator FIRST (1 sprint), then transits (1 sprint).
+DECISION: Refactor CoreCalculator FIRST (1 sprint), then workflows (1 sprint).
 
-Here's why: Transits engine will depend on AspectCalculator.
+Here's why: Workflow engine will depend on CoreCalculator.
 If we build on messy foundation, we're repeating the same coupling issues.
 Better to clean foundation once.
 
 TASKLIST (2 sprints, 4 weeks):
 
-SPRINT 1: Foundation (AspectCalculator Refactoring)
-├─ T1: Repository pattern for Neo4j (1 day)
-├─ T2: Refactor AspectCalculator logic (2 days)
+SPRINT 1: Foundation (CoreCalculator Refactoring)
+├─ T1: Repository pattern for Database (1 day)
+├─ T2: Refactor CoreCalculator logic (2 days)
 ├─ T3: Unit test isolation + coverage (2 days)
 └─ T4: Integration validation (1 day)
 
-SPRINT 2: Feature (KP Transits Engine)
-├─ T5: Design transit calculation engine (1 day)
-├─ T6: Implement Saturn/Jupiter transits (2 days)
+SPRINT 2: Feature (Core Workflow Engine)
+├─ T5: Design workflow calculation engine (1 day)
+├─ T6: Implement Entity A/Entity B workflows (2 days)
 ├─ T7: Test suite + multi-year validation (2 days)
 └─ T8: Performance benchmarks + optimization (1 day)
 
@@ -145,16 +150,16 @@ Ready for Ox to execute?
 ### Preflight Gate (New)
 
 ```
-User: @soulja preflight KP transits engine
+User: @soulja preflight Core workflows engine
 
-Soulja checks:
-- Runs guardrails: `python Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature kp-transits --stage preflight`
+Soulja Slim checks:
+- Runs guardrails: `python Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature core-workflows --stage preflight`
 - Stack + test command confirmed
 - PRD + TASKLIST present
 - TDD evidence template created
 - Dev environment ready (no mocks)
 
-Soulja output: PASS or BLOCKED
+Soulja Slim output: PASS or BLOCKED
 ```
 
 ### Step 4: User Activates Ox
@@ -172,16 +177,16 @@ Keisha's PRD + TASKLIST attached (2 sprints, clear success criteria)
 
 I understand the plan. Before I start, confirming:
 
-1. Rust stack, Neo4j backend, async/await throughout?
-2. Should I run tests against local dev Neo4j?
-3. Any existing patterns in Levite for error types + repository?
+1. Rust stack, Database backend, async/await throughout?
+2. Should I run tests against local dev Database?
+3. Any existing patterns in Project A for error types + repository?
 4. Timeline: Start immediately? (I'll time-box each task)
 
 Once confirmed, I'll:
 - Start T1: Define repository trait
 - Write tests first (TDD approach)
 - Achieve > 85% coverage + < 12 complexity
-- Handoff to Tester after each task
+- Handoff to Soulja Slim after each task
 
 Ready for answers.
 ```
@@ -191,9 +196,9 @@ Ready for answers.
 ```
 User: @ox confirmed:
 
-1. Yes, Rust + Neo4j + tokio
-2. Use local dev Neo4j for tests
-3. See LeviteError enum in src/errors.rs (follow that pattern)
+1. Yes, Rust + Database + tokio
+2. Use local dev Database for tests
+3. See ProjectError enum in src/errors.rs (follow that pattern)
 4. Start immediately; we're on tight timeline
 ```
 
@@ -204,24 +209,24 @@ User: @ox confirmed:
 
 T1: Repository trait definition
 ├─ Defining GraphRepository trait (async)
-├─ Neo4j implementation (src/repository/neo4j.rs)
+├─ Database implementation (src/repository/database.rs)
 ├─ Custom error types (RepositoryError)
-├─ Unit tests with dev env Neo4j (tests/repository_tests.rs)
+├─ Unit tests with dev env Database (tests/repository_tests.rs)
 └─ Target: 8 hours, > 85% coverage
 
 Current progress:
 - Trait definition: DONE (3 hours)
-- Neo4j implementation: IN PROGRESS (1 hour remaining)
+- Database implementation: IN PROGRESS (1 hour remaining)
 - Tests: DONE (4 hours, 12 test cases)
 
 Coverage: 89% (exceeds 85%) ✓
 Complexity: Avg 6.2 (well below 12) ✓
 All tests passing: YES ✓
 
-Ready to hand off to Tester? (Will do before T2)
+Ready to hand off to Soulja Slim? (Will do before T2)
 ```
 
-### Step 7: Ox Hands Off to Tester
+### Step 7: Ox Hands Off to Soulja Slim
 
 ```
 @ox → @tester handoff
@@ -230,7 +235,7 @@ Task: T1 (Repository trait definition)
 
 Deliverables:
 ├─ src/repository.rs (trait definition)
-├─ src/repository/neo4j.rs (Neo4j implementation)
+├─ src/repository/database.rs (Database implementation)
 ├─ src/errors.rs (RepositoryError enum)
 └─ tests/repository_tests.rs (12 test cases)
 
@@ -243,13 +248,13 @@ Quality Evidence:
 
 Acceptance Criteria (from Keisha):
 ├─ pub trait GraphRepository with async methods ✓
-├─ Neo4jRepository implementation provided ✓
-└─ Ready for AspectCalculator refactoring ✓
+├─ DatabaseRepository implementation provided ✓
+└─ Ready for CoreCalculator refactoring ✓
 
-Ready for Tester validation.
+Ready for Soulja Slim validation.
 ```
 
-### Step 8: Tester Validates
+### Step 8: Soulja Slim Validates
 
 ```
 @tester response:
@@ -257,26 +262,26 @@ Ready for Tester validation.
 T1 Validation Report:
 
 ✅ PASS: Trait definition correct
-✅ PASS: Neo4j implementation complete
+✅ PASS: Database implementation complete
 ✅ PASS: Error handling comprehensive
 ✅ PASS: Coverage 89% (exceeds 85% target)
 ✅ PASS: Complexity within bounds (avg 6.2)
 ✅ PASS: All Keisha's acceptance criteria met
-✅ PASS: Ready for AspectCalculator refactoring
+✅ PASS: Ready for CoreCalculator refactoring
 
 Approval: READY FOR NEXT TASK
 
-Ox may proceed to T2: Refactor AspectCalculator
+Ox may proceed to T2: Refactor CoreCalculator
 ```
 
-### Step 9: Ox Continues (T2: Refactor AspectCalculator)
+### Step 9: Ox Continues (T2: Refactor CoreCalculator)
 
 ```
 @ox working:
 
-T2: Refactor AspectCalculator
+T2: Refactor CoreCalculator
 ├─ Accept repository trait as param
-├─ Extract pure logic from graph queries
+├─ Extract pure logic from database queries
 ├─ Implement with error handling
 └─ Unit tests + dev environment services
 
@@ -300,15 +305,15 @@ Re-testing... ALL PASS (15 test cases)
 Coverage: 87% (exceeds 85%) ✓
 Complexity: Avg 7.8, Max 12 (meets Keisha's target) ✓
 
-Ready for Tester validation (T2 complete).
+Ready for Soulja Slim validation (T2 complete).
 ```
 
-### Step 10: Tester Validates T2
+### Step 10: Soulja Slim Validates T2
 
 ```
 @tester response:
 
-T2 Validation: AspectCalculator Refactoring
+T2 Validation: CoreCalculator Refactoring
 
 ✅ PASS: Repository pattern applied correctly
 ✅ PASS: Pure logic extracted and testable
@@ -331,7 +336,7 @@ Sprint 1 on track: T1 ✓ T2 ✓ (T3, T4 pending)
 ```
 @ox working:
 
-T3: Unit test isolation + coverage (AspectCalculator)
+T3: Unit test isolation + coverage (CoreCalculator)
 ├─ Add edge case tests
 ├─ Null/empty/boundary tests
 ├─ Error path tests
@@ -344,8 +349,8 @@ COMPLETE:
 - All tests pass ✓
 
 T4: Integration validation
-├─ End-to-end synastry flow
-├─ Test with real Neo4j queries
+├─ End-to-end comparison flow
+├─ Test with real Database queries
 └─ Performance baseline
 
 COMPLETE:
@@ -356,16 +361,16 @@ COMPLETE:
 SPRINT 1 STATUS: COMPLETE ✓
 
 All T1-T4 validation passed.
-Ready to start SPRINT 2 (Transits Engine).
+Ready to start SPRINT 2 (Workflow Engine).
 ```
 
-### Step 12: Sprint 2 - Transits Engine
+### Step 12: Sprint 2 - Workflow Engine
 
 ```
 @ox working:
 
-T5: Design transit calculation engine
-- Saturn/Jupiter only (extensible)
+T5: Design workflow calculation engine
+- Entity A/Entity B only (extensible)
 - 5-year span calculations
 - Aspect orbs + interpretations
 
@@ -374,9 +379,9 @@ COMPLETE:
 - API contract defined
 - Tests written (ready for implementation)
 
-T6: Implement Saturn/Jupiter transits
+T6: Implement Entity A/Entity B workflows
 - Multi-year ephemeris lookups
-- Aspect calculations using AspectCalculator
+- Aspect calculations using CoreCalculator
 - Interpretation matching
 
 COMPLETE:
@@ -396,7 +401,7 @@ COMPLETE:
 - Historical accuracy verified
 
 T8: Performance benchmarks
-- Single transit calculation: 2.3ms
+- Single workflow calculation: 2.3ms
 - 5-year multi-planet span: 145ms
 - Memory usage: stable
 
@@ -410,13 +415,13 @@ All T5-T8 validation passed.
 Ready for code review + merge.
 ```
 
-### Step 13: Final Handoff to Reviewer
+### Step 13: Final Handoff to DMX
 
 ```
 @ox → @reviewer handoff
 
 Summary:
-├─ Feature: KP Transits Engine (Saturn/Jupiter, 5-year)
+├─ Feature: Core Workflow Engine (Entity A/Entity B, 5-year)
 ├─ Lines of code: 1,245 (implementation)
 ├─ Lines of tests: 1,890 (test code)
 ├─ Coverage: 91% overall, 95% critical paths
@@ -425,17 +430,17 @@ Summary:
 
 All Tests: ✅ PASS (67 total tests)
 Keisha's Acceptance Criteria: ✅ 100% MET
-Tester Validation: ✅ APPROVED (all phases)
+Soulja Slim Validation: ✅ APPROVED (all phases)
 
-Ready for Reviewer quality gates + merge.
+Ready for DMX quality gates + merge.
 ```
 
-### Step 14: Reviewer Final Quality Check
+### Step 14: DMX Final Quality Check
 
 ```
 @reviewer response:
 
-Final Review: KP Transits Engine
+Final Review: Core Workflow Engine
 
 ✅ Code quality gates: PASS
 ✅ Architecture review: PASS (follows patterns)
@@ -476,7 +481,7 @@ Deploy checklist:
 ### 2. Sequential Handoffs (Not Parallel)
 
 ```
-Keisha finishes plan → Soulja preflights → Ox starts coding → Tester validates → Reviewer merges
+Keisha finishes plan → Soulja Slim preflights → Ox starts coding → Soulja Slim validates → DMX merges
 
 NOT: Everyone working at once (chaos, conflicts, rework)
 ```
@@ -487,10 +492,10 @@ NOT: Everyone working at once (chaos, conflicts, rework)
 
 ```
 Keisha defines success criteria in PRD.
-Soulja preflights stack/test command + guardrails.
+Soulja Slim preflights stack/test command + guardrails.
 Ox builds to meet those criteria exactly (dev env, no mocks).
-Tester validates 100% criteria met.
-Reviewer enforces standards.
+Soulja Slim validates 100% criteria met.
+DMX enforces standards.
 
 Result: No surprises, no rework, no drift.
 ```
@@ -521,10 +526,10 @@ Saves 10x the rework later.
 ### 5. Iterate, Don't Skip
 
 ```
-Ox → Tester finds issues → Ox fixes → Tester re-validates → Next task
+Ox → Soulja Slim finds issues → Ox fixes → Soulja Slim re-validates → Next task
 
-Never skip Tester.
-Never skip Reviewer.
+Never skip Soulja Slim.
+Never skip DMX.
 Never merge without validation.
 ```
 
@@ -537,12 +542,12 @@ Never merge without validation.
 Yes, with caveats:
 
 ```
-@ox task1: Work on AspectCalculator refactoring
+@ox task1: Work on CoreCalculator refactoring
 (Provide task1 context: PRD, TASKLIST, etc.)
 
 [Ox works on T1, T2]
 
-@ox task2: Meanwhile, start KP transits design
+@ox task2: Meanwhile, start Core workflows design
 (Separate context, separate branch, separate approval)
 
 Ox switches between them, context-managed.
@@ -575,7 +580,7 @@ Compare: Traditional dev (without agent coordination): 2-4 weeks
 
 | Situation | Agent | Command |
 |-----------|-------|---------|
-| "Code is messy; what should we fix?" | @keisha | audit Levite |
+| "Code is messy; what should we fix?" | @keisha | audit Project A |
 | "I want to add feature X" | @keisha | plan feature X |
 | "Choose between architecture A/B" | @keisha | decide A vs B |
 | "Run TDD preflight gate" | @soulja | preflight [feature] |
@@ -608,12 +613,12 @@ Compare: Traditional dev (without agent coordination): 2-4 weeks
 ✅ **Coverage**: Test coverage maintained > 85%  
 ✅ **Scalability**: Code designed for extension from day 1  
 ✅ **Clarity**: No ambiguity (Keisha clarifies upfront)  
-✅ **Confidence**: Tester validates; Reviewer enforces  
+✅ **Confidence**: Soulja Slim validates; DMX enforces  
 
 ---
 
 **The @activation system is how you orchestrate your agent team.**
 
-**Keisha plans. Soulja preflights. Ox builds. Tester validates. Reviewer enforces.**
+**Keisha plans. Soulja Slim preflights. Ox builds. Soulja Slim validates. DMX enforces.**
 
 **Together: production-ready code at scale.**

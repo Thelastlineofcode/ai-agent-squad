@@ -8,7 +8,7 @@ Use Soulja Slim's debugging expertise to find and fix issues.
 
 ## Steps
 
-### 1. Activate Soulja with Error Context
+### 1. Activate Soulja Slim with Error Context
 ```
 @soulja debug this error:
 
@@ -22,7 +22,7 @@ Use Soulja Slim's debugging expertise to find and fix issues.
 - Environment details
 
 ### 3. Review Root Cause Analysis
-Soulja will provide:
+Soulja Slim will provide:
 - **Symptom**: What was observed
 - **Root Cause**: Why it happened
 - **Evidence**: Logs, traces
@@ -31,7 +31,7 @@ Soulja will provide:
 
 ### 4. Hand Off to Ox for Fix
 ```
-@ox fix the issue identified by Soulja:
+@ox fix the issue identified by Soulja Slim:
 
 [PASTE SOULJA'S RECOMMENDED FIX]
 ```

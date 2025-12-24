@@ -35,7 +35,7 @@ Use these names exactly:
 - Master P (Design / UI/UX)
 
 Allowed triggers:
-- `@suge`, `@keisha`, `@ox`, `@soulja` / `@tester`, `@dmx` / `@reviewer`, `@igor`
+- `@suge`, `@keisha`, `@ox`, `@soulja` / `@tester`, `@dmx` / `@reviewer`, `@igor`, `@masterp` / `@master-p`
 
 Do not introduce alternates (no "Executor" as a public name).
 
@@ -58,11 +58,11 @@ If any output violates this format, DMX blocks.
 ## Enforcement
 
 - Keisha includes naming rules in PRDs.
-- Soulja preflight blocks mismatched names.
+- Soulja Slim preflight blocks mismatched names.
 - DMX blocks release on naming drift.
 
 ---
 
 ## Example
 
-Feature: Transit Engine | Codename: SATURN-RUN | Owner: Ox
+Feature: Workflow Engine | Codename: SATURN-RUN | Owner: Ox

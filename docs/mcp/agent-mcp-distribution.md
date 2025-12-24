@@ -76,7 +76,7 @@ This document maps the free MCP tools to their designated agents, following the 
 
 ---
 
-## @soulja (Tester) — Security Research
+## @soulja (Soulja Slim) — Security Research
 
 ### Docs Fetcher MCP (Testing Docs)
 ```json
@@ -98,7 +98,7 @@ This document maps the free MCP tools to their designated agents, following the 
 
 ---
 
-## @dmx (Reviewer) — Best Practices
+## @dmx (Enforcer) — Best Practices
 
 ### DocFork MCP (Architecture Patterns)
 ```json

@@ -26,11 +26,11 @@ This workflow orchestrates all 4 agents to plan, build, test, and approve a new 
 - Ox will implement the feature
 - Ox will provide evidence (coverage, complexity)
 
-### 3. Hand Off to Soulja for Validation
+### 3. Hand Off to Soulja Slim for Validation
 ```
 @soulja validate [FEATURE_NAME] implementation
 ```
-- Soulja runs 5-layer validation
+- Soulja Slim runs 5-layer validation
 - If BLOCKED: return to step 2 with fixes
 - If PASSED: proceed to step 4
 

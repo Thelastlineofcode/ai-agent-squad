@@ -83,7 +83,7 @@ metadata:
     # TIER 4: Architecture
     - cargo-tree       # Rust dependency tree
     - depcruise        # TypeScript dependency cruiser
-    - neo4j-query      # Graph data model analysis
+    - database-query      # Data model analysis
     # TIER 5: Documentation
     - graphviz         # Architecture visualization
     # TIER 6: Security

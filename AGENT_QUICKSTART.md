@@ -12,7 +12,7 @@ This repository contains a **multi-agent AI system** for software development. S
 │                    DEVELOPMENT PIPELINE                         │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  @keisha (Planner)  →  @soulja (Preflight) → @ox (Executor) → @soulja (Validate) → @dmx (Reviewer) │
+│  @keisha (Planner)  →  @soulja (Preflight) → @ox (Executor) → @soulja (Validate) → @dmx (Enforcer) │
 │       │                    │                     │                  │                  │ │
 │       ▼                    ▼                     ▼                  ▼                  ▼ │
 │   PRD + Tasks         TDD Gate              Tests + Code        Validation         Approval │
@@ -24,6 +24,8 @@ Each agent is an **LLM system prompt** designed to specialize in one phase of th
 
 Auto workflow: `Execs/docs/auto-workflow.md`  
 Branding canon: `Execs/docs/branding.md`
+Audits: `Execs/docs/audits/`  
+Limiters: `Execs/docs/limiters.md`
 
 ---
 
@@ -35,7 +37,7 @@ Branding canon: `Execs/docs/branding.md`
 |-------|--------|-------|--------|
 | **Keisha** | Planning | Feature request | PRD + TASKLIST |
 | **Ox (Executor)** | Implementation | PRD/TASKLIST | Code + Tests |
-| **Soulja** | Preflight + Validation | PRD/Tasks + Code | Pass/Fail Report |
+| **Soulja Slim** | Preflight + Validation | PRD/Tasks + Code | Pass/Fail Report |
 | **DMX** | Governance | Validation Report | Approval/Rejection |
 
 ### Design Principles
@@ -55,7 +57,7 @@ Branding canon: `Execs/docs/branding.md`
 ├──────────────┼────────────────────────────────────────────────┤
 │ Keisha       │ radon, gitpython, ast, graphviz, pygments      │
 │ Ox (Executor)│ rustc, cargo, tsc, esbuild, go, black, ruff    │
-│ Soulja       │ pytest, vitest, bandit, trufflehog, cargo-audit│
+│ Soulja Slim       │ pytest, vitest, bandit, trufflehog, cargo-audit│
 │ DMX          │ difflib, git-diff, json-diff, deploy scripts   │
 └──────────────┴────────────────────────────────────────────────┘
 ```
@@ -117,10 +119,10 @@ Branding canon: `Execs/docs/branding.md`
 | Metric | Target | Hard Limit | Enforced By |
 |--------|--------|------------|-------------|
 | Cyclomatic Complexity | < 8 avg | < 12 max | Keisha, DMX |
-| Test Coverage | > 85% | > 95% critical | Soulja |
+| Test Coverage | > 85% | > 95% critical | Soulja Slim |
 | Function Length | < 30 lines | < 50 max | Ox |
-| Security Vulnerabilities | 0 critical | 0 high | Soulja |
-| Response Time (P95) | < 1 sec | < 2 sec | Soulja |
+| Security Vulnerabilities | 0 critical | 0 high | Soulja Slim |
+| Response Time (P95) | < 1 sec | < 2 sec | Soulja Slim |
 
 ### Security Standards (December 2025)
 
@@ -159,7 +161,7 @@ Execs/
 │   ├── Keisha/                      # Planner
 │   ├── Ox/                          # Executor
 │   ├── Soulja-Slim/                 # Validator
-│   └── DMX/                         # Reviewer
+│   └── DMX/                         # DMX
 │
 ├── docs/                            # THE LIBRARY
 │   ├── orchestration.md             # Activation rules
@@ -237,7 +239,7 @@ Execs/
    → Keisha produces PRD + TASKLIST
 
 2. @soulja preflight authentication
-   → Soulja verifies stack/test command + guardrails
+   → Soulja Slim verifies stack/test command + guardrails
    → Blocks if TDD artifacts or dev env are missing
 
 3. @ox build authentication following this PRD
@@ -246,8 +248,8 @@ Execs/
    → Ox provides evidence (coverage, complexity)
 
 4. @soulja validate authentication implementation
-   → Soulja runs 5-layer validation
-   → Soulja produces Pass/Fail report
+   → Soulja Slim runs 5-layer validation
+   → Soulja Slim produces Pass/Fail report
 
 5. @dmx review for production
    → DMX reviews architecture, security, quality
@@ -261,7 +263,7 @@ Execs/
    → Keisha audits for bloat, complexity, and patterns
    → Keisha plans refinements (no new features)
    → Ox refactors and optimizes
-   → Soulja validates stability and performance
+   → Soulja Slim validates stability and performance
    → DMX performs final review
 ```
 
@@ -273,7 +275,7 @@ Execs/
    → Keisha creates reorganization plan
    → Human approves changes
    → Ox executes moves and fixes imports
-   → Soulja validates nothing broke
+   → Soulja Slim validates nothing broke
 ```
 
 ### Quick Fix
@@ -282,7 +284,7 @@ Execs/
 1. @soulja debug this error: [paste error]
    → Root cause analysis
    
-2. @ox fix the issue identified by Soulja
+2. @ox fix the issue identified by Soulja Slim
    → Fix + regression test
    
 3. @dmx quick review

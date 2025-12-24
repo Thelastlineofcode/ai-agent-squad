@@ -42,7 +42,28 @@ python Execs/dev-tools/guardrails/guardrails.py --voice ox --feature [slug] --st
 python Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature [slug] --stage preflight
 ```
 
-### VALIDATING (Soulja/Tester)
+### AUDITS (Reports)
+```
+@keisha requirements audit for [feature]
+Output: Report in Execs/docs/audits/reports/keisha/
+
+@soulja flow coverage audit for [feature]
+Output: Report in Execs/docs/audits/reports/soulja/
+
+@igor security audit for [feature]
+Output: Report in Execs/docs/audits/reports/igor/
+
+@masterp ux audit for [feature]
+Output: Report in Execs/docs/audits/reports/master-p/
+
+@dmx release audit for [feature]
+Output: Report in Execs/docs/audits/reports/dmx/
+
+# Scaffold all audit reports for a feature
+python Execs/dev-tools/audits/scaffold_audits.py --feature [slug]
+```
+
+### VALIDATING (Soulja Slim)
 ```
 @soulja preflight [feature]
 Output: Stack/test command verification + guardrails PASS/BLOCKED (5-10 min)
@@ -90,6 +111,8 @@ Requirement: PRD + TASKLIST + TDD evidence in tasks/
 
 Brand canon: `Execs/docs/branding.md`
 PRD template: `tasks/prd-template.md`
+Limiters: `Execs/docs/limiters.md`
+Audits: `Execs/docs/audits/`
 
 ---
 
@@ -355,7 +378,7 @@ cargo install k6
 npm install -g k6
 ```
 
-Then wire into agents (Keisha, Ox, Soulja, DMX)
+Then wire into agents (Keisha, Ox, Soulja Slim, DMX)
 
 ---
 
@@ -515,6 +538,6 @@ Result: Complete PRD with acceptance criteria in 5 minutes
 
 **Your AI dev team is ready. Start using these commands today. 🚀**
 
-Keisha plans. Soulja preflights. Ox builds. Soulja validates. DMX enforces.
+Keisha plans. Soulja Slim preflights. Ox builds. Soulja Slim validates. DMX enforces.
 
 10x productivity. 100% quality. Zero tech debt.

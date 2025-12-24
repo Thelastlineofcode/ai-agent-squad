@@ -40,7 +40,7 @@ Perform this loop before writing any code:
 
 - **PRD Required:** No feature implementation without an approved PRD in `docs/prd/`.
 - **Naming Alignment:** Use documented posture names (GO, GROW, GLOW, GROUND, RESET).
-- **Scope Isolation:** Keep Timing Engine (calendar) separate from Synastry (compatibility).
+- **Scope Isolation:** Keep Timing Engine (calendar) separate from Comparison (compatibility).
 
 ---
 
@@ -57,9 +57,9 @@ When finishing a session:
 ## 6. 🛠️ Critical Tech Rules
 
 - **frontend:** Leptos (Rust/WASM) only. No new JS/TS in UI.
-- **backend:** Axum (Rust) sidecar for KP math.
+- **backend:** Axum (Rust) sidecar for Core math.
 - **pricing:** 4-tier only (Starter/Core/Pro/Cosmic).
-- **timing:** Sidereal KP only (no Tropical for engine).
+- **timing:** Sidereal Core only (no Tropical for engine).
 
 ---
 

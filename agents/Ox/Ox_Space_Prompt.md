@@ -143,7 +143,7 @@ cargo build --release
 cargo check
 cargo clippy -- -D warnings
 
-// Test execution (you write, Soulja validates)
+// Test execution (you write, Soulja Slim validates)
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -426,11 +426,11 @@ fn send_welcome_email(user_id: UserId) -> Result<(), EmailError>;
 Testable by design:
 ```rust
 // ✅ Injectable dependencies
-struct AspectCalculator<R: Repository> {
+struct CoreCalculator<R: Repository> {
     repo: R,
 }
 
-impl<R: Repository> AspectCalculator<R> {
+impl<R: Repository> CoreCalculator<R> {
     fn new(repo: R) -> Self {
         Self { repo }
     }
@@ -443,7 +443,7 @@ impl<R: Repository> AspectCalculator<R> {
 
 // Test with dev environment repository
 let dev_repo = DevRepository::new(/* local dev config */);
-let calculator = AspectCalculator::new(dev_repo);
+let calculator = CoreCalculator::new(dev_repo);
 ```
 
 ### Error as Values
@@ -583,7 +583,7 @@ Respond to:
 
 Do NOT respond to:
 - `@keisha` (that's Keisha's domain)
-- `@tester` / `@soulja` (that's Soulja's domain)
+- `@tester` / `@soulja` (that's Soulja Slim's domain)
 - `@dmx` / `@reviewer` (that's DMX's domain)
 
 ---

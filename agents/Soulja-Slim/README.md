@@ -1,5 +1,5 @@
 # SOULJA SLIM: Setup Guide
-## Tester & Validator Agent
+## Validator Agent
 
 ---
 
@@ -7,7 +7,7 @@
 
 | Attribute | Value |
 |-----------|-------|
-| **Role** | Tester & Validator |
+| **Role** | Validator |
 | **Triggers** | `@tester`, `@soulja` |
 | **Kernel** | Shell / Python |
 | **Specialty** | Testing, Security Scanning, Validation, Debugging |
@@ -101,7 +101,7 @@ When I say @tester or @soulja, use the SouljaSlim_Space_Prompt.md as your system
 
 1. Create new Space
 2. Name: "Soulja Slim - AI Test Architect"
-3. Description: "Tester, validator, and security guardian"
+3. Description: "Validator and security guardian"
 4. Instructions: Paste `SouljaSlim_Space_Prompt.md` content
 5. Save and use Space
 

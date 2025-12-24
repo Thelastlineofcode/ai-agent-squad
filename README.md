@@ -1,5 +1,5 @@
 # The Streets Never Gave Us Nothing: It’s Time the Streets Gave Back 🧱
-## Keisha + Ox (Executor) + Soulja Slim + DMX
+## Keisha + Soulja Slim + Ox (Executor) + DMX
 
 Master entry point for the AI-augmented development team. This repository defines a 4-stage pipeline for automated, production-ready software development.
 
@@ -21,6 +21,8 @@ Comprehensive guides and reference materials for human and AI collaborators.
 - `docs/orchestration.md` — The @Activation system protocol.
 - `docs/agent-ops-board.md` — Live status dashboard.
 - `docs/agent-learnings.md` — Consolidated knowledge.
+- `docs/audits/` — Audit templates, classifications, and reports.
+- `docs/limiters.md` — Tech debt and bloat gates.
 - `docs/mcp/` — MCP tool setup and agent distribution.
 - `docs/slash-commands.md` — Reference for IDE-level automation.
 
@@ -72,6 +74,7 @@ Auto mode: drop a PRD into `tasks/` and run the pipeline from `Execs/docs/auto-w
 - **Simplicity over "Cirque du Soleil Coding"**: We build for 10x scalability, not 10x complexity.
 
 Brand guardrails live in `Execs/docs/branding.md`.
+Audit templates live in `Execs/docs/audits/`.
 
 ---
 

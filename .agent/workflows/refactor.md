@@ -47,7 +47,7 @@ Ox provides:
 @soulja validate refactoring of [TARGET]
 ```
 
-Soulja verifies:
+Soulja Slim verifies:
 - [ ] All existing tests pass
 - [ ] No behavior regression
 - [ ] Coverage maintained or improved

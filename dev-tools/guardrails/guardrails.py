@@ -291,6 +291,22 @@ def check_naming_canon(prd_path):
     return True, []
 
 
+def check_prd_requirements(prd_path):
+    content = read_text(prd_path)
+    missing = []
+    if "## User Stories" not in content:
+        missing.append("## User Stories section")
+    if not re.search(r\"\\bUS-\\d+\\b\", content):
+        missing.append(\"User story IDs (US-#)\")
+    if "Tech Debt Budget:" not in content:
+        missing.append("Tech Debt Budget:")
+    if "Bloat Budget:" not in content:
+        missing.append("Bloat Budget:")
+    if missing:
+        return False, ["PRD missing: {}".format(", ".join(missing))]
+    return True, []
+
+
 def build_report(voice, status, lines, next_steps):
     name = voice["name"]
     output = []
@@ -390,6 +406,13 @@ def main(argv):
                 next_steps.append("Add Feature/Codename/Owner to PRD")
             else:
                 findings.append("NAMING: OK (Feature/Codename/Owner)")
+            ok_prd, prd_notes = check_prd_requirements(prd_path)
+            if not ok_prd:
+                blocked = True
+                findings.extend(prd_notes)
+                next_steps.append("Add user stories (US-#) and debt/bloat budgets to PRD")
+            else:
+                findings.append("PRD REQUIREMENTS: OK (User Stories + Budgets)")
 
         if not tasks_path.exists():
             blocked = True

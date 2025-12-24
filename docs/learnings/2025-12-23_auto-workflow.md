@@ -33,13 +33,13 @@ Key excerpts:
 - Execs/docs/orchestration.md
   - L16: │  @soulja [preflight] →  TDD Gate | Stack | Guardrails       │
   - L60: Branding canon is enforced via `Execs/docs/branding.md`.
-  - L151: - Runs guardrails: `python Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature kp-transits --stage preflight`
-  - L490: Soulja preflights stack/test command + guardrails.
+  - L151: - Runs guardrails: `python Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature core-workflows --stage preflight`
+  - L490: Soulja Slim preflights stack/test command + guardrails.
 - Execs/docs/auto-workflow.md
   - L1: # Auto Workflow Mode
   - L13: - `tdd-<feature>.md` (use `Execs/dev-tools/guardrails/tdd-evidence.template.md`)
   - L21: - `python Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature <feature> --stage preflight`
-  - L24: 4. **Soulja (Validate)** runs full 5-layer validation + `--stage post` guardrails.
+  - L24: 4. **Soulja Slim (Validate)** runs full 5-layer validation + `--stage post` guardrails.
   - L32: - `Execs/docs/branding.md`
 - Execs/docs/branding.md
   - L1: # Urban Branding Strategy

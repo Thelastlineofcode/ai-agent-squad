@@ -47,8 +47,8 @@ def ask_keisha(request, codebase_context=""):
 
 # Example
 audit = ask_keisha(
-    "Audit the Levite codebase for complexity and tech debt",
-    codebase_context="Repository: House of Obi (Neo4j + Rust microservices)"
+    "Audit the Project A codebase for complexity and tech debt",
+    codebase_context="Repository: the organization (Database + Rust microservices)"
 )
 print(audit)
 ```
@@ -73,7 +73,7 @@ async function askKeisha(request: string) {
 
 // Usage
 const audit = await askKeisha(
-  "Audit Levite synastry module for coupling and tech debt"
+  "Audit Project A comparison module for coupling and tech debt"
 );
 ```
 
@@ -81,15 +81,15 @@ const audit = await askKeisha(
 
 ## STEP 2: Run Your First Keisha Audit (Today)
 
-Pick ONE repo (recommend: Levite, since you're actively building it). Ask Keisha:
+Pick ONE repo (recommend: Project A, since you're actively building it). Ask Keisha:
 
 ```
-Repository: Levite (Rust synastry engine, Neo4j backend)
+Repository: Project A (Rust comparison engine, Database backend)
 
 Please audit this codebase for:
 1. Cyclomatic complexity hot-spots
 2. Technical debt (coupling, unused exports, test coverage gaps)
-3. Architecture risks (tight coupling between business logic + Neo4j queries)
+3. Architecture risks (tight coupling between business logic + Database queries)
 4. Surface area bloat (public API you don't need)
 
 Provide metrics:
@@ -117,8 +117,8 @@ Then give me a ranked list of top 5 refactoring priorities by ROI.
   },
   "hot_spots": [
     {
-      "location": "src/synastry/aspect_calculator.rs:45-120",
-      "issue": "High complexity (24), tight Neo4j coupling",
+      "location": "src/comparison/aspect_calculator.rs:45-120",
+      "issue": "High complexity (24), tight Database coupling",
       "risk_level": "HIGH",
       "recommendation": "Extract repository pattern; decouple business logic from queries",
       "estimated_effort": "2-3 days"
@@ -128,7 +128,7 @@ Then give me a ranked list of top 5 refactoring priorities by ROI.
   "refactoring_roadmap": [
     {
       "priority": 1,
-      "target": "AspectCalculator: decouple Neo4j queries",
+      "target": "CoreCalculator: decouple Database queries",
       "impact": "HIGH (unblocks testing, parallelizes future work)",
       "effort": "2-3 days",
       "roi": "HIGH"
@@ -142,21 +142,21 @@ Then give me a ranked list of top 5 refactoring priorities by ROI.
 
 ## STEP 3: Use Keisha to Plan a Feature (Week 1)
 
-Next time you want to build something (e.g., "synastry+ with multi-birth analysis"):
+Next time you want to build something (e.g., "comparison+ with multi-input analysis"):
 
 ```
-Keisha, plan the synastry+ feature.
+Keisha, plan the comparison+ feature.
 
 Context:
-- Current Levite codebase has 18% tech debt (AspectCalculator is messy)
-- We want to add multi-birth analysis (compare 3+ charts simultaneously)
+- Current Project A codebase has 18% tech debt (CoreCalculator is messy)
+- We want to add multi-input analysis (compare 3+ charts simultaneously)
 - Team capacity: 2 sprints max
 - Constraint: No breaking API changes
 
 Please produce:
 1. PRD with objective, success criteria, dependencies
 2. TASKLIST with atomic tasks, dependencies, and effort estimates
-3. Refactoring prerequisite (should we clean up AspectCalculator first?)
+3. Refactoring prerequisite (should we clean up CoreCalculator first?)
 4. Risk assessment and mitigations
 
 Format as JSON matching the Keisha PRD and TASKLIST schemas.
@@ -189,10 +189,10 @@ keisha_agent = Agent(
     verbose=True
 )
 
-# Now coordinate Keisha → Ox → Tester → Reviewer
+# Now coordinate Keisha → Ox → Soulja Slim → DMX
 ```
 
-### If you use Google Cloud Agent Dev Kit (ADK) for Novella:
+### If you use Google Cloud Agent Dev Kit (ADK) for Project B:
 
 ```go
 // agents/keisha.go
@@ -258,7 +258,7 @@ Keisha is most powerful when she can SEE your actual code. Give her:
 
 ---
 
-## EXAMPLE: Keisha Audit of Levite (Right Now)
+## EXAMPLE: Keisha Audit of Project A (Right Now)
 
 **You ask Keisha:**
 
@@ -280,7 +280,7 @@ Format as JSON.
 {
   "request_id": "keisha-audit-levite-2025-12-20-001",
   "timestamp": "2025-12-20T15:30:00Z",
-  "executive_summary": "Levite is YELLOW: healthy core logic but messy in synastry module. 18% tech debt concentrated in AspectCalculator and TransitEngine. Refactoring will unblock testing and future features. 2-sprint investment recommended.",
+  "executive_summary": "Project A is YELLOW: healthy core logic but messy in comparison module. 18% tech debt concentrated in CoreCalculator and WorkflowEngine. Refactoring will unblock testing and future features. 2-sprint investment recommended.",
   "metrics": {
     "cyclomatic_complexity": {
       "average": 9.2,
@@ -312,17 +312,17 @@ Format as JSON.
   },
   "hot_spots": [
     {
-      "location": "src/synastry/aspect_calculator.rs:45-120",
+      "location": "src/comparison/aspect_calculator.rs:45-120",
       "issue_type": "complexity",
-      "description": "AspectCalculator has cyclomatic complexity of 24; 8 nested conditionals; tightly coupled to Neo4j graph queries. Hard to test in isolation.",
+      "description": "CoreCalculator has cyclomatic complexity of 24; 8 nested conditionals; tightly coupled to Database database queries. Hard to test in isolation.",
       "risk_level": "high",
-      "recommendation": "Extract repository pattern; move Neo4j queries to separate layer; refactor logic into pure functions.",
+      "recommendation": "Extract repository pattern; move Database queries to separate layer; refactor logic into pure functions.",
       "estimated_effort_to_fix": "2-3 days"
     },
     {
-      "location": "src/synastry/transit_engine.rs:80-150",
+      "location": "src/comparison/transit_engine.rs:80-150",
       "issue_type": "complexity",
-      "description": "TransitEngine loop has 21-line nested conditionals; hard to extend for new aspect types.",
+      "description": "WorkflowEngine loop has 21-line nested conditionals; hard to extend for new aspect types.",
       "risk_level": "high",
       "recommendation": "Convert to state machine or decision table pattern.",
       "estimated_effort_to_fix": "1-2 days"
@@ -330,21 +330,21 @@ Format as JSON.
     {
       "location": "src/lib.rs",
       "issue_type": "coupling",
-      "description": "Synastry module publicly exports internal functions that shouldn't be part of public API.",
+      "description": "Comparison module publicly exports internal functions that shouldn't be part of public API.",
       "risk_level": "medium",
       "recommendation": "Audit public exports; make internal functions private.",
       "estimated_effort_to_fix": "4 hours"
     },
     {
-      "location": "src/synastry/",
+      "location": "src/comparison/",
       "issue_type": "coverage",
-      "description": "62% test coverage in critical synastry module; missing isolation tests (all tests depend on Neo4j).",
+      "description": "62% test coverage in critical comparison module; missing isolation tests (all tests depend on Database).",
       "risk_level": "high",
-      "recommendation": "Add unit tests for AspectCalculator and TransitEngine using local dev Neo4j.",
+      "recommendation": "Add unit tests for CoreCalculator and WorkflowEngine using local dev Database.",
       "estimated_effort_to_fix": "2-3 days"
     },
     {
-      "location": "src/synastry/aspect_calculator.rs",
+      "location": "src/comparison/aspect_calculator.rs",
       "issue_type": "duplication",
       "description": "Aspect calculation logic repeated in 3 places; should be consolidated.",
       "risk_level": "medium",
@@ -355,14 +355,14 @@ Format as JSON.
   "refactoring_roadmap": [
     {
       "priority": 1,
-      "target": "Repository pattern for Neo4j abstraction",
+      "target": "Repository pattern for Database abstraction",
       "impact": "HIGH: enables unit testing, decouples business logic",
       "effort": "2-3 days",
       "roi": "HIGH"
     },
     {
       "priority": 2,
-      "target": "AspectCalculator pure logic extraction",
+      "target": "CoreCalculator pure logic extraction",
       "impact": "HIGH: reduces complexity, improves testability",
       "effort": "2-3 days",
       "roi": "HIGH"
@@ -376,7 +376,7 @@ Format as JSON.
     },
     {
       "priority": 4,
-      "target": "TransitEngine state machine refactor",
+      "target": "WorkflowEngine state machine refactor",
       "impact": "MEDIUM: easier to extend, lower complexity",
       "effort": "1-2 days",
       "roi": "MEDIUM"
@@ -391,17 +391,17 @@ Format as JSON.
   ],
   "suggested_sprint_allocation": "Sprint 1: Tasks 1-2 (foundation). Sprint 2: Tasks 3-4 (isolation + simplification). Task 5 can be a 'polish' during Sprint 2 if time allows.",
   "assumptions": [
-    "Existing integration tests exercise all critical synastry paths",
-    "No hidden dependencies on AspectCalculator internals outside synastry module",
+    "Existing integration tests exercise all critical comparison paths",
+    "No hidden dependencies on CoreCalculator internals outside comparison module",
     "Team comfortable with Rust trait-based abstraction and dev env testing patterns"
   ],
   "open_questions": [
-    "Should we add async support for Neo4j queries during refactor? (affects effort estimate)",
+    "Should we add async support for Database queries during refactor? (affects effort estimate)",
     "Is there an acceptable performance regression during transition? (benchmarking required)",
     "Can we gate this behind a feature flag, or do we need full cutover?",
-    "Who validates the Neo4j repository abstraction contract?"
+    "Who validates the Database repository abstraction contract?"
   ],
-  "follow_up": "Once Sprint 1 complete, re-run metrics to validate debt reduction. Then Ox can confidently add synastry+ features on top of clean foundation."
+  "follow_up": "Once Sprint 1 complete, re-run metrics to validate debt reduction. Then Ox can confidently add comparison+ features on top of clean foundation."
 }
 ```
 
@@ -411,7 +411,7 @@ Format as JSON.
 
 1. **Pick the quick integration you like best** (Perplexity, Claude API, or Gemini)
 2. **Paste in Keisha's system prompt**
-3. **Ask Keisha to audit Levite** using the example query above
+3. **Ask Keisha to audit Project A** using the example query above
 4. **Review the output**; store as JSON
 5. **Share with Ox** (your implementer agent) so he knows what to refactor first
 
@@ -425,7 +425,7 @@ Once Keisha is in your workflow:
 ✅ **Refactoring with confidence** — Keisha tells you ROI before you start  
 ✅ **Unblock new features** — Clean foundation first, then ship  
 ✅ **Prevent tech debt accumulation** — Catch it early, plan it out  
-✅ **Parallel agent work** — Keisha plans, Ox builds, Tester validates, Reviewer approves  
+✅ **Parallel agent work** — Keisha plans, Ox builds, Soulja Slim validates, DMX approves  
 
 ---
 
@@ -436,7 +436,7 @@ Once you see the value:
 1. **Automate Keisha's reports** — Run audits weekly/per-PR
 2. **Dashboard her metrics** — Track complexity, coverage, debt over time
 3. **CI/CD gates** — Block PRs if complexity or debt exceeds thresholds
-4. **Pair with Ox** — Keisha plans the refactor, Ox implements, Tester validates
+4. **Pair with Ox** — Keisha plans the refactor, Ox implements, Soulja Slim validates
 5. **Document architectural decisions** — Keisha's decision tables become your architecture RFC
 
 ---
@@ -449,7 +449,7 @@ Once you see the value:
 2. Should she output to GitHub issues/PRs, or just JSON?
 3. What's your primary LLM for agents? (Gemini, Claude, or mix?)
 4. Do you want her to auto-suggest refactoring PRs, or just analysis?
-5. Should she also audit Novella and Jouvae, or start with Levite only?
+5. Should she also audit Project B and Project C, or start with Project A only?
 
 ---
 

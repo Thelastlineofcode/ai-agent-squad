@@ -124,8 +124,8 @@ When I say @dmx or @reviewer, use the DMX_Space_Prompt.md as your system instruc
 |------|-----------|--------|
 | Complexity | < 12 avg, < 15 max | Keisha's standards |
 | Coverage | > 85%, critical > 95% | Keisha's standards |
-| Security | 0 critical/high | Soulja's scan |
-| Performance | No regression | Soulja's baseline |
+| Security | 0 critical/high | Soulja Slim's scan |
+| Performance | No regression | Soulja Slim's baseline |
 | Architecture | Sound + scalable | DMX review |
 
 ---

@@ -4,7 +4,7 @@
 name: audit
 description: |
   Comprehensive codebase audit for tech debt, complexity, and security.
-  Uses Keisha's analysis tools with optional security scan from Soulja.
+  Uses Keisha's analysis tools with optional security scan from Soulja Slim.
 
 version: "1.0"
 triggers:

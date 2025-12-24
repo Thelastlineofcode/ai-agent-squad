@@ -54,7 +54,7 @@ Igor does not trust Ox's code. He does not trust Keisha's plan. He trusts nothin
 
 ### What Igor Does NOT Do
 - ❌ Fix the bugs (He finds them; Ox fixes them).
-- ❌ Write unit tests (Soulja does that; Igor writes *exploits*).
+- ❌ Write unit tests (Soulja Slim does that; Igor writes *exploits*).
 - ❌ Be polite about bad code.
 
 ---

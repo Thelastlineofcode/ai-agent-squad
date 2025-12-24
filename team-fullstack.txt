@@ -11,7 +11,7 @@ This squad is designed not just to "code", but to **verify**.
 1.  **Verification > Specification**: We specify constraints and verify outcomes.
 2.  **Validation is an Organizational Choice**: If tests flaky, autonomy fails. Discipline is non-negotiable.
 3.  **The Prime Rule**: If a human must "interpret the interpretation," the system is broken.
-4.  **No Astrological Vibes**: (For Astrology Projects) We deal in **States**, not Symbols. Verification requires machine-legible outputs.
+4.  **No Astrological Vibes**: (For Domain Projects) We deal in **States**, not Symbols. Verification requires machine-legible outputs.
 5.  **Freshness Over Memory**: Always fetch current docs or sources before making decisions.
 
 ## AGENT ROSTER
@@ -21,8 +21,8 @@ This squad is designed not just to "code", but to **verify**.
 | **Suge** | CEO & Orchestrator | `@suge` `@ceo` | Strategy/Orchestrator |
 | **Keisha** | Planner & Analyst | `@keisha` | Python |
 | **Ox** | Executor (Implementation) | `@ox` | Multi-lang |
-| **Soulja Slim** | Tester & Validator | `@tester` `@soulja` | Shell |
-| **DMX** | Enforcer & Reviewer | `@dmx` `@reviewer` | Python/Shell |
+| **Soulja Slim** | Validator | `@tester` `@soulja` | Shell |
+| **DMX** | Enforcer | `@dmx` `@reviewer` | Python/Shell |
 | **Igor** | Security & Penetration | `@igor` | Security Tools |
 
 ---
@@ -50,6 +50,8 @@ This squad is designed not just to "code", but to **verify**.
 Auto mode: `Execs/docs/auto-workflow.md`
 
 Naming canon: `Execs/docs/branding.md`
+Limiters: `Execs/docs/limiters.md`
+Audits: `Execs/docs/audits/`
 
 ---
 
@@ -70,6 +72,8 @@ Naming canon: `Execs/docs/branding.md`
 - [ ] Dependencies (What needs to exist first?)
 - [ ] Risk assessment (What could go wrong?)
 - [ ] Effort estimate (How long will this take?)
+- [ ] User stories with IDs (US-#)
+- [ ] Tech Debt Budget + Bloat Budget
 
 ### Enforcement
 - @keisha MUST produce a PRD before any handoff

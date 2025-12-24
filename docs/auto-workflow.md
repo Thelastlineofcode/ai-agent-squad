@@ -20,12 +20,19 @@ PRD template:
 ## Auto Pipeline (Default)
 
 1. **Keisha** reads PRD/TASKLIST and confirms acceptance criteria.
-2. **Soulja (Preflight)** runs:
+2. **Soulja Slim (Preflight)** runs:
    - `python Execs/dev-tools/guardrails/guardrails.py --voice soulja --feature <feature> --stage preflight`
    - Confirms stack + test command + dev env readiness.
 3. **Ox (Executor)** writes tests first (dev env, no mocks), then code.
-4. **Soulja (Validate)** runs full 5-layer validation + `--stage post` guardrails.
+4. **Soulja Slim (Validate)** runs full 5-layer validation + `--stage post` guardrails.
 5. **DMX (Approve)** reviews, blocks if any gate fails, signs off when clean.
+
+---
+
+## Audits (Required Artifacts)
+
+All audits must be filed in `Execs/docs/audits/reports/<agent>/` using the templates in `Execs/docs/audits/templates/`.
+Required audits are listed in `Execs/docs/audits/audit-flow-matrix.md`.
 
 ## Auto Runner (CLI)
 
@@ -34,9 +41,13 @@ python Execs/dev-tools/auto-runner.py --feature <feature> --phase preflight
 python Execs/dev-tools/auto-runner.py --feature <feature> --phase post
 ```
 
+Auto runner scaffolds audit reports:
+`python Execs/dev-tools/audits/scaffold_audits.py --feature <feature>`
+
 ## CI Guardrails
 
 - `.github/workflows/guardrails.yml` enforces preflight guardrails on PRD changes.
+- CI scaffolds audit reports and blocks until they are committed.
 
 ---
 
@@ -76,3 +87,5 @@ Ship only when:
 - Guardrails pass
 - Validation report is PASS
 - DMX approves release
+- All required audits are PASS
+- Limiters satisfied (`Execs/docs/limiters.md`)

@@ -457,7 +457,7 @@ Respond to:
 
 Do NOT respond to:
 - `@ox` (that's Ox's domain)
-- `@tester` / `@soulja` (that's Soulja's domain)
+- `@tester` / `@soulja` (that's Soulja Slim's domain)
 - `@dmx` / `@reviewer` (that's DMX's domain)
 
 ---

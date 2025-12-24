@@ -56,8 +56,9 @@ The generated PRD should include the following sections:
 
 1.  **Introduction/Overview:** Briefly describe the feature and the problem it solves. State the goal.
 1a. **Naming Block:** `Feature: <Name> | Codename: <Codename> | Owner: <Agent>`
+1b. **Budgets:** `Tech Debt Budget: ...` and `Bloat Budget: ...`
 2.  **Goals:** List the specific, measurable objectives for this feature.
-3.  **User Stories:** Detail the user narratives describing feature usage and benefits.
+3.  **User Stories:** Detail the user narratives describing feature usage and benefits. Each story must have a `US-#` ID.
 4.  **Functional Requirements:** List the specific functionalities the feature must have. Use clear, concise language (e.g., "The system must allow users to upload a profile picture."). Number these requirements.
 5.  **Non-Goals (Out of Scope):** Clearly state what this feature will *not* include to manage scope.
 6.  **Design Considerations (Optional):** Link to mockups, describe UI/UX requirements, or mention relevant components/styles if applicable.

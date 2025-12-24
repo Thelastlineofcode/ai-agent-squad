@@ -174,7 +174,7 @@ Uses:
 Output: Test patterns + best practices
 ```
 
-### With @dmx (Reviewer)
+### With @dmx (Enforcer)
 
 ```
 @dmx architecture review using [framework] best practices
@@ -720,6 +720,6 @@ All 3 MCPs are:
 
 ---
 
-**Keisha plans. Soulja preflights. Ox builds (with instant doc access). Soulja validates. DMX enforces.**
+**Keisha plans. Soulja Slim preflights. Ox builds (with instant doc access). Soulja Slim validates. DMX enforces.**
 
 **Together with free MCPs: Unstoppable productivity + knowledge. 🎤**

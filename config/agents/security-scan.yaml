@@ -3,7 +3,7 @@
 
 name: security-scan
 description: |
-  Comprehensive security scan using Soulja's security tools.
+  Comprehensive security scan using Soulja Slim's security tools.
   7-layer validation with focus on security aspects.
 
 version: "1.0"

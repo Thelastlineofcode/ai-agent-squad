@@ -107,7 +107,7 @@ For each documented feature:
 
 | Feature | Docs Status | Code Status | Drift? | Priority |
 |---------|-------------|-------------|--------|----------|
-| Synastry calculation | Documented (stale) | Refactored 3 months ago | HIGH | CRITICAL |
+| Comparison calculation | Documented (stale) | Refactored 3 months ago | HIGH | CRITICAL |
 | Push notifications | Not documented | Implemented in v2 | HIGH | HIGH |
 | Offline sync | Documented | Changed algorithm last month | MEDIUM | HIGH |
 | Data export | Documented | Works but slow | LOW | MEDIUM |
@@ -165,9 +165,9 @@ For [Feature Name]:
 8. Identify edge cases
 ```
 
-**Example: Synastry Calculation (Levite)**
+**Example: Comparison Calculation (Project A)**
 ```
-Entry: calculateSynastry(userChart, partnerChart)
+Entry: calculateComparison(sourceInput, targetInput)
   → Load ephemeris data
   → Calculate aspects between charts
   → Filter by orb tolerance
@@ -175,7 +175,7 @@ Entry: calculateSynastry(userChart, partnerChart)
   → Cache results
   
 Edge cases:
-- Unknown birth time handling
+- Unknown input time handling
 - Timezone DST transitions
 - Ephemeris data currency
 - Rare aspect combinations
@@ -207,7 +207,7 @@ Document answers in code comments or wiki.
 Visual representation of how components interact:
 
 ```
-# Synastry Feature Map
+# Comparison Feature Map
 
 [User Input]
     ↓
@@ -328,13 +328,13 @@ FunctionName(param1: type, param2: type): returnType
 
 | Issue | Workaround | Severity | ETA |
 |-------|-----------|----------|-----|
-| Synastry takes 5+ sec with 100+ aspects | Pre-calculate common combinations | Medium | v3.0 |
+| Comparison takes 5+ sec with 100+ aspects | Pre-calculate common combinations | Medium | v3.0 |
 | Timezone DST transitions cause incorrect time | Manually adjust or use UTC | Low | v2.5 |
 
 ## Error Handling
 
 ### Error Codes
-- `ERR_001`: Invalid birth data format
+- `ERR_001`: Invalid input data format
   - Cause: Date format not recognized
   - Recovery: Validate input format, show error message
   
@@ -373,7 +373,7 @@ FunctionName(param1: type, param2: type): returnType
 ## Deployment Considerations
 
 ### Database Migrations
-- Migration 001: Create synastry_results table
+- Migration 001: Create comparison_results table
   - Rollback: Drop table
   - Risk: Data loss if rolled back
 
@@ -423,7 +423,7 @@ FunctionName(param1: type, param2: type): returnType
 
 ## FAQ
 
-**Q: Why does synastry calculation take 5 seconds?**  
+**Q: Why does comparison calculation take 5 seconds?**  
 A: Heavy computation involving 12 planets × 8 aspects × 20+ interpretations. Each chart calculation involves ~500 operations. Cache hits reduce this to <100ms.
 
 **Q: Can I use this offline?**  
@@ -489,7 +489,7 @@ For each CRITICAL feature:
 - **Purpose:** User-facing application
 - **Key responsibilities:**
   - User authentication
-  - Data input (birth charts)
+  - Data input (input records)
   - Display results
   - Offline support
 - **Dependencies:** Backend API, local database
@@ -500,7 +500,7 @@ For each CRITICAL feature:
 - **Purpose:** Business logic and data management
 - **Key endpoints:**
   - POST /api/charts (create chart)
-  - GET /api/synastry (calculate synastry)
+  - GET /api/comparison (calculate comparison)
   - POST /api/auth/login
 - **Authentication:** JWT tokens
 - **Rate limiting:** 100 req/min per user
@@ -519,11 +519,11 @@ For each CRITICAL feature:
 
 ## Data Flow
 
-### Synastry Calculation Flow
+### Comparison Calculation Flow
 ```
 1. User inputs partner chart data
 2. Mobile app validates input locally
-3. Sends to backend: POST /api/synastry
+3. Sends to backend: POST /api/comparison
 4. Backend loads user's chart from DB
 5. Backend loads ephemeris data (cached)
 6. Backend calculates aspects
@@ -662,8 +662,8 @@ Quick overview:
 ## Key Features
 
 - ✅ Birth chart calculation
-- ✅ Synastry (relationship) analysis
-- ✅ Transits & predictive readings
+- ✅ Comparison analysis
+- ✅ Workflow forecasting & predictive outputs
 - ✅ Offline support
 - ✅ Push notifications
 - ✅ Data export (GDPR)
@@ -729,7 +729,7 @@ See [docs/deployment.md](./docs/deployment.md) for detailed instructions.
 
 ## Troubleshooting
 
-### Problem: "Synastry calculation timeout"
+### Problem: "Comparison calculation timeout"
 **Solution:** This can happen with complex charts. Try:
 1. Reduce chart complexity (fewer aspects)
 2. Check Redis is running
@@ -835,15 +835,15 @@ const aspects = calculateAspects(chart);
 ```markdown
 ## POST /api/charts
 
-Create a new birth chart.
+Create a new input record.
 
 ### Request
 ```json
 {
   "name": "John Doe",
-  "birth_date": "1990-01-15",
-  "birth_time": "14:30",
-  "birth_location": "New York, NY"
+  "input_date": "1990-01-15",
+  "input_time": "14:30",
+  "input_location": "New York, NY"
 }
 ```
 
@@ -956,7 +956,7 @@ npm run docs:test-examples
 
 ## Known Gotchas
 
-### Synastry Calculation
+### Comparison Calculation
 **Problem:** Calculation slow when > 100 aspects
 **Root Cause:** No caching, recalculates every time
 **Workaround:** Pre-calculate common combinations
@@ -979,7 +979,7 @@ npm run docs:test-examples
 
 ## Performance Characteristics
 
-### Synastry Calculation
+### Comparison Calculation
 - Typical: 2-5 seconds
 - Best case: 100ms (cached)
 - Worst case: 30+ seconds (100+ aspects, first time)
@@ -1035,7 +1035,7 @@ npm run docs:test-examples
 
 ## Learning Resources
 
-- **Astrology basics:** docs/astrology-101.md
+- **Domain basics:** docs/domain-101.md
 - **Chart interpretation guide:** docs/interpretations.md
 - **API design guide:** docs/api-design.md
 - **Database schema:** docs/database-schema.md
@@ -1111,7 +1111,7 @@ If < 90%:
 ```markdown
 # Documentation Refactoring Sign-Off
 
-**Project:** [Levite / Novella / Jouvae]
+**Project:** [Project A / Project B / Project C]
 **Date:** YYYY-MM-DD
 **Status:** COMPLETE / IN PROGRESS / BLOCKED
 
@@ -1144,7 +1144,7 @@ If < 90%:
 - **Team confidence:** Improved (devs know what they're working with)
 
 ## Recommendations
-1. **Next priority:** Refactor Novella documentation (similar debt)
+1. **Next priority:** Refactor Project B documentation (similar debt)
 2. **Ongoing:** Implement quarterly review process
 3. **Tooling:** Set up doc generation from code (comments → docs)
 
@@ -1282,20 +1282,20 @@ Use this to start immediately on one of your projects:
 
 ## FOR YOUR THREE PRODUCTS
 
-**Levite:** Highest priority (core revenue product, fast growth)
+**Project A:** Highest priority (core revenue product, fast growth)
 - Estimated effort: 120 hours (3 weeks intensive)
 - Gap score: 45% (moderate-to-critical debt)
-- Priority features: Synastry, transits, sharing
+- Priority features: Comparison, workflows, sharing
 
-**Novella:** Medium priority (agent-based, complex architecture)
+**Project B:** Medium priority (agent-based, complex architecture)
 - Estimated effort: 100 hours (might be easier due to simpler feature set)
 - Gap score: 50% (critical debt)
 - Priority features: Booking flow, agent orchestration, integrations
 
-**Jouvae:** Lower priority (platform layer, internal focus)
+**Project C:** Lower priority (platform layer, internal focus)
 - Estimated effort: 80 hours
 - Gap score: 35% (moderate debt)
 - Priority features: MCP server specs, agent coordination, data models
 
 **Total effort:** ~300 hours across all three products  
-**Recommended timeline:** 12-16 weeks (do Levite first, then Novella, then Jouvae)
+**Recommended timeline:** 12-16 weeks (do Project A first, then Project B, then Project C)

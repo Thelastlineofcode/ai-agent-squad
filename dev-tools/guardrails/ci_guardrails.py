@@ -42,6 +42,25 @@ def run_guardrails(root, slug):
     return subprocess.call(cmd, cwd=str(root))
 
 
+def run_audit_scaffold(root, slug):
+    scaffold = root / "Execs" / "dev-tools" / "audits" / "scaffold_audits.py"
+    cmd = [
+        sys.executable,
+        str(scaffold),
+        "--feature",
+        slug,
+    ]
+    return subprocess.call(cmd, cwd=str(root))
+
+
+def audit_reports_dirty(root):
+    output = run(
+        ["git", "status", "--porcelain", "Execs/docs/audits/reports"],
+        cwd=root,
+    )
+    return bool(output.strip())
+
+
 def main():
     root = Path(__file__).resolve().parents[3]
     base_sha = os.environ.get("BASE_SHA")
@@ -58,9 +77,15 @@ def main():
 
     print("CI guardrails: PRD slugs -> {}".format(", ".join(slugs)))
     for slug in slugs:
+        code = run_audit_scaffold(root, slug)
+        if code != 0:
+            return code
         code = run_guardrails(root, slug)
         if code != 0:
             return code
+    if audit_reports_dirty(root):
+        print("CI guardrails: audit reports generated. Commit them before merging.")
+        return 1
     return 0
 
 

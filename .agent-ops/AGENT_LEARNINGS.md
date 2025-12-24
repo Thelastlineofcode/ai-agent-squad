@@ -6,8 +6,8 @@
 
 ## Project Context
 
-- **Product:** Levité — Synastry + Timing astrology app
-- **Stack:** Leptos (Rust/WASM) frontend, Rust/Axum backend, PostgreSQL + Neo4j
+- **Product:** Project A — Comparison + Timing domain app
+- **Stack:** Leptos (Rust/WASM) frontend, Rust/Axum backend, PostgreSQL + Database
 - **Pricing:** 4-tier subscription (Starter/Core/Pro/Cosmic)
 
 ---
@@ -16,12 +16,12 @@
 
 ### 1. Sidereal System Standard
 - **Zodiac:** Sidereal (Krishnamurti 23.8° ayanamsa)
-- **Houses:** Koch (KP System)
+- **Houses:** Koch (Core System)
 - **Never use Tropical for calculations** — only as reference layer
 
-### 2. Timing vs Synastry Scope
+### 2. Timing vs Comparison Scope
 - **Timing (5-posture):** GO/GROW/GLOW/GROUND/RESET — for calendar only
-- **Synastry:** Full compatibility analysis — unchanged
+- **Comparison:** Full compatibility analysis — unchanged
 
 ### 3. Stripe SKU Format
 - Format: `levite_[tier]_[billing]`
@@ -40,7 +40,7 @@
 | Leptos over React | Rust end-to-end, WASM performance |
 | Hybrid backend | Node gateway + Rust engine sidecar |
 | Redis caching | 6-hour TTL for timing signals |
-| Swiss Ephemeris | Required for KP accuracy |
+| Swiss Ephemeris | Required for Core accuracy |
 
 ---
 
@@ -59,7 +59,7 @@
 
 | Date | Learning |
 |------|----------|
-| 2025-12-21 | 5-posture system is timing-only, doesn't replace synastry |
+| 2025-12-21 | 5-posture system is timing-only, doesn't replace comparison |
 | 2025-12-21 | White-label B2B is $99-299/mo per seat |
 | 2025-12-21 | Translation Engine uses weighted threshold resolution |
 

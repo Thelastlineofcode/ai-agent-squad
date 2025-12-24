@@ -89,11 +89,11 @@ python -m code_analysis_mcp.server
 - Dead code identification (unused functions, unreachable code)
 - Module cohesion analysis (do these functions belong together?)
 - Complexity calculation (nested depth, branch count)
-- Semantic search ("find all functions that work with Neo4j")
+- Semantic search ("find all functions that work with Database")
 
 **Example**:
 ```
-Keisha: "Show me all functions that call Neo4j queries directly"
+Keisha: "Show me all functions that call Database queries directly"
 Code Analysis: Returns list + locations + test coverage for each
 ```
 
@@ -101,7 +101,7 @@ Code Analysis: Returns list + locations + test coverage for each
 
 ### 3. Rust-Specific: Clippy (via MCP wrapper)
 **What it does**: Lint warnings + suggestions for Rust idioms  
-**Why Keisha needs it**: Levite/Novella are Rust; Clippy catches anti-patterns, inefficiencies, safety issues
+**Why Keisha needs it**: Project A/Project B are Rust; Clippy catches anti-patterns, inefficiencies, safety issues
 
 **MCP Wrapper**:
 ```rust
@@ -142,7 +142,7 @@ impl Tool for ClippyTool {
 
 ### 4. TypeScript-Specific: ESLint + TypeScript Compiler MCP
 **What it does**: Linting + type checking for TypeScript/JavaScript  
-**Why Keisha needs it**: For Novella UI, Jouvae frontend, any TS/JS code
+**Why Keisha needs it**: For Project B UI, Project C frontend, any TS/JS code
 
 **MCP Configuration**:
 ```json
@@ -216,7 +216,7 @@ impl Tool for ClippyTool {
   },
   "by_file": [
     {
-      "file": "src/synastry/aspect_calculator.rs",
+      "file": "src/comparison/aspect_calculator.rs",
       "coverage": 62,
       "is_critical": true,
       "status": "RED"
@@ -308,7 +308,7 @@ npm install --save-dev depcheck dependency-cruiser
 ```json
 {
   "coupling_analysis": {
-    "AspectCalculator": {
+    "CoreCalculator": {
       "internal_deps": 3,
       "external_deps": 5,
       "coupling_index": 0.52,
@@ -406,14 +406,14 @@ class GitAnalysisMCP:
 
 **Example**:
 ```
-Keisha: "What are the hot-spots in Levite?"
+Keisha: "What are the hot-spots in Project A?"
 Git Analysis: [
-  { "file": "src/synastry/aspect_calculator.rs", "churn": 24, "authors": 3, "risk": "HIGH" },
+  { "file": "src/comparison/aspect_calculator.rs", "churn": 24, "authors": 3, "risk": "HIGH" },
   { "file": "src/transit_engine.rs", "churn": 19, "authors": 2, "risk": "HIGH" },
   { "file": "src/lib.rs", "churn": 8, "authors": 4, "risk": "MEDIUM" }
 ]
 
-Keisha: "AspectCalculator is changing frequently AND has poor test coverage. 
+Keisha: "CoreCalculator is changing frequently AND has poor test coverage. 
 That's a safety risk. Refactor + test it first."
 ```
 
@@ -461,18 +461,18 @@ class DefectCorrelationMCP:
 
 ## TIER 4: ARCHITECTURE & RELATIONSHIP TOOLS
 
-### 10. Neo4j Query Tool (For House of Obi / Astrology Data Model Analysis)
+### 10. Database Query Tool (For the organization / Domain Data Model Analysis)
 
-**Custom MCP for Neo4j**:
+**Custom MCP for Database**:
 ```python
-from neo4j import GraphDatabase
+from database import GraphDatabase
 
-class Neo4jAnalysisMCP:
+class DatabaseAnalysisMCP:
     def __init__(self, uri, auth):
         self.driver = GraphDatabase.driver(uri, auth=auth)
     
     def analyze_data_model_coupling(self):
-        """Analyze how tightly code is coupled to Neo4j graph structure"""
+        """Analyze how tightly code is coupled to database model"""
         with self.driver.session() as session:
             result = session.run("""
                 MATCH (n:Node)
@@ -487,11 +487,11 @@ class Neo4jAnalysisMCP:
             
             return [dict(record) for record in result]
     
-    def find_astrology_data_dependencies(self):
-        """What data does synastry depend on?"""
+    def find_domain_data_dependencies(self):
+        """What data does comparison depend on?"""
         with self.driver.session() as session:
             result = session.run("""
-                MATCH (synastry:Synastry)-[dep]->(data)
+                MATCH (comparison:Comparison)-[dep]->(data)
                 RETURN 
                   type(dep) as relationship_type,
                   labels(data) as data_type,
@@ -506,23 +506,23 @@ class Neo4jAnalysisMCP:
 ```json
 {
   "mcpServers": {
-    "neo4j-analysis": {
+    "database-analysis": {
       "command": "python",
-      "args": ["neo4j_mcp.py"],
+      "args": ["database_mcp.py"],
       "env": {
-        "NEO4J_URI": "bolt://localhost:7687",
-        "NEO4J_USER": "neo4j",
-        "NEO4J_PASSWORD": "password"
+        "DATABASE_URI": "<DB_URI>",
+        "DATABASE_USER": "database",
+        "DATABASE_PASSWORD": "password"
       }
     }
   }
 }
 ```
 
-**Keisha uses Neo4j Analysis for**:
-- Understanding data model (what does synastry depend on?)
+**Keisha uses Database Analysis for**:
+- Understanding data model (what does comparison depend on?)
 - Identifying shared data (potential tight coupling)
-- Validating KP/astrology logic (does the graph structure match theory?)
+- Validating core/domain logic (does the data model match theory?)
 - Planning migrations (impact analysis: "if we change this node, what breaks?")
 
 ---
@@ -547,18 +547,18 @@ class ArchitectureMapperMCP:
         return {
             "modules": [
                 {
-                    "name": "synastry",
-                    "exports": ["AspectCalculator", "TransitEngine", "SynastryChart"],
+                    "name": "comparison",
+                    "exports": ["CoreCalculator", "WorkflowEngine", "ComparisonChart"],
                     "internal_functions": 8,
                     "public_functions": 3,
-                    "dependencies": ["neo4j", "astrology_math"],
+                    "dependencies": ["database", "domain_math"],
                     "internal_coupling": 0.45,
                     "external_coupling": 0.38
                 }
             ],
             "relationships": [
-                { "from": "synastry", "to": "neo4j", "type": "data_access" },
-                { "from": "synastry", "to": "astrology_math", "type": "computation" }
+                { "from": "comparison", "to": "database", "type": "data_access" },
+                { "from": "comparison", "to": "domain_math", "type": "computation" }
             ]
         }
 ```
@@ -630,13 +630,13 @@ Already covered under Semgrep (#1), but enhanced:
         "REPO_PATH": "/path/to/levite"
       }
     },
-    "neo4j-analysis": {
+    "database-analysis": {
       "command": "python",
-      "args": ["tools/neo4j_mcp.py"],
+      "args": ["tools/database_mcp.py"],
       "env": {
-        "NEO4J_URI": "bolt://localhost:7687",
-        "NEO4J_USER": "neo4j",
-        "NEO4J_PASSWORD": "password"
+        "DATABASE_URI": "<DB_URI>",
+        "DATABASE_USER": "database",
+        "DATABASE_PASSWORD": "password"
       }
     }
   }
@@ -650,7 +650,7 @@ Already covered under Semgrep (#1), but enhanced:
 ### Audit Flow (Example)
 
 ```
-User: "Keisha, audit Levite"
+User: "Keisha, audit Project A"
   ↓
 Keisha:
   1. Code Analysis MCP: Parse codebase, build dependency graph
@@ -690,12 +690,12 @@ Keisha (synthesizes all data):
 
 Before Keisha can use these tools:
 
-- [ ] **Python environment**: `pip install neo4j semgrep code-analysis-mcp`
+- [ ] **Python environment**: `pip install database semgrep code-analysis-mcp`
 - [ ] **Rust tools**: `cargo install clippy tarpaulin`
 - [ ] **Node tools**: `npm install -g @dependency-cruiser c8`
 - [ ] **PostgreSQL**: For Code Analysis embeddings database
 - [ ] **Git**: Accessible from MCP servers
-- [ ] **Neo4j**: Running and accessible (for House of Obi analysis)
+- [ ] **Database**: Running and accessible (for the organization analysis)
 - [ ] **MCP config**: Update `claude_desktop_config.json` or agent framework config
 - [ ] **Paths**: Set correct `REPO_PATH` for each MCP server
 

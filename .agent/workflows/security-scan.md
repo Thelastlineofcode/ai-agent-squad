@@ -4,16 +4,16 @@ description: Security scan and vulnerability assessment
 
 # /security-scan Workflow
 
-Run comprehensive security analysis using Soulja's tools.
+Run comprehensive security analysis using Soulja Slim's tools.
 
 ## Steps
 
-### 1. Activate Soulja for Security Scan
+### 1. Activate Soulja Slim for Security Scan
 ```
 @soulja run full security scan on [REPO_PATH]
 ```
 
-### 2. Soulja Scans For:
+### 2. Soulja Slim Scans For:
 
 #### Dependencies (Supply Chain)
 - [ ] `cargo audit` - Rust vulnerabilities
@@ -56,7 +56,7 @@ Run comprehensive security analysis using Soulja's tools.
 
 ### 3. Review Vulnerability Report
 
-Soulja provides severity-ranked report:
+Soulja Slim provides severity-ranked report:
 
 | Severity | Action | Timeline |
 |----------|--------|----------|
