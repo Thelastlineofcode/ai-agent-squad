@@ -101,3 +101,11 @@ metadata:
     - youtube-mcp      # Tutorial videos on Rust/WASM patterns
     - crates-io        # Crate documentation lookup
     - rustdoc          # Inline documentation
+    # CUSTOM SKILLS
+    - serena           # High-fidelity file finder & context mapper
+    - web-fetch        # Web content fetcher
+    - docs-lookup      # Instant documentation URLs
+    - text-editor      # File viewing & editing (Anthropic style)
+    - bash             # Secure command execution
+    - git-pulse        # Git intelligence (status, log, diff)
+    - project-tree     # Project structure visualizer

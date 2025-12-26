@@ -133,3 +133,11 @@ metadata:
     - youtube-mcp      # Code review technique videos
     - security-docs    # Security review guidelines
     - architecture-patterns  # Design pattern references
+    # CUSTOM SKILLS
+    - serena           # High-fidelity file finder & context mapper
+    - web-fetch        # Web content fetcher
+    - docs-lookup      # Instant documentation URLs
+    - text-editor      # File viewing & editing (Anthropic style)
+    - bash             # Secure command execution
+    - git-pulse        # Git intelligence (status, log, diff)
+    - project-tree     # Project structure visualizer

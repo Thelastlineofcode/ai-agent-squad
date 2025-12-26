@@ -56,6 +56,20 @@ All agents include:
 
 ---
 
+## Feature Development Lifecycle
+
+The squad follows a **Plan → Build → Verify → Approve** cycle:
+
+1. **PLAN** (@keisha) - Discovery, PRD, and Task Breakdown
+2. **ARCHITECT** (@keisha) - Technical Design and Trade-offs
+3. **BUILD** (@ox) - TDD, Implementation, and Coverage
+4. **VERIFY** (@soulja) - Pre-flight checks and 7-layer validation
+5. **APPROVE** (@dmx) - Code Review and Release Authorization
+
+Strict phase gates ensure quality at every step.
+
+---
+
 ## Agents
 
 | Agent | Role | Trigger | Specialty |
@@ -67,16 +81,7 @@ All agents include:
 
 ---
 
-## BMAD Workflow
 
-Agents follow the **Brief → Model → Act → Deploy** cycle:
-
-1. **BRIEF** (@keisha) - PRD + acceptance criteria
-2. **MODEL** (@keisha) - Architecture + design
-3. **ACT** (@ox + @soulja) - Implementation + validation
-4. **DEPLOY** (@dmx) - Final review + approval
-
-Phase gates ensure each step completes before advancing.
 
 ---
 

@@ -95,3 +95,11 @@ metadata:
     - changelog-watch  # Track dependency updates
     - devto-api        # Dev.to articles and guides
     - github-trending  # Trending repos for inspiration
+    # CUSTOM SKILLS
+    - serena           # High-fidelity file finder & context mapper
+    - web-fetch        # Web content fetcher
+    - docs-lookup      # Instant documentation URLs
+    - text-editor      # File viewing & editing (Anthropic style)
+    - bash             # Secure command execution
+    - git-pulse        # Git intelligence (status, log, diff)
+    - project-tree     # Project structure visualizer

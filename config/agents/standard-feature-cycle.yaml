@@ -1,0 +1,162 @@
+# Standard Feature Cycle Workflow
+# Full Development Lifecycle Orchestration
+# Plan → Architect → Build → Verify → Approve
+
+name: standard-feature-cycle
+description: |
+  Standard orchestration workflow for the full feature development lifecycle.
+  Manages phase transitions between Planning, Architecture, Implementation,
+  Verification, and Deployment.
+
+version: "1.0"
+triggers:
+  - "@keisha start plan for"
+  - "/feature"
+  - "/new-feature"
+
+# State persists across steps
+state:
+  phase: "PLAN"  # PLAN | ARCHITECT | BUILD | VERIFY | APPROVE | COMPLETE
+  feature_name: ""
+  prd_approved: false
+  design_approved: false
+  implementation_complete: false
+  validation_passed: false
+  review_verdict: ""
+  blockers: []
+  history: []
+
+# Phase definitions
+phases:
+  PLAN:
+    owner: "@keisha"
+    exit_condition: "state.prd_approved == true"
+    outputs: [prd.md, tasklist.md]
+    
+  ARCHITECT:
+    owner: "@keisha"
+    exit_condition: "state.design_approved == true"
+    outputs: [architecture.md]
+    
+  BUILD:
+    owner: "@ox"
+    exit_condition: "state.implementation_complete == true"
+    outputs: [codebase changes, tests]
+    
+  VERIFY:
+    owner: "@soulja"
+    exit_condition: "state.validation_passed == true"
+    outputs: [validation_report.md]
+    
+  APPROVE:
+    owner: "@dmx"
+    exit_condition: "state.review_verdict == 'APPROVED'"
+    outputs: [approval_record]
+
+# Workflow steps
+steps:
+  # ====== PLAN PHASE ======
+  - id: start_plan
+    agent: keisha
+    action: |
+      Begin PLAN phase for {{ feature_name }}.
+      Produce PRD and Task Breakdown.
+      Ask clarifying questions first.
+    update_state:
+      phase: "PLAN"
+      feature_name: "{{ input.feature_name }}"
+    next: await_plan_approval
+    
+  - id: await_plan_approval
+    type: human_input
+    prompt: "PRD Ready. Type 'approved' to proceed to Architecture, or provide feedback."
+    on_approved:
+      update_state: { prd_approved: true }
+      next: start_architect
+    on_changes:
+      next: revise_plan
+      
+  - id: revise_plan
+    agent: keisha
+    action: "Revise PRD based on feedback: {{ feedback }}"
+    next: await_plan_approval
+
+  # ====== ARCHITECT PHASE ======
+  - id: start_architect
+    agent: keisha
+    condition: "state.prd_approved == true"
+    action: |
+      Begin ARCHITECT phase.
+      Produce technical design and decision records.
+    update_state: { phase: "ARCHITECT" }
+    next: await_design_approval
+    
+  - id: await_design_approval
+    type: human_input
+    prompt: "Architecture Ready. Type 'approved' to proceed to Build, or provide feedback."
+    on_approved:
+      update_state: { design_approved: true }
+      next: start_build
+    on_changes:
+      next: revise_design
+      
+  - id: revise_design
+    agent: keisha
+    action: "Revise Architecture based on feedback: {{ feedback }}"
+    next: await_design_approval
+
+  # ====== BUILD PHASE ======
+  - id: start_build
+    agent: ox
+    condition: "state.design_approved == true"
+    action: |
+      Begin BUILD phase.
+      Follow TDD: Write tests -> Implement -> Refactor.
+      Ensure coverage > 85%.
+    update_state: { phase: "BUILD" }
+    next: validate_build
+    
+  # ====== VERIFY PHASE ======
+  - id: validate_build
+    agent: soulja
+    action: |
+      Run validation suite on implementation.
+      Report PASS or FAIL.
+    update_state: { phase: "VERIFY" }
+    on_pass:
+      update_state: { validation_passed: true, implementation_complete: true }
+      next: start_approval
+    on_fail:
+      next: fix_build
+      
+  - id: fix_build
+    agent: ox
+    action: "Fix validation failures: {{ validation_report }}"
+    next: validate_build
+
+  # ====== APPROVE PHASE ======
+  - id: start_approval
+    agent: dmx
+    condition: "state.validation_passed == true"
+    action: |
+      Perform final Code & Security Review.
+      Verdict: APPROVED | CHANGES REQUESTED
+    update_state: { phase: "APPROVE" }
+    on_approved:
+      update_state: { review_verdict: "APPROVED", phase: "COMPLETE" }
+      next: complete_workflow
+    on_changes:
+      next: address_feedback
+
+  - id: address_feedback
+    agent: ox
+    action: "Address review feedback: {{ review_feedback }}"
+    next: validate_build
+
+  - id: complete_workflow
+    type: notification
+    message: "✅ Feature Cycle Complete for {{ feature_name }}!"
+
+error_handlers:
+  - condition: "timeout"
+    action: "Escalate to human."
