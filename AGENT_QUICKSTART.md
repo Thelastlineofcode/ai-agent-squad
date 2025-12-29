@@ -147,6 +147,12 @@ All agents enforce:
 - Agents must fetch current docs (MCPs or repo docs) before decisions
 - If sources are unavailable, block and request confirmation
 
+### Documentation System & Sprint Alignment (Required)
+1. Identify the project doc index and active sprint source before any work.
+2. Use the doc index as the single source of truth; update it before creating new docs.
+3. Keep one active status doc per sprint or date; consolidate within 24 hours.
+4. End every session with a summary in `Execs/docs/session-summaries/`.
+
 ---
 
 ## Directory Structure
@@ -168,6 +174,7 @@ Execs/
 │   ├── mcp-integration.md           # Guide
 │   ├── quick-commands.md            # Command list
 │   └── slash-commands.md            # Reference
+│   └── session-summaries/           # Cross-LLM handoff summaries
 │
 ├── .agent/                          # IDE Workflows
 └── dev-tools/                       # Global scripts

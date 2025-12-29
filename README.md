@@ -21,6 +21,7 @@ Comprehensive guides and reference materials for human and AI collaborators.
 - `docs/orchestration.md` — The @Activation system protocol.
 - `docs/agent-ops-board.md` — Live status dashboard.
 - `docs/agent-learnings.md` — Consolidated knowledge.
+- `docs/session-summaries/` — End-of-session handoffs.
 - `docs/audits/` — Audit templates, classifications, and reports.
 - `docs/limiters.md` — Tech debt and bloat gates.
 - `docs/mcp/` — MCP tool setup and agent distribution.

@@ -53,6 +53,7 @@ Agents update this board at:
 2. **Handoff**: Add to "Pending Handoffs"
 3. **Completion**: Move to "Completed This Sprint"
 4. **Blocked**: Update "Blocked On"
+5. **Session end**: Post a brief summary in `Execs/docs/session-summaries/`
 
 ```
 Example update:
