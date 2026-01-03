@@ -1,5 +1,5 @@
 # KEISHA QUICK-START GUIDE
-## For Travone: Integrate into Your Agent Team Today
+## Integrate into Your Agent Team Today
 
 ---
 
@@ -105,7 +105,7 @@ Then give me a ranked list of top 5 refactoring priorities by ROI.
 **Keisha returns:**
 ```json
 {
-  "request_id": "keisha-audit-levite-2025-12-20-001",
+  "request_id": "keisha-audit-project-2025-12-20-001",
   "metrics": {
     "cyclomatic_complexity": {
       "average": 9.2,
@@ -263,7 +263,7 @@ Keisha is most powerful when she can SEE your actual code. Give her:
 **You ask Keisha:**
 
 ```
-@keisha audit --repo=/path/to/levite --scope=full_codebase
+@keisha audit --repo=/path/to/your-project --scope=full_codebase
 
 Provide:
 1. Metrics (complexity, coverage, debt, coupling)
@@ -278,7 +278,7 @@ Format as JSON.
 
 ```json
 {
-  "request_id": "keisha-audit-levite-2025-12-20-001",
+  "request_id": "keisha-audit-project-2025-12-20-001",
   "timestamp": "2025-12-20T15:30:00Z",
   "executive_summary": "Project A is YELLOW: healthy core logic but messy in comparison module. 18% tech debt concentrated in CoreCalculator and WorkflowEngine. Refactoring will unblock testing and future features. 2-sprint investment recommended.",
   "metrics": {

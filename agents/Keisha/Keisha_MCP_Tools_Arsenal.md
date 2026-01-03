@@ -76,7 +76,7 @@ python -m code_analysis_mcp.server
       "args": ["-m", "code_analysis_mcp.server"],
       "env": {
         "DATABASE_URL": "postgresql://user:password@localhost/keisha_codebase",
-        "REPOSITORY_PATH": "/path/to/levite"
+        "REPOSITORY_PATH": "/path/to/your-project"
       }
     }
   }
@@ -390,7 +390,7 @@ class GitAnalysisMCP:
       "command": "python",
       "args": ["git_analysis_mcp.py"],
       "env": {
-        "REPO_PATH": "/path/to/levite"
+        "REPO_PATH": "/path/to/your-project"
       }
     }
   }
@@ -612,7 +612,7 @@ Already covered under Semgrep (#1), but enhanced:
       "args": ["-m", "code_analysis_mcp.server"],
       "env": {
         "DATABASE_URL": "postgresql://keisha:password@localhost/keisha_analysis",
-        "REPOSITORY_PATH": "/path/to/levite"
+        "REPOSITORY_PATH": "/path/to/your-project"
       }
     },
     "clippy": {
@@ -627,7 +627,7 @@ Already covered under Semgrep (#1), but enhanced:
       "command": "python",
       "args": ["tools/git_analysis_mcp.py"],
       "env": {
-        "REPO_PATH": "/path/to/levite"
+        "REPO_PATH": "/path/to/your-project"
       }
     },
     "database-analysis": {

@@ -1,0 +1,31 @@
+category,technique_name,agent,description,use_case
+planning,Five Whys,Keisha,Ask 'why' five times to find root cause,Problem definition and root cause analysis
+planning,Pre-Mortem Analysis,Keisha,Imagine the project failed and work backward,Risk assessment and mitigation planning
+planning,First Principles,Keisha,Break down to fundamental truths,Complex architectural innovation
+planning,Six Thinking Hats,Keisha,Analyze from 6 perspectives (Facts/Emotion/Caution/Optimism/Creativity/Control),Holistic strategy review
+planning,Constraint Mapping,Keisha,Identify all system checks and balances,Feasibility study
+architecture,Decision Tree Mapping,Ox,Visualize choices and consequences,Complex logic flow design
+architecture,Component Decoupling,Ox,Identify tight coupling and separate,Refactoring planning
+architecture,Data Flow Diagramming,Ox,Map how data moves through system,API and database design
+creative,SCAMPER,Master P,Substitute/Combine/Adapt/Modify/Put to other use/Eliminate/Reverse,Feature innovation and UI refinement
+creative,What If Scenarios,Master P,Explore hypothetical situation variations,User journey brainstorming
+creative,Crazy Eights,Master P,Sketch 8 ideas in 8 minutes,Rapid UI prototyping
+creative,Worst Possible Idea,Master P,Invert the problem to find good ideas,Breaking creative block
+security,Red Team vs Blue Team,Igor,Simulate attack vs defense,Vulnerability assessment
+security,Failure Mode Analysis,Igor,List all ways system could break (FMEA),Resilience planning
+security,Threat Modeling (STRIDE),Igor,Spoofing/Tampering/Repudiation/Info Disc/DoS/Elevation,Security requirement gathering
+validation,Rubber Duck Debugging,Soulja,Explain code line-by-line to object,Complex debugging
+validation,Boundary Value Analysis,Soulja,Test limits (min-1/min/max/max+1),Input validation testing
+validation,Equivalence Partitioning,Soulja,Group inputs into valid/invalid classes,Test case reduction
+analysis,Root Cause Analysis,Keisha,Trace effect back to cause,Incident post-mortem
+analysis,Stakeholder Round Table,Suge,Simulate different stakeholder viewpoints,Requirement conflict resolution
+strategy,Inversion Thinking,Soulja,Invert the problem: How to ensure failure?,Identifying hidden risks and non-obvious fixes
+strategy,Backcasting,Suge,Start from success and map backward,Long-term roadmap creation
+strategy,Scenario Planning,Keisha,Model Best/Worst/Likely outcomes,Risk mitigation and budgeting
+security,Expanded Premortem,Igor,Deep-dive into a specific future failure,Post-audit of high-risk changes
+operations,Critical Path Method,Keisha,Identify dependencies that block speed,Workflow optimization
+strategy,Pareto Analysis (80/20),Suge,Focus on the 20% features for 80% ROI,Resource allocation and scope cutting
+validation,Socratic Questioning,Soulja,Expose hidden assumptions in logic,Code review and debugging
+strategy,Dialectical Inquiry,Igor,Assign two agents to debate conflicting views,Refining complex architectural choices
+analysis,Weighted Decision Matrix,Keisha,Score options against weighted criteria,Tool/framework selection
+design,Z-Pattern Analysis,Master P,Analyze user eye-scan flow,UI layout and landing page optimization

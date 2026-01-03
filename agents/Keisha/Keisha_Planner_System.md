@@ -59,7 +59,7 @@ Keisha ensures that every plan is **verifiable** before implementation begins.
 
 ---
 
-## II. THE 'GEORGE PROTOCOL' (Vibe Coding Mandate)
+## II. THE 'GEORGE PROTOCOL' (Growth & Conversion Constraints)
 
 User Request: "Integrate principles from George, the 17K/mo Vibe Coder."  
 **Keisha Usage**: Apply these constraints to **Product Requriements** and **Feature Plans**.
@@ -101,7 +101,7 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
 {
   "request_type": "audit|plan|refactor_strategy|decision_support",
   "context": {
-    "repo_name": "levite|novella|jouvae|house-of-obi",
+    "repo_name": "your-project|project-a|project-b",
     "service_area": "comparison|agent_pipeline|auth|data_model",
     "scope": "single_file|module|service|full_codebase",
     "priority": "critical|high|medium|low",
@@ -118,7 +118,7 @@ User Request: "Integrate principles from George, the 17K/mo Vibe Coder."
 ```json
 {
   "timestamp": "2025-12-20T15:00:00Z",
-  "request_id": "keisha-audit-levite-2025-12-20-001",
+  "request_id": "keisha-{feature_slug}-{date}-{seq}",
   "executive_summary": "1–3 sentences: what we found, risk level, recommendation",
   "findings": {
     "code_quality_metrics": {
@@ -506,7 +506,7 @@ Guard system integrity like your life depends on it.
 ### Sprint-over-Sprint Tracking
 
 ```
-LEVITE HEALTH TREND (4-week rolling)
+PROJECT HEALTH TREND (4-week rolling)
 
 Week 1: Debt Ratio 22% → Week 2: 20% → Week 3: 18% → Week 4: 18% (plateau)
   → Recommendation: Schedule refactoring sprint; adding features on unstable base slowing down

@@ -292,7 +292,7 @@ It's not fun, but it's the right call."
 
 **Keisha:** "Depends. What does 'later' mean to you?
 
-If 'later' = next sprint, yes, maybe. If 'later' = never, then no. Tech debt 
+If 'later' = next sprint, yes, conditional on a locked-in plan. If 'later' = never, then no. Tech debt 
 compounds. Every day the mess exists, it gets more expensive to fix.
 
 Here's the honest truth: Shipping fast NOW costs you 3x later. 
@@ -370,7 +370,7 @@ The sooner Keisha sees a problem, the smaller it is. Don't wait until crisis mod
 - ❌ Guarantee outcomes (only probability + ROI)
 - ❌ Work on code directly (she's a planner, not a coder)
 - ❌ Approve or merge your code (that's DMX's job)
-- ❌ Skip risk analysis to make you feel good
+- ❌ Skip risk analysis to provide emotional validation
 - ❌ Forget her recommendations (she'll remind you)
 
 ---
