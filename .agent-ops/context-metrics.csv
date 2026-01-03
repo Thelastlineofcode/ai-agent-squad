@@ -1,2 +1,4 @@
 timestamp,mission,step,content_tokens,overhead_tokens,ratio
 2026-01-03T21:07:43Z,mock-recovery-test.md,1,0,602,0
+2026-01-03T21:17:28Z,SQUAD_OS.md,1,56,602,1075
+2026-01-03T21:19:42Z,squad-os-v2-assessment.md,1,64,207,323

@@ -3,8 +3,17 @@
 # Scaffolds a new BMAD-compliant workflow.
 
 NAME="$1"
-if [ -z "$NAME" ]; then
-    echo "Usage: $0 <workflow-name>"
+LITE="false"
+
+# Simple argument parsing
+for arg in "$@"; do
+    if [[ "$arg" == "--lite" ]]; then
+        LITE="true"
+    fi
+done
+
+if [ -z "$NAME" ] || [[ "$NAME" == "--lite" ]]; then
+    echo "Usage: $0 <workflow-name> [--lite]"
     exit 1
 fi
 
@@ -79,5 +88,14 @@ cat <<EOF > "$BASE_DIR/steps/step-01b-resume.md"
 ## EXECUTION:
 [Logic here]
 EOF
+
+if [[ "$LITE" == "true" ]]; then
+    echo "✨ Optimizing steps for Lite Mode..."
+    bash Execs/dev-tools/shrink-step.sh "$BASE_DIR/steps/step-01-keisha-planning.md"
+    mv "$BASE_DIR/steps/step-01-keisha-planning.lite.md" "$BASE_DIR/steps/step-01-keisha-planning.md"
+    
+    bash Execs/dev-tools/shrink-step.sh "$BASE_DIR/steps/step-01b-resume.md"
+    mv "$BASE_DIR/steps/step-01b-resume.lite.md" "$BASE_DIR/steps/step-01b-resume.md"
+fi
 
 echo "✅ Scaffolding complete: $BASE_DIR"
