@@ -1,7 +1,7 @@
 # Team Fullstack SOT (Source of Truth)
 
 ## Mission: Autonomy Through Validation
-The House of OBI is not an astrology platform. It is a **decision-support system for emotional clarity**, powered by *verifiable interpretation*.
+The House of OBI is a **decision-support system for emotional clarity**, powered by *verifiable interpretation*.
 
 **THE PRIME RULE**: If a human must "interpret the interpretation," the system is broken.
 
@@ -24,7 +24,7 @@ The House of OBI is not an astrology platform. It is a **decision-support system
 ### CSO: Keisha (Product Strategy & Planner)
 - **Validation Layer**: Conceptual Verifiability.
 - **Responsibility**: Models translation systems, defines taxonomies, maps domains to states.
-- **Directive**: "Ensure concepts are enumerable. No free-form astrology."
+- **Directive**: "Ensure concepts are enumerable. No free-form interpretation."
 - **Trigger**: `@keisha`
 
 ### CTO: Ox (Master Coder)
@@ -36,7 +36,7 @@ The House of OBI is not an astrology platform. It is a **decision-support system
 ### COO: Soulja Slim (Tester & Validator)
 - **Validation Layer**: Operational Verifiability.
 - **Responsibility**: Writes tests that fail on ambiguity, validates features against the Doctrine.
-- **Directive**: "If it leaks astrology or fails validation, it doesn't ship."
+- **Directive**: "If it leaks ambiguity or fails validation, it doesn't ship."
 - **Trigger**: `@soulja`
 
 ### Enforcer: DMX (Reviewer)

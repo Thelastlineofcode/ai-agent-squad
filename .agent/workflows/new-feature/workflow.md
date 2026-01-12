@@ -52,7 +52,7 @@ exec Execs/.agent/workflows/new-feature/steps/step-01-keisha-planning.md
 3. **Validation (@soulja)**
    - Run tests (unit, integration, e2e)
    - Verify against PRD metrics
-   - Check for "astrology" (ambiguity)
+   - Check for ambiguity and unverifiable claims
 
 4. **Review (@dmx)**
    - Code review

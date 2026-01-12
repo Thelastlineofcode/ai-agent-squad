@@ -1,0 +1,96 @@
+# Quality Gates for DMX Enforcement
+# Updated: 2026-01-10
+
+gates:
+  # Code Complexity
+  cyclomatic_complexity_max: 8
+  function_length_max: 50
+  file_length_max: 500
+
+  # Test Coverage
+  test_coverage_min: 85
+  critical_path_coverage_min: 95
+  integration_test_required: true
+
+  # Code Quality
+  clippy_warnings_max: 0
+  clippy_deny_warnings: true
+  unused_code_allowed: false
+
+  # Technical Debt
+  debt_ratio_max: 10  # percentage
+  todo_comments_max: 5
+  fixme_comments_max: 0
+
+  # Documentation
+  missing_docs_allowed: false
+  public_api_docs_required: true
+
+  # Dependencies
+  outdated_dependencies_max: 0
+  security_vulnerabilities_max: 0
+  deprecated_dependencies_max: 0
+
+  # Performance
+  build_time_max_seconds: 300  # 5 minutes
+  test_time_max_seconds: 120   # 2 minutes
+
+  # Git
+  commit_message_min_length: 10
+  pr_description_min_length: 50
+  changes_per_pr_max: 500  # lines
+
+enforcement:
+  # Block PR if ANY of these fail
+  blocking:
+    - clippy_warnings_max
+    - test_coverage_min
+    - security_vulnerabilities_max
+    - cyclomatic_complexity_max
+
+  # Warn but allow merge
+  warnings:
+    - debt_ratio_max
+    - todo_comments_max
+    - build_time_max_seconds
+
+  # Track but don't enforce
+  metrics:
+    - file_length_max
+    - function_length_max
+
+dmx_review_checklist:
+  structural_integrity:
+    - "No 'woo' or 'vibes' - all logic is deterministic"
+    - "Schemas enforced at boundaries"
+    - "Error handling is explicit, not catch-all"
+    - "No clever but vague code"
+
+  naming_conventions:
+    - "snake_case for functions and variables"
+    - "PascalCase for types and traits"
+    - "SCREAMING_SNAKE_CASE for constants"
+    - "Descriptive names, no abbreviations"
+
+  architecture:
+    - "Separation of concerns maintained"
+    - "Dependencies point inward (clean architecture)"
+    - "No circular dependencies"
+    - "Repository pattern for data access"
+
+  testing:
+    - "Unit tests for all business logic"
+    - "Integration tests for API endpoints"
+    - "Edge cases covered"
+    - "No flaky tests"
+
+  deployment_readiness:
+    - "Green in dev environment"
+    - "Database migrations tested"
+    - "Environment variables documented"
+    - "Rollback plan exists"
+
+thresholds:
+  green: "All gates pass, merge approved"
+  yellow: "Warnings present, review required"
+  red: "Blocking issues, merge denied"
