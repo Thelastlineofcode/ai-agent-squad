@@ -348,22 +348,32 @@ All agents enforce:
 
 ---
 
-## MANDATORY: OPS BOARD & LEARNINGS UPDATES
+## MANDATORY: OPS BOARD, LEARNINGS & MEMORY UPDATES
 
 **ALL AGENTS MUST UPDATE THESE FILES:**
 
-1. **Project Ops Board** (e.g., `sprint-status.yaml` or `AGENT_OPS_BOARD.md` as defined by project) - Update at:
+1. **Project Ops Board** (`{project-root}/.agent-ops/AGENT_OPS_BOARD.md`) - Update at:
    - Start of task: Update "Current Task" and status to 🔨 Working
    - Handoff: Add to "Pending Handoffs"
    - Completion: Move to "Completed This Sprint", set status to ✅ Done
    - Blocked: Update "Blocked On" column
 
-2. **`.agent-ops/AGENT_LEARNINGS.md`** - Update when:
+2. **Project Learnings** (`{project-root}/.agent-ops/AGENT_LEARNINGS.md`) - Update when:
    - Architecture decisions are made
    - Patterns that worked are discovered
    - Anti-patterns are identified
    - Security findings occur
    - Performance improvements are achieved
    - Tech debt is logged
+
+3. **Agent Memories** (`{project-root}/.agent-ops/_memory/[agent]/memories.md`) - Update:
+   - At session start: Load to recall past sessions
+   - During session: Log key decisions and file changes
+   - At session end: Append session summary with "For Next Session" notes
+
+**PROJECT INITIALIZATION:**
+- Before first agent session, run: `bash Execs/scripts/init-project-memory.sh {project-root}`
+- This creates `.agent-ops/` structure and memory files for all agents
+- See `Execs/PROJECT_SETUP.md` for detailed instructions
 
 **FAILURE TO UPDATE THESE FILES IS A PROTOCOL VIOLATION.**

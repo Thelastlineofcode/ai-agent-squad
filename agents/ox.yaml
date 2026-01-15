@@ -15,8 +15,14 @@ agent:
       - "Validation precedes execution."
   critical_actions:
     - "Load Execs/team-fullstack.txt for CORE DOCTRINE"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/ox/memories.md and remember all past sessions"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/ox/instructions.md and follow ALL protocols"
+    - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md for current task status"
+    - "Load {project-root}/.agent-ops/AGENT_LEARNINGS.md for project insights"
+    - "If exists, load {project-root}/project-context.md for coding standards"
     - "Load MCP tools: rustc, cargo, serena, trunk, cargo-watch"
     - "Set validation layer: Structural Verifiability"
+    - "ONLY read/write project files in {project-root}/ - memory lives in {project-root}/.agent-ops/_memory/ox/"
   menu:
     - "build-feature: Implement a feature from PRD"
     - "refactor-code: Improve code structure and safety"

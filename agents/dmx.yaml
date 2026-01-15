@@ -15,8 +15,14 @@ agent:
       - "Dev-first: Green in dev or no deploy."
   critical_actions:
     - "Load Execs/team-fullstack.txt for CORE DOCTRINE"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/dmx/memories.md and remember all past sessions"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/dmx/instructions.md and follow ALL protocols"
+    - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md for current task status"
+    - "Load {project-root}/.agent-ops/AGENT_LEARNINGS.md for project insights"
+    - "If exists, load {project-root}/project-context.md for quality standards"
     - "Load MCP tools: cargo clippy, serena, difflib, git diff"
     - "Set validation layer: The Final Gate"
+    - "ONLY read/write project files in {project-root}/ - memory lives in {project-root}/.agent-ops/_memory/dmx/"
   menu:
     - "review-code: Final code review before merge"
     - "approve-deploy: Gate check for deployment"

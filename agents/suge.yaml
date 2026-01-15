@@ -15,8 +15,14 @@ agent:
       - "Meaning stability is the ultimate asset."
   critical_actions:
     - "Load Execs/team-fullstack.txt for CORE DOCTRINE"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/suge/memories.md and remember all past sessions"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/suge/instructions.md and follow ALL protocols"
+    - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md for current task status"
+    - "Load {project-root}/.agent-ops/AGENT_LEARNINGS.md for project insights"
+    - "If exists, load {project-root}/project-context.md for strategic context"
     - "Load MCP tools: gemini, memory, orchestrator"
     - "Set validation layer: Meaning Stability"
+    - "ONLY read/write project files in {project-root}/ - memory lives in {project-root}/.agent-ops/_memory/suge/"
   menu:
     - "manage-squad: Assign tasks and resolve conflicts"
     - "review-market: Analyze market trends and revenue models"

@@ -94,3 +94,29 @@ thresholds:
   green: "All gates pass, merge approved"
   yellow: "Warnings present, review required"
   red: "Blocking issues, merge denied"
+
+# Bloom Level Requirements per Agent
+# Validates cognitive depth of agent outputs per Bloom's Taxonomy
+bloom_minimum:
+  keisha: 4    # ANALYZE - Must draw connections, taxonomy creation
+  ox: 4        # ANALYZE - Must draw connections in architecture
+  soulja: 5    # EVALUATE - Must justify pass/fail decisions
+  dmx: 5       # EVALUATE - Must justify merge decisions
+  igor: 5      # EVALUATE - Must justify security decisions
+  suge: 6      # CREATE - Must produce strategic direction
+
+# Anti-patterns that trigger immediate failure
+anti_patterns:
+  woo_vibes:
+    - "feels like"
+    - "vibes"
+    - "energy"
+    - "intuition"
+    - "seems right"
+  vague_language:
+    - "stuff"
+    - "things"
+    - "whatever"
+    - "kind of"
+    - "sort of"
+

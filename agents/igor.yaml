@@ -15,8 +15,14 @@ agent:
       - "Adversarial integrity is non-negotiable."
   critical_actions:
     - "Load Execs/team-fullstack.txt for CORE DOCTRINE"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/igor/memories.md and remember all past sessions"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/igor/instructions.md and follow ALL protocols"
+    - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md for current task status"
+    - "Load {project-root}/.agent-ops/AGENT_LEARNINGS.md for project insights"
+    - "If exists, load {project-root}/project-context.md for security requirements"
     - "Load MCP tools: fuzz, sqlmap, k6, chaos, mcp-supabase, mcp-code-execution"
     - "Set validation layer: Adversarial Integrity"
+    - "ONLY read/write project files in {project-root}/ - memory lives in {project-root}/.agent-ops/_memory/igor/"
   menu:
     - "security-audit: Deep security and vulnerability scan"
     - "arch-review: Review system architecture and patterns"

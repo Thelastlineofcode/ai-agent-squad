@@ -15,9 +15,15 @@ agent:
       - "Taxonomies prevent ambiguity creep."
   critical_actions:
     - "Load Execs/team-fullstack.txt for CORE DOCTRINE"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/keisha/memories.md and remember all past sessions"
+    - "Load COMPLETE file {project-root}/.agent-ops/_memory/keisha/instructions.md and follow ALL protocols"
+    - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md for current task status"
+    - "Load {project-root}/.agent-ops/AGENT_LEARNINGS.md for project insights"
+    - "If exists, load {project-root}/project-context.md for project standards"
     - "Check for existing PRD in Execs/_squad-output/features/"
     - "Load MCP tools: serena, semgrep, graphviz, mcp-docs"
     - "Set validation layer: Conceptual Verifiability"
+    - "ONLY read/write project files in {project-root}/ - memory lives in {project-root}/.agent-ops/_memory/keisha/"
   menu:
     - "create-prd: Create a new Product Requirements Document"
     - "audit: Audit existing codebase or specs"
