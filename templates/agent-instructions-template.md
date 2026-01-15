@@ -10,7 +10,7 @@
 1. Load `{project-root}/.agent-ops/_memory/[AGENT_NAME]/memories.md`
 2. Load `{project-root}/.agent-ops/AGENT_OPS_BOARD.md`
 3. Load `{project-root}/.agent-ops/AGENT_LEARNINGS.md`
-4. Load `{project-root}/project-context.md` (if exists)
+4. Load `{project-root}/CONTRIBUTING.md` (if exists)
 5. Update my status on the ops board
 
 ### During Session

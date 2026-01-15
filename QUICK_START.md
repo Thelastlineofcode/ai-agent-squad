@@ -27,7 +27,7 @@ your-project/
 │       ├── igor/                  # Igor's session history
 │       ├── masterp/               # Master P's session history
 │       └── suge/                  # Suge's session history
-└── project-context.md             # Your project standards
+└── CONTRIBUTING.md             # Your project standards
 ```
 
 ---
@@ -36,7 +36,7 @@ your-project/
 
 ### 1. Fill In Project Context
 ```bash
-vim project-context.md
+vim CONTRIBUTING.md
 ```
 
 Add:
@@ -76,7 +76,7 @@ Each agent loads:
 1. Their personal memories (`_memory/[agent]/memories.md`)
 2. Task board (`AGENT_OPS_BOARD.md`)
 3. Project insights (`AGENT_LEARNINGS.md`)
-4. Project standards (`project-context.md`)
+4. Project standards (`CONTRIBUTING.md`)
 
 ### During Session
 Agents update:
@@ -133,7 +133,7 @@ cd ~/Projects/my-app
 bash ~/Execs/scripts/init-project-memory.sh
 
 # 2. Configure project
-vim project-context.md
+vim CONTRIBUTING.md
 # Fill in: Tech stack, standards, critical rules
 
 # 3. Plan feature

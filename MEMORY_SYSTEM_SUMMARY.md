@@ -29,7 +29,7 @@ bash Execs/scripts/init-project-memory.sh /path/to/project
 - `AGENT_LEARNINGS.md` (project insights)
 - `_memory/[agent]/memories.md` (per-agent session history)
 - `_memory/[agent]/instructions.md` (per-agent protocols)
-- `project-context.md` (project standards)
+- `CONTRIBUTING.md` (project standards)
 
 ---
 
@@ -43,7 +43,7 @@ All in `Execs/templates/`:
 | `learnings-template.md` | Project insights structure |
 | `agent-memory-template.md` | Agent session history format |
 | `agent-instructions-template.md` | Agent session protocols |
-| `project-context-template.md` | Project standards doc |
+| `contributing-template.md` | CONTRIBUTING.md with project standards |
 
 ---
 
@@ -66,7 +66,7 @@ critical_actions:
   - "Load COMPLETE file {project-root}/.agent-ops/_memory/[agent]/instructions.md"
   - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md"
   - "Load {project-root}/.agent-ops/AGENT_LEARNINGS.md"
-  - "If exists, load {project-root}/project-context.md"
+  - "If exists, load {project-root}/CONTRIBUTING.md"
   - "Load MCP tools: [tools]"
   - "ONLY read/write project files in {project-root}/"
 ```
@@ -126,7 +126,7 @@ Agent loads:
 - Instructions: `{project}/.agent-ops/_memory/[agent]/instructions.md`
 - Task board: `{project}/.agent-ops/AGENT_OPS_BOARD.md`
 - Learnings: `{project}/.agent-ops/AGENT_LEARNINGS.md`
-- Standards: `{project}/project-context.md`
+- Standards: `{project}/CONTRIBUTING.md`
 
 #### 2. During Session
 Agent updates:
@@ -163,7 +163,7 @@ Agent appends:
 ```bash
 cd existing-project
 bash /path/to/Execs/scripts/init-project-memory.sh
-vim project-context.md  # Fill in project details
+vim CONTRIBUTING.md  # Fill in project details
 ```
 
 ### Option 2: Preserve Existing Ops Board
@@ -214,7 +214,7 @@ ls -la .agent-ops/_memory/keisha/  # Should show memories.md & instructions.md
 
 # Keisha should:
 # 1. Load her memories from .agent-ops/_memory/keisha/
-# 2. Reference project-context.md
+# 2. Reference CONTRIBUTING.md
 # 3. Update ops board
 # 4. Append to her memories at session end
 ```
@@ -272,7 +272,7 @@ Execs/
 │   ├── learnings-template.md           ✅ NEW
 │   ├── agent-memory-template.md        ✅ NEW
 │   ├── agent-instructions-template.md  ✅ NEW
-│   └── project-context-template.md     ✅ NEW
+│   └── contributing-template.md        ✅ NEW
 ├── PROJECT_SETUP.md                    ✅ NEW
 ├── QUICK_START.md                      ✅ NEW
 └── MEMORY_SYSTEM_SUMMARY.md            ✅ NEW (this file)

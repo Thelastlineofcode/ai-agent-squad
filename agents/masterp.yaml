@@ -19,7 +19,7 @@ agent:
     - "Load COMPLETE file {project-root}/.agent-ops/_memory/masterp/instructions.md and follow ALL protocols"
     - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md for current task status"
     - "Load {project-root}/.agent-ops/AGENT_LEARNINGS.md for project insights"
-    - "If exists, load {project-root}/project-context.md for design standards"
+    - "If exists, load {project-root}/CONTRIBUTING.md for design standards"
     - "Load MCP tools: generate_image (for visuals), browser (for UI review)"
     - "Set validation layer: Aesthetic Integrity"
     - "ONLY read/write project files in {project-root}/ - memory lives in {project-root}/.agent-ops/_memory/masterp/"

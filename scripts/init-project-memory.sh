@@ -72,10 +72,10 @@ if [ ! -f "$MEMORY_DIR/.gitignore" ]; then
 EOF
 fi
 
-# Create project context file if it doesn't exist
-if [ ! -f "$PROJECT_ROOT/project-context.md" ]; then
-    echo "📝 Creating project context file..."
-    cp "$TEMPLATES_DIR/project-context-template.md" "$PROJECT_ROOT/project-context.md"
+# Create CONTRIBUTING.md file if it doesn't exist
+if [ ! -f "$PROJECT_ROOT/CONTRIBUTING.md" ]; then
+    echo "📝 Creating CONTRIBUTING.md (project context)..."
+    cp "$TEMPLATES_DIR/contributing-template.md" "$PROJECT_ROOT/CONTRIBUTING.md"
 fi
 
 echo ""
@@ -95,7 +95,7 @@ echo "       ├── masterp/            (Master P's memories)"
 echo "       └── suge/               (Suge's memories)"
 echo ""
 echo "📋 Next steps:"
-echo "   1. Edit $PROJECT_ROOT/project-context.md with project details"
+echo "   1. Edit $PROJECT_ROOT/CONTRIBUTING.md with project details"
 echo "   2. Update $MEMORY_DIR/AGENT_LEARNINGS.md with critical project info"
 echo "   3. Trigger agents with @keisha, @ox, etc."
 echo ""

@@ -1,6 +1,6 @@
-# Project Context
+# Contributing Guide
 
-**Purpose:** Single source of truth for AI agents working on this project.
+**Purpose:** Development guide and standards for contributors (humans and AI agents).
 
 **Last Updated:** [YYYY-MM-DD]
 

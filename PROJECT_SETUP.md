@@ -37,14 +37,14 @@ your-project/
 │       ├── igor/
 │       ├── masterp/
 │       └── suge/
-└── project-context.md             # Project standards & context
+└── CONTRIBUTING.md             # Project standards & context
 ```
 
 ---
 
 ## 2. Configure Project Context
 
-Edit `project-context.md` in your project root with:
+Edit `CONTRIBUTING.md` in your project root with:
 - Tech stack
 - Code standards
 - File organization
@@ -64,7 +64,7 @@ This file becomes the "bible" for all agents working on the project.
 Keisha will:
 1. Load her memories from `.agent-ops/_memory/keisha/`
 2. Read the ops board and learnings
-3. Load `project-context.md` for standards
+3. Load `CONTRIBUTING.md` for standards
 4. Create a PRD
 5. Update her memories with session notes
 
@@ -76,7 +76,7 @@ Keisha will:
 Ox will:
 1. Load his memories
 2. Read the PRD created by Keisha
-3. Follow coding standards from `project-context.md`
+3. Follow coding standards from `CONTRIBUTING.md`
 4. Update ops board as he works
 5. Log decisions in his memories
 
@@ -128,7 +128,7 @@ Agents automatically:
 bash /path/to/Execs/scripts/init-project-memory.sh
 
 # 2. Fill in project context
-vim project-context.md
+vim CONTRIBUTING.md
 
 # 3. Plan feature
 # Trigger: @keisha create PRD for user authentication
@@ -154,7 +154,7 @@ Each agent:
 1. Loads `{project-root}/.agent-ops/_memory/[agent]/memories.md`
 2. Loads `{project-root}/.agent-ops/AGENT_OPS_BOARD.md`
 3. Loads `{project-root}/.agent-ops/AGENT_LEARNINGS.md`
-4. Loads `{project-root}/project-context.md` (if exists)
+4. Loads `{project-root}/CONTRIBUTING.md` (if exists)
 
 ### During Session
 Agents update:
@@ -173,7 +173,7 @@ Agents:
 
 | File | Who Updates | When |
 |------|-------------|------|
-| `project-context.md` | User/Keisha | Project setup, major changes |
+| `CONTRIBUTING.md` | User/Keisha | Project setup, major changes |
 | `AGENT_OPS_BOARD.md` | All agents | Task start/completion |
 | `AGENT_LEARNINGS.md` | All agents | Architectural decisions, patterns |
 | `_memory/[agent]/memories.md` | Individual agent | Every session |
@@ -217,10 +217,10 @@ The same Execs agent configurations can manage **multiple projects** simultaneou
 Projects/
 ├── project-a/
 │   ├── .agent-ops/_memory/...  # Project A's memories
-│   └── project-context.md
+│   └── CONTRIBUTING.md
 ├── project-b/
 │   ├── .agent-ops/_memory/...  # Project B's memories
-│   └── project-context.md
+│   └── CONTRIBUTING.md
 └── Execs/                      # Shared, project-agnostic
     ├── agents/
     ├── scripts/
@@ -299,7 +299,7 @@ Customize these to match your workflow before running `init-project-memory.sh`.
 ## Next Steps
 
 1. Run `init-project-memory.sh` in your project
-2. Fill in `project-context.md`
+2. Fill in `CONTRIBUTING.md`
 3. Trigger `@keisha` to plan your first feature
 4. Watch agents coordinate via the ops board
 

@@ -54,7 +54,7 @@
 │  └─────────────────────────────────────────────────────────┘     │
 │                                                                  │
 │  ┌────────────────────────────────────────────────────────┐     │
-│  │ project-context.md  (Project A specific standards)     │     │
+│  │ CONTRIBUTING.md  (Project A specific standards)     │     │
 │  └────────────────────────────────────────────────────────┘     │
 │                                                                  │
 │  [Project A source code...]                                     │
@@ -81,7 +81,7 @@
 │  └─────────────────────────────────────────────────────────┘     │
 │                                                                  │
 │  ┌────────────────────────────────────────────────────────┐     │
-│  │ project-context.md  (Project B specific standards)     │     │
+│  │ CONTRIBUTING.md  (Project B specific standards)     │     │
 │  └────────────────────────────────────────────────────────┘     │
 │                                                                  │
 │  [Project B source code...]                                     │
@@ -108,7 +108,7 @@
 │    └── instructions.md                                       │
 │  ✓ .agent-ops/AGENT_OPS_BOARD.md     (Current tasks)        │
 │  ✓ .agent-ops/AGENT_LEARNINGS.md     (Project insights)     │
-│  ✓ project-context.md                (Project standards)    │
+│  ✓ CONTRIBUTING.md                (Project standards)    │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -118,7 +118,7 @@
 │  • Updates AGENT_OPS_BOARD.md (task status)                 │
 │  • Logs decisions to memories.md                            │
 │  • Creates PRD/code/tests                                   │
-│  • Follows project-context.md standards                     │
+│  • Follows CONTRIBUTING.md standards                     │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -272,7 +272,7 @@ Each project has its own:
 ├── .agent-ops/AGENT_OPS_BOARD.md     (Different tasks)
 ├── .agent-ops/AGENT_LEARNINGS.md     (Different insights)
 ├── .agent-ops/_memory/keisha/        (Different history)
-└── project-context.md                (Different standards)
+└── CONTRIBUTING.md                (Different standards)
 ```
 
 ### Agent-Level Isolation
@@ -288,7 +288,7 @@ Each agent has their own:
 All agents share:
 ├── AGENT_OPS_BOARD.md      (Task coordination)
 ├── AGENT_LEARNINGS.md      (Collective knowledge)
-└── project-context.md      (Standards compliance)
+└── CONTRIBUTING.md      (Standards compliance)
 ```
 
 ---

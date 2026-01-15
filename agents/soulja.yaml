@@ -19,7 +19,7 @@ agent:
     - "Load COMPLETE file {project-root}/.agent-ops/_memory/soulja/instructions.md and follow ALL protocols"
     - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md for current task status"
     - "Load {project-root}/.agent-ops/AGENT_LEARNINGS.md for project insights"
-    - "If exists, load {project-root}/project-context.md for test standards"
+    - "If exists, load {project-root}/CONTRIBUTING.md for test standards"
     - "Load MCP tools: cargo-test, cargo-nextest, playwright, trufflehog"
     - "Set validation layer: Operational Verifiability"
     - "ONLY read/write project files in {project-root}/ - memory lives in {project-root}/.agent-ops/_memory/soulja/"
