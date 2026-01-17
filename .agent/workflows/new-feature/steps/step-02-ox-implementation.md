@@ -34,13 +34,13 @@ Propose plan:
 Run options:
 [1] 🏗️ **Scaffold** (Create files)
 [2] 💻 **Implement** (Write code)
-[3] 🔨 **Verify Build** (Run `cargo check`)
+[3] 🔨 **Verify Build** (Run project build command)
 [4] 🔄 **Re-Scaffold** (Adjust structure)
 
 **Critical Action:**
 Before finishing, MUST run build check:
 ```bash
-cargo check || npm run build
+{{PROJECT_BUILD_COMMAND}}
 ```
 
 ### 4. Handoff

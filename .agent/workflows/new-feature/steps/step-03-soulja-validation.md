@@ -24,10 +24,10 @@ Execute verification commands:
 
 ```bash
 # 1. Unit Tests
-cargo test || npm test
+{{PROJECT_TEST_COMMAND}}
 
 # 2. Lint/Style (Quick check)
-cargo clippy || npx eslint .
+{{PROJECT_LINT_COMMAND}}
 ```
 
 ### 3. Ambiguity Check

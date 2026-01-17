@@ -20,11 +20,11 @@
 Proposed fix: [Fix]"
 
 ### 2. Implement
-- Edit code using `replace_file_content` etc.
+- Edit code using appropriate tools
 - **Critical:** Verify build passes.
 
 ```bash
-cargo check || npm run build
+{{PROJECT_BUILD_COMMAND}}
 ```
 
 ### 3. Handoff

@@ -26,7 +26,7 @@ Addressing findings..."
 Ensure patches don't break the build.
 
 ```bash
-cargo check || npm run build
+{{PROJECT_BUILD_COMMAND}}
 ```
 
 ### 3. Handoff

@@ -42,15 +42,32 @@ your-project/
 
 ---
 
-## 2. Configure Project Context
+## 2. Configure Project Specifications
 
-Edit `CONTRIBUTING.md` in your project root with:
-- Tech stack
-- Code standards
-- File organization
-- Critical rules
+**CRITICAL:** Create `.agent-ops/PROJECT_SPECIFICATIONS.md` in your project root.
 
-This file becomes the "bible" for all agents working on the project.
+Use the template:
+```bash
+cp /path/to/Execs/templates/PROJECT_SPECIFICATIONS.template.md .agent-ops/PROJECT_SPECIFICATIONS.md
+```
+
+Fill in:
+- **Build/Test Commands**: Replaces `{{PROJECT_BUILD_COMMAND}}`, `{{PROJECT_TEST_COMMAND}}`, etc.
+- **Code Quality Standards**: Coverage targets, complexity limits
+- **Architecture Patterns**: How dependencies are injected, error handling
+- **Development Environment**: Prerequisites, setup commands
+
+**This file is REQUIRED** - agents will read it to understand your project's language, tooling, and conventions.
+
+### Optional: CONTRIBUTING.md
+
+You can also create `CONTRIBUTING.md` for human-focused documentation:
+- Team workflows
+- Git conventions
+- PR process
+- Style guides
+
+The agents will read this too, but `PROJECT_SPECIFICATIONS.md` takes precedence for technical specs.
 
 ---
 

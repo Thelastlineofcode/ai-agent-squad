@@ -23,7 +23,7 @@ Moving files..."
 
 ### 2. Verify
 ```bash
-cargo check || npm run build
+{{PROJECT_BUILD_COMMAND}}
 ```
 
 ### 3. Handoff

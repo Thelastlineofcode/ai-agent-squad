@@ -54,7 +54,12 @@
 │  └─────────────────────────────────────────────────────────┘     │
 │                                                                  │
 │  ┌────────────────────────────────────────────────────────┐     │
-│  │ CONTRIBUTING.md  (Project A specific standards)     │     │
+│  │ .agent-ops/PROJECT_SPECIFICATIONS.md (REQUIRED)      │     │
+│  │ - Build/test commands, language, framework           │     │
+│  │ - Quality standards, architecture patterns           │     │
+│  └────────────────────────────────────────────────────────┘     │
+│  ┌────────────────────────────────────────────────────────┐     │
+│  │ CONTRIBUTING.md (Optional - team workflows)          │     │
 │  └────────────────────────────────────────────────────────┘     │
 │                                                                  │
 │  [Project A source code...]                                     │
@@ -81,7 +86,10 @@
 │  └─────────────────────────────────────────────────────────┘     │
 │                                                                  │
 │  ┌────────────────────────────────────────────────────────┐     │
-│  │ CONTRIBUTING.md  (Project B specific standards)     │     │
+│  │ .agent-ops/PROJECT_SPECIFICATIONS.md (REQUIRED)      │     │
+│  └────────────────────────────────────────────────────────┘     │
+│  ┌────────────────────────────────────────────────────────┐     │
+│  │ CONTRIBUTING.md (Optional)                           │     │
 │  └────────────────────────────────────────────────────────┘     │
 │                                                                  │
 │  [Project B source code...]                                     │
@@ -102,13 +110,14 @@
 ┌─────────────────────────────────────────────────────────────┐
 │              2. Agent Loads Context (Automatic)              │
 │                                                              │
-│  ✓ Execs/team-fullstack.txt          (Core doctrine)        │
-│  ✓ .agent-ops/_memory/keisha/        (Personal history)     │
+│  ✓ Execs/team-fullstack.txt               (Core doctrine)   │
+│  ✓ .agent-ops/PROJECT_SPECIFICATIONS.md  (REQUIRED!)        │
+│  ✓ .agent-ops/_memory/keisha/             (Personal history)│
 │    └── memories.md                                           │
 │    └── instructions.md                                       │
-│  ✓ .agent-ops/AGENT_OPS_BOARD.md     (Current tasks)        │
-│  ✓ .agent-ops/AGENT_LEARNINGS.md     (Project insights)     │
-│  ✓ CONTRIBUTING.md                (Project standards)    │
+│  ✓ .agent-ops/AGENT_OPS_BOARD.md          (Current tasks)   │
+│  ✓ .agent-ops/AGENT_LEARNINGS.md          (Project insights)│
+│  ✓ CONTRIBUTING.md                     (Optional standards) │
 └─────────────────────────────────────────────────────────────┘
                               │
                               ▼
@@ -388,5 +397,105 @@ Day 7: Deep Context
 
 ---
 
-**Architecture Version:** 1.0
+## Project-Agnostic Design
+
+### Philosophy
+
+The Execs agent system is **language and framework agnostic**. All agents, workflows, and templates are designed to work with any tech stack.
+
+### How It Works
+
+**Problem:** Hardcoded commands like `cargo test`, `npm build`, etc. make agents Rust/Node-specific.
+
+**Solution:** Project overlay system with placeholder replacement:
+
+```bash
+# In workflow files:
+{{PROJECT_BUILD_COMMAND}}      # Instead of: cargo check || npm run build
+{{PROJECT_TEST_COMMAND}}       # Instead of: cargo test || npm test
+{{PROJECT_LINT_COMMAND}}       # Instead of: cargo clippy || eslint .
+{{PROJECT_COVERAGE_COMMAND}}   # Instead of: cargo tarpaulin || vitest --coverage
+{{PROJECT_SECURITY_SCAN_COMMAND}}  # Instead of: cargo audit || npm audit
+```
+
+### Configuration File
+
+Each project MUST have `.agent-ops/PROJECT_SPECIFICATIONS.md`:
+
+```markdown
+## BUILD & TEST COMMANDS
+
+### Build Command
+PROJECT_BUILD_COMMAND="cargo check"
+
+### Test Command
+PROJECT_TEST_COMMAND="cargo test"
+
+### Lint Command
+PROJECT_LINT_COMMAND="cargo clippy"
+```
+
+**Agents read this file FIRST** to understand:
+- What language/framework the project uses
+- What commands to run for build/test/lint
+- Quality standards and architecture patterns
+- Development environment setup
+
+### Agent Behavior
+
+1. **On activation**, agents search for `.agent-ops/PROJECT_SPECIFICATIONS.md`
+2. If found, extract command definitions
+3. Replace `{{PLACEHOLDERS}}` with actual commands
+4. If NOT found, ask user for explicit commands
+
+### Example: Multi-Language Support
+
+**Rust Project:**
+```markdown
+PROJECT_BUILD_COMMAND="cargo check"
+PROJECT_TEST_COMMAND="cargo test --all"
+PROJECT_LINT_COMMAND="cargo clippy -- -D warnings"
+```
+
+**TypeScript Project:**
+```markdown
+PROJECT_BUILD_COMMAND="npm run build"
+PROJECT_TEST_COMMAND="vitest run"
+PROJECT_LINT_COMMAND="eslint . --max-warnings=0"
+```
+
+**Python Project:**
+```markdown
+PROJECT_BUILD_COMMAND="python -m build"
+PROJECT_TEST_COMMAND="pytest"
+PROJECT_LINT_COMMAND="ruff check ."
+```
+
+**Go Project:**
+```markdown
+PROJECT_BUILD_COMMAND="go build ./..."
+PROJECT_TEST_COMMAND="go test ./..."
+PROJECT_LINT_COMMAND="golangci-lint run"
+```
+
+### Code Examples in Agent Prompts
+
+Agent system prompts (like `Ox_Master_Coder_System.md`) contain **illustrative code examples** in various languages. These are:
+- **NOT prescriptive** - they demonstrate patterns, not requirements
+- **NOT the default** - agents adapt to the project's actual language
+- **Educational** - they show best practices across ecosystems
+
+Agents are instructed at the top of their system prompts:
+> "This agent is language and framework agnostic. Code examples are illustrative only."
+
+### Benefits
+
+1. **Portability**: Same Execs folder works for Rust, TypeScript, Python, Go, Java, etc.
+2. **Flexibility**: Projects define their own tooling preferences
+3. **No Vendor Lock-in**: Not tied to specific build tools or test frameworks
+4. **Team Adoption**: Different teams can use the same agent system with different stacks
+
+---
+
+**Architecture Version:** 1.1
 **Last Updated:** 2026-01-15

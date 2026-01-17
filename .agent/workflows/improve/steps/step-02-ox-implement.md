@@ -20,7 +20,7 @@ Applying changes..."
 
 ### 2. Check
 ```bash
-cargo check || npm run build
+{{PROJECT_BUILD_COMMAND}}
 ```
 
 ### 3. Handoff

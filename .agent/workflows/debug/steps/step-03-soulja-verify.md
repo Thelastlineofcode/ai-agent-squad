@@ -22,7 +22,7 @@ Running reproduction test against the fix..."
 Run the test that previously failed.
 
 ```bash
-cargo test [test_name]
+{{PROJECT_TEST_COMMAND}}
 ```
 
 ### 3. Verdict

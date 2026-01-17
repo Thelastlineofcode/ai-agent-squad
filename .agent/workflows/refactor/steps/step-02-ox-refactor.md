@@ -23,7 +23,7 @@ Applying patterns..."
 
 ### 2. Verify Build
 ```bash
-cargo check || npm run build
+{{PROJECT_BUILD_COMMAND}}
 ```
 
 ### 3. Handoff

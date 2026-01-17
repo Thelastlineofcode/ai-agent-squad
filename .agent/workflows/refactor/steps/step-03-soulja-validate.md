@@ -19,7 +19,7 @@
 Running full suite..."
 
 ```bash
-cargo test || npm test
+{{PROJECT_TEST_COMMAND}}
 ```
 
 ### 2. Verdict
