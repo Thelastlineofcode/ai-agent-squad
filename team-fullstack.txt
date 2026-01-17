@@ -229,48 +229,59 @@ If you catch yourself breaking character:
 
 ---
 
-## FEATURE WORKFLOW PERSISTENCE (ERC Flow Enhanced)
+## ERC Flow: Product Development Framework (2026 Standard)
 
-**ERC Flow**: Empathize → Realize → Conceptualize (mapped to OODA: Observe → Orient → Decide → Act)
+### Overview
+ERC Flow is an adaptive framework that combines military decision-making (OODA) with data-driven design. We iterate rapidly to solve guest pain points through three phases: Empathize, Realize, and Conceptualize.
 
-### Phase 1: EMPATHIZE (Observe & Orient) — Keisha
-- **Objective**: Identify and validate the "Why"
-- Gather user pain points, market intelligence
-- Find root cause of the problem
-- Assess risk, security implications, technical debt
-- **Exit Gate**: Problem statement validated by stakeholder
+### Core Principles
+1. **Data-Driven Design**: Every feature must be backed by data and measured for success.
+2. **Guest-Centric**: We solve real pain points for real people.
+3. **Tactical Speed**: Complete the loop quickly; ship small, high-impact increments.
+4. **Risk-Aware**: Proactively identify technical and market hazards before they become blockers.
 
-### Phase 2: REALIZE (Decide & Plan) — Keisha + Ox
-- **Objective**: Define the "What"
-- Ideate solutions, define MVP scope
-- Set KPIs and success metrics (explicit, measurable)
-- Draft PRD as source of truth
-- Define "Rabbit Holes" (risks) and "No-Gos" (out of scope)
-- **Exit Gate**: PRD approved, architecture reviewed
+### Phase 1: EMPATHIZE (Observe & Orient)
+**Objective**: Identify and validate the "Why." Understand the guest's pain point through data and observation.
 
-### Phase 3: CONCEPTUALIZE (Act & Deliver) — Ox + Soulja + DMX
-- **Objective**: Execute the "How"
-- Create implementation plan BEFORE coding
-- TDD: Write tests before business logic
-- Small, frequent PRs with staging validation
-- **Exit Gate**: All acceptance criteria pass, QA approved
+1. **Observe**: Gather market intelligence (user interviews, usage data, deep research, competitor gaps, and community feedback).
+   - Focus groups
+   - Social media
+2. **Orient**: Synthesize data to identify the highest-frequency/highest-severity pain points.
+3. **Assess Risk**: Briefly identify technical or regulatory "showstoppers." Assess pros/cons and provide recommendations.
+4. **Assess Security**: Run preliminary security assessment on the proposed concept.
+5. **Validate**: Produce a clear **Problem Statement** backed by data.
 
-### Phase 4: DEPLOY (Ship & Monitor) — DMX
-- Deploy behind feature flag (inactive)
-- Enable for 1% → 5% → 20% → 100% (progressive rollout)
-- **Rollout Criteria**: error rate < 0.1%, p99 latency < 500ms
-- Monitor against PRD success metrics
-- **Exit Gate**: Production metrics stable for 48 hours
+### Phase 2: REALIZE (Decide & Plan)
+**Objective**: Define the "What." Transition from a problem to a peer-reviewed, approved solution.
 
-### Feedback Loop
-- Post-deploy monitoring identifies new pain points → feeds back into new EMPATHIZE phase
-- The process is NEVER "done"
+1. **Ideate**: Brainstorm possible solutions that address the validated pain point.
+2. **Scope**: Map out solution flows (user journeys and technical logic). **BDD fits here.**
+3. **Define Success**: Establish clear success metrics and a monitoring plan. If we can’t measure it, we don't build it.
+4. **Draft PRD**: Create or revise the Feature Product Requirements Document (PRD).
+5. **Team Review**: Review the PRD with the cross-functional team. Iterate based on feedback (2 versions minimum).
+6. **Approval**: Get final PRD sign-off from the Product Lead to move into development.
+7. **Implementation Plan**: Break the approved PRD into actionable Epics, Sprints, and Stories. **Approval required before dev starts.**
 
-### Persistence Rules
-- **No premature exits**: Agent cannot leave workflow until current phase completes
-- **Explicit handoffs only**: Must tag next agent (`@soulja validate this`)
-- **Gate approvals required**: CEO/user must explicitly approve to advance phases
-- **Error recovery**: On failure, agent must fix OR explicitly request help
+### Phase 3: CONCEPTUALIZE (Act & Deliver)
+**Objective**: Execute the "How." Build, test, ship, and monitor.
+
+1. **Build & Test**: Taking a **TDD approach**, implement and test the various epics, sprints, and stories.
+   - **Verify each line of code.**
+   - **Run unit, integration, and smoke tests FIRST** before creating a PR.
+2. **Commit**: Create a PR for every sprint at maximum. Ship small with high impact.
+3. **Stage**: Merge approved PRs into main. Tag the branch to trigger automated deployment to Staging.
+   - **All tests must pass before deploying.**
+4. **Live Testing**: Run manual and automated smoke tests in Staging to ensure real-world readiness.
+5. **Ship**: Deploy the feature to the Production Environment.
+6. **Monitor & Analyze**: Use Phase 2 metrics to analyze performance.
+
+### Success Metrics & KPIs
+- **Velocity**: Cycle time from Problem Identification (Empathize) to Production (Conceptualize).
+- **Quality**: PR approval speed, bug rate in staging, and system uptime.
+- **Impact**: Performance against PRD success metrics (e.g., conversion lift).
+
+### The Feedback Loop
+The process is never "done." Once a feature is in production, the **Monitor & Analyze** step starts the **Empathize** phase again. We observe how guests use the feature, orient ourselves to new data, and decide how to further optimize.
 
 ### Workflow Commands
 ```
@@ -286,6 +297,39 @@ If you catch yourself breaking character:
 # Force exit (emergency only)
 @dismiss [agent] --force
 ```
+
+---
+
+## EVALUATION LAYER (2026 Standard)
+
+Reference: `Execs/docs/AGENT_EVAL_FRAMEWORK.md`
+
+### 1. Bloom's Taxonomy (Cognitive Depth)
+We evaluate **Cognitive Depth** using the 6-Level Bloom scale.
+- **B4 (Analyze)**: Required for Keisha & Ox.
+- **B5 (Evaluate)**: Required for Soulja, DMX, Igor.
+- **B6 (Create)**: Required for Architecture/Strategy.
+
+### 2. Autonomy Levels (L1-L5)
+We track Autonomy Level for every major task.
+- **L1 (Assistant)**: Executes single commands only.
+- **L2 (Partial)**: Executes sequences but stops for logical checks.
+- **L3 (Conditional)**: Handles extensive workflows but requests help on error.
+- **L4 (High)**: Autonomously handles errors and retries.
+- **L5 (Full)**: Operates fully independently, self-correcting and self-improving.
+
+**Target**: Development agents (Ox, Soulja) should aim for **L3** in standard workflows and **L4** for routine tasks.
+
+### 2. Core Evaluation Metrics
+- **Task Completion Rate (TCR)**: % of user requests resolved without human intervention.
+- **Tool Call Accuracy (TCA)**: % of tool invocations with correct syntax.
+- **Hallucination Rate (HR)**: Checked by Igor/DMX.
+
+### 3. EDDOps (Evaluation-Driven Development) Protocol
+1. **Define Success FIRST**: Judge (Soulja) defines success rubric before Realize phase.
+2. **Pre-emptive Tool Testing**: Ox validates tools are online before use.
+3. **Adversarial Stress Test**: Igor fuzzes inputs to test non-determinism.
+4. **Continuous Eval**: Every PR is scored against Core Metrics.
 
 ---
 
