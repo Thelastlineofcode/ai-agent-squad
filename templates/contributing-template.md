@@ -100,6 +100,8 @@ cp .env.example .env
 
 ## Agent Workflow
 
+**Core Doctrine File:** `team-fullstack.txt` (project root). Agents must load this after `CONTRIBUTING.md`.
+
 ### Planning Phase (@keisha)
 1. Read this file for context
 2. Analyze requirements

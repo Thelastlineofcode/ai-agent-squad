@@ -320,4 +320,4 @@ Customize these to match your workflow before running `init-project-memory.sh`.
 3. Trigger `@keisha` to plan your first feature
 4. Watch agents coordinate via the ops board
 
-For questions about the agent squad system, see [team-fullstack.txt](team-fullstack.txt).
+For questions about the agent squad system, see your project-root `team-fullstack.txt`.

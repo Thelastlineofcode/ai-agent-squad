@@ -84,6 +84,12 @@ if [ ! -f "$PROJECT_ROOT/CONTRIBUTING.md" ]; then
     cp "$TEMPLATES_DIR/contributing-template.md" "$PROJECT_ROOT/CONTRIBUTING.md"
 fi
 
+# Create team-fullstack.txt file if it doesn't exist
+if [ ! -f "$PROJECT_ROOT/team-fullstack.txt" ]; then
+    echo "🧭 Creating team-fullstack.txt (project doctrine)..."
+    cp "$TEMPLATES_DIR/team-fullstack.template.txt" "$PROJECT_ROOT/team-fullstack.txt"
+fi
+
 # ==========================================
 # FRAMEWORK IMPROVEMENTS - NEW FILES
 # ==========================================
@@ -99,10 +105,12 @@ if [ ! -f "$MEMORY_DIR/AGENT_CONTEXT_LOADER.md" ]; then
 ## Step 1: Load Core Context
 You are operating on this project. Load these files in order:
 
-1. `team-fullstack.txt` - Core doctrine and standards
-2. `.agent-ops/PROJECT_SPECIFICATIONS.md` - Build/test/lint commands for THIS project
-3. `.agent-ops/AGENT_OPS_BOARD.md` - Current tasks and status
-4. `.agent-ops/AGENT_LEARNINGS.md` - Collective knowledge
+1. `CONTRIBUTING.md` - Project rules and standards
+2. `team-fullstack.txt` - Core doctrine for this project
+3. `CLAUDE.md` - Project-specific AI instructions (if present)
+4. `.agent-ops/PROJECT_SPECIFICATIONS.md` - Build/test/lint commands for THIS project
+5. `.agent-ops/AGENT_OPS_BOARD.md` - Current tasks and status
+6. `.agent-ops/AGENT_LEARNINGS.md` - Collective knowledge
 
 ## Step 2: Load Your Personal Memory
 Load your agent-specific memory:
@@ -329,7 +337,7 @@ echo "📋 Next steps:"
 echo "   1. Edit $MEMORY_DIR/PROJECT_SPECIFICATIONS.md with build commands"
 echo "   2. Edit $MEMORY_DIR/STATUS.md with current project phase"
 echo "   3. Update $MEMORY_DIR/AGENT_LEARNINGS.md with critical project info"
-echo "   4. Copy team-fullstack.txt → $MEMORY_DIR/"
+echo "   4. Edit $PROJECT_ROOT/team-fullstack.txt with project doctrine"
 echo "   5. Use AGENT_CONTEXT_LOADER.md as preamble for all agent chats"
 echo ""
 echo "🚀 Quick Start:"

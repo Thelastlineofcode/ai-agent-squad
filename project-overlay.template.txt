@@ -12,7 +12,7 @@ Architecture: [Monolith/Microservices/Serverless]
 
 ---
 
-## ADDITIONAL TOOLS (append to team-fullstack.txt)
+## ADDITIONAL TOOLS (append to project-root team-fullstack.txt)
 
 ### Keisha Additions
 # - [tool] - [purpose]

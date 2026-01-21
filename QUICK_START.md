@@ -193,7 +193,7 @@ echo ".agent-ops/_memory/" >> .gitignore
 ## Full Documentation
 
 - [PROJECT_SETUP.md](PROJECT_SETUP.md) - Detailed setup guide
-- [team-fullstack.txt](team-fullstack.txt) - Complete agent doctrine
+- `team-fullstack.txt` (project root) - Complete agent doctrine
 - [Execs/README.md](README.md) - Squad overview
 
 ---

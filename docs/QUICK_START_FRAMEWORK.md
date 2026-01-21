@@ -64,10 +64,10 @@ Update:
 4. Use DMX to review
 ```
 
-### Copy team-fullstack.txt
+### Create team-fullstack.txt
 
 ```bash
-cp ../Execs/team-fullstack.txt .agent-ops/
+cp ../Execs/templates/team-fullstack.template.txt ./team-fullstack.txt
 ```
 
 ---
@@ -262,7 +262,7 @@ PROJECT_COVERAGE_COMMAND="pytest --cov"
 2. Customize 3 files (30 min total)
    ├─ PROJECT_SPECIFICATIONS.md (build commands)
    ├─ STATUS.md (phase + status)
-   └─ Copy team-fullstack.txt
+   └─ Create team-fullstack.txt in project root
    ↓
 3. Run Keisha with context loader
    ↓

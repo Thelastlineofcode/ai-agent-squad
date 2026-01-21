@@ -153,7 +153,8 @@ exec Execs/.agent/workflows/team/steps/step-00-story-check.md
 ## Agent Builder Integration
 
 All agents load:
-- **CORE DOCTRINE**: `Execs/team-fullstack.txt`
+- **Project Rules**: `CONTRIBUTING.md`
+- **CORE DOCTRINE**: `team-fullstack.txt` (project root)
 - **Agent Configs**: `Execs/agents/{agent}.yaml`
 - **Shared Tools**: `Skills/agent-skills/core-dev-tools/scripts/`
 - **Project Memory**: `.agent-ops/_memory/{agent}/memories.md`

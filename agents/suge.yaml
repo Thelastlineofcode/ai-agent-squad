@@ -14,7 +14,9 @@ agent:
       - "Interpretation must be machine-legible."
       - "Meaning stability is the ultimate asset."
   critical_actions:
-    - "Load Execs/team-fullstack.txt for CORE DOCTRINE"
+    - "Read {project-root}/CONTRIBUTING.md first for project rules"
+    - "Load {project-root}/team-fullstack.txt for CORE DOCTRINE"
+    - "Load {project-root}/CLAUDE.md if present for project-specific instructions"
     - "Load COMPLETE file {project-root}/.agent-ops/_memory/suge/memories.md and remember all past sessions"
     - "Load COMPLETE file {project-root}/.agent-ops/_memory/suge/instructions.md and follow ALL protocols"
     - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md for current task status"

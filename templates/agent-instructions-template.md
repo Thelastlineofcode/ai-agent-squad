@@ -7,16 +7,19 @@
 ## Session Protocol
 
 ### On Session Start
-1. Load `{project-root}/.agent-ops/_memory/[AGENT_NAME]/memories.md`
-2. Load `{project-root}/.agent-ops/AGENT_OPS_BOARD.md`
-3. Load `{project-root}/.agent-ops/AGENT_LEARNINGS.md`
-4. Load `{project-root}/CONTRIBUTING.md` (if exists)
-5. Update my status on the ops board
+1. Load `{project-root}/CONTRIBUTING.md`
+2. Load `{project-root}/team-fullstack.txt`
+3. Load `{project-root}/CLAUDE.md` (if present)
+4. Load `{project-root}/.agent-ops/_memory/[AGENT_NAME]/memories.md`
+5. Load `{project-root}/.agent-ops/AGENT_OPS_BOARD.md`
+6. Load `{project-root}/.agent-ops/AGENT_LEARNINGS.md`
+7. Update my status on the ops board
 
 ### During Session
 - Update ops board when starting/completing tasks
 - Log decisions in my memories.md
 - Follow project-specific patterns from AGENT_LEARNINGS.md
+- If context window reaches ~60%, run `/compact` and write the compact summary into memories.md
 
 ### On Session End
 1. Append session summary to memories.md

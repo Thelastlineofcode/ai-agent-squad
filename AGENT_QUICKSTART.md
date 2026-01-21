@@ -161,7 +161,7 @@ All agents enforce:
 Execs/
 ├── README.md                        # Master entry point
 ├── AGENT_QUICKSTART.md              # Senior Engineer entry point
-├── team-fullstack.txt               # Quick reference card
+├── team-fullstack.txt               # Doctrine template (copy to project root)
 │
 ├── agents/                          # THE SQUAD
 │   ├── Keisha/                      # Planner
@@ -209,7 +209,7 @@ Execs/
    - Quality standards
    - Handoff protocols
 3. Create `README.md` with setup instructions
-4. Update `team-fullstack.txt` with new agent
+4. Update `team-fullstack.txt` template for new projects
 5. Update this file's command reference
 
 ### Modifying an Agent
@@ -224,7 +224,7 @@ Execs/
 1. Check tool doesn't exist in another agent (no overlap rule)
 2. Add to agent's "Exclusive Tools" section
 3. Add usage examples
-4. Update `team-fullstack.txt` tool distribution table
+4. Update `team-fullstack.txt` template tool distribution table
 
 ### Code Style for Prompts
 

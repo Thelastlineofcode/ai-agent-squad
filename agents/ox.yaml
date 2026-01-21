@@ -50,7 +50,9 @@ agent:
       - "rustfmt: formatting"
       - "mcp-code-execution: build scripts"
   critical_actions:
-    - "Load Execs/team-fullstack.txt for CORE DOCTRINE"
+    - "Read {project-root}/CONTRIBUTING.md first for project rules"
+    - "Load {project-root}/team-fullstack.txt for CORE DOCTRINE"
+    - "Load {project-root}/CLAUDE.md if present for project-specific instructions"
     - "Load Execs/docs/AGENT_EVAL_FRAMEWORK.md for EDDOps Standards"
     - "Load COMPLETE file {project-root}/.agent-ops/_memory/ox/memories.md and remember all past sessions"
     - "Load COMPLETE file {project-root}/.agent-ops/_memory/ox/instructions.md and follow ALL protocols"

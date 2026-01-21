@@ -21,7 +21,7 @@ Your `scripts/init-project-memory.sh` now automatically generates **4 new framew
 ## The Problems These Solve
 
 ### Problem 1: Context Lost Between Sessions
-**Before:** You manually copy-paste `team-fullstack.txt`, `AGENT_OPS_BOARD.md`, project specs into each Claude chat.
+**Before:** You manually copy-paste `team-fullstack.txt` (project root), `AGENT_OPS_BOARD.md`, project specs into each Claude chat.
 
 **After:** Paste `AGENT_CONTEXT_LOADER.md` once per project. Agents know exactly what to load.
 
@@ -81,7 +81,7 @@ nano .agent-ops/PROJECT_SPECIFICATIONS.md
 nano .agent-ops/STATUS.md
 
 # Copy your team doctrine
-cp ../Execs/team-fullstack.txt .agent-ops/
+cp ../Execs/templates/team-fullstack.template.txt ./team-fullstack.txt
 ```
 
 ### Step 3: Use With Agents
@@ -155,7 +155,7 @@ I can see Keisha's PRD and decisions. Now I'll write tests first..."
 - Agents automatically know what to load
 
 **What it loads:**
-1. `team-fullstack.txt` - Your core doctrine
+1. `team-fullstack.txt` (project root) - Your core doctrine
 2. `PROJECT_SPECIFICATIONS.md` - Build/test commands
 3. `AGENT_OPS_BOARD.md` - Current tasks
 4. `AGENT_LEARNINGS.md` - Project knowledge
@@ -272,7 +272,7 @@ Last Updated: 2026-01-17 11:30 by @keisha
 ```
 1. Open Claude
 2. Copy Keisha system prompt
-3. Paste team-fullstack.txt manually
+3. Paste team-fullstack.txt (project root) manually
 4. Paste PROJECT_SPECIFICATIONS.md manually
 5. Paste AGENT_OPS_BOARD.md manually
 6. Give Keisha task
@@ -314,7 +314,7 @@ Agents coordinate automatically ✅
 - [x] Creates `STATUS.md`
 - [ ] Edit `.agent-ops/PROJECT_SPECIFICATIONS.md` with your build commands
 - [ ] Edit `.agent-ops/STATUS.md` with current phase
-- [ ] Copy `team-fullstack.txt` to `.agent-ops/`
+- [ ] Create `team-fullstack.txt` in project root
 - [ ] Test with first agent (Keisha)
 - [ ] Verify Keisha updates EXECUTION_LOG.md + OPS_BOARD.md
 - [ ] Test with second agent (Ox)
@@ -330,7 +330,7 @@ bash scripts/init-project-memory.sh cosmic-ai
 cd cosmic-ai
 nano .agent-ops/PROJECT_SPECIFICATIONS.md  # Add build commands
 nano .agent-ops/STATUS.md                  # Add phase + status
-cp ../Execs/team-fullstack.txt .agent-ops/
+cp ../Execs/templates/team-fullstack.template.txt ./team-fullstack.txt
 ```
 
 ### Tuesday

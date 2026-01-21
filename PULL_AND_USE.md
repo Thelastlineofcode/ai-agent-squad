@@ -188,7 +188,7 @@ nano .agent-ops/STATUS.md
 # Update "Next Steps"
 
 # 6. Copy your team doctrine
-cp ~/path/to/Execs/team-fullstack.txt .agent-ops/
+cp ~/path/to/Execs/templates/team-fullstack.template.txt ./team-fullstack.txt
 ```
 
 ### Monday Afternoon (Use with Keisha)

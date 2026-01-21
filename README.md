@@ -46,7 +46,7 @@ Each agent has a platform-agnostic setup guide. Navigate to `agents/[AgentName]/
 - Perplexity Spaces
 
 ### 3. Master Reference
-Use **[team-fullstack.txt](file:///Users/houseofobi/Documents/Agent%20Builder/Execs/team-fullstack.txt)** as your day-to-day command card.
+Use your project-root `team-fullstack.txt` as the day-to-day command card. Template: `Execs/templates/team-fullstack.template.txt`.
 
 ---
 

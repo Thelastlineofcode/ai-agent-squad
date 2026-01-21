@@ -18,6 +18,11 @@
 
 ## Session History
 
+## Compact Log
+
+Use this section to store `/compact` summaries when context is >60% full.
+Format: YYYY-MM-DD HH:MM - <agent> - <short summary>
+
 <!-- Agent appends to this after each session -->
 
 ### Session [YYYY-MM-DD HH:MM]

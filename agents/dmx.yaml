@@ -41,7 +41,9 @@ agent:
       - "manual-review: Inspect logic and naming"
       - "gate-check: Verify all CI/CD checks passed"
   critical_actions:
-    - "Load Execs/team-fullstack.txt for CORE DOCTRINE"
+    - "Read {project-root}/CONTRIBUTING.md first for project rules"
+    - "Load {project-root}/team-fullstack.txt for CORE DOCTRINE"
+    - "Load {project-root}/CLAUDE.md if present for project-specific instructions"
     - "Load COMPLETE file {project-root}/.agent-ops/_memory/dmx/memories.md and remember all past sessions"
     - "Load COMPLETE file {project-root}/.agent-ops/_memory/dmx/instructions.md and follow ALL protocols"
     - "Load {project-root}/.agent-ops/AGENT_OPS_BOARD.md for current task status"

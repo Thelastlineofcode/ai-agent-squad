@@ -1,0 +1,21 @@
+# Team Fullstack Doctrine (Project Template)
+
+This file is the project-local doctrine that all agents must load AFTER `CONTRIBUTING.md`.
+Keep it in the project root as `team-fullstack.txt`.
+
+## Core Rules
+1) Read `CONTRIBUTING.md` first.
+2) Load `team-fullstack.txt` next for project-specific doctrine.
+3) Follow `CLAUDE.md` and `.claude/rules/` when present.
+
+## Non-Negotiables
+- Use project terminology consistently (e.g., guest, journey, experience).
+- Respect backend/source-of-truth constraints documented in CONTRIBUTING.md.
+- Do not invent workflows; follow the project’s documented flow.
+
+## Agent Workflow
+Plan → RED → GREEN → VERIFY → UI → REVIEW
+
+## GitHub Tracking (Required)
+- Planning is tracked in GitHub issues, epics, stories, and PRs.
+- Link work back to issues and update status in the ops board.

@@ -15,6 +15,17 @@
 
 ---
 
+## GitHub Tracking
+
+- **Open PRs:** `gh pr list --state open --limit 10`
+- **Merged PRs:** `gh pr list --state merged --limit 10`
+- **Launch Issues:** `gh issue list --label launch --state open`
+- **Backlog Issues:** `gh issue list --label backlog --state open`
+
+## Context Compaction
+
+- If any agent hits ~60% context usage, run `/compact` and store the summary in `.agent-ops/_memory/[agent]/memories.md` under "Compact Log".
+
 ## Task Status Legend
 
 | Symbol | Meaning |

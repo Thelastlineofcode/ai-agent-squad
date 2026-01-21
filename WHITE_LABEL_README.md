@@ -13,7 +13,7 @@ git clone <this-repo> ./agents
 # 2. Create your project overlay
 cp project-overlay.template.txt project-overlay.txt
 
-# 3. Customize team-fullstack.txt for your stack
+# 3. Create project-root team-fullstack.txt for your stack
 ```
 
 ---
@@ -22,7 +22,7 @@ cp project-overlay.template.txt project-overlay.txt
 
 | Path | Purpose | Customize? |
 |------|---------|------------|
-| `team-fullstack.txt` | Master agent reference | ✅ Add project tools |
+| `team-fullstack.txt` (project root) | Master agent reference | ✅ Add project tools |
 | `agents/` | Agent system prompts (markdown) | ⚠️ Extend, don't modify |
 | `config/agents/` | Agent YAMLs with state + MCPs | ✅ Add project MCPs |
 | `.agent/workflows/` | Slash command workflows | ✅ Add project workflows |
@@ -109,4 +109,4 @@ git merge upstream/main --no-commit
 
 ---
 
-See `team-fullstack.txt` for full details.
+See your project-root `team-fullstack.txt` for full details.
