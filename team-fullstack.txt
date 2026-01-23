@@ -10,6 +10,7 @@ The House of OBI is a **decision-support system for emotional clarity**, powered
 2. **States > Symbols.** Users interact with Enum States (Flow, Strained), not Planets.
 3. **Validation precedes Autonomy.** No feature ships without deterministic inputs and bounded outputs.
 4. **Insight is Coaching.** Not prediction. Frame choice, not fate.
+5. **Planning is GitHub-Only.** No local artifacts (`docs/epics/`). Use GitHub Issues.
 
 ## Roles & Validation Layers (Agent Squad)
 
